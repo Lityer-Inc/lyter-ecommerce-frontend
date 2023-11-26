@@ -142,19 +142,31 @@ export const ShopContextProvider = (props) => {
 
   /* AUTHENTICATION */
 
-  //Calculate total items and total price
-  let totalItems = 0;
-  let totalPrice = 0;
 
-  if (Array.isArray(cartItems)) {
-    totalItems = cartItems.reduce((acc, item) => acc + item.count, 0);
-    totalPrice = cartItems.reduce((acc, item) => {
-      const dataItem = data.find((d) => d.id === item.eachitem.id);
-      return acc + item.count * dataItem.price;
-    }, 0);
-  } else {
-    console.log("cart data is not an array");
-  }
+//Calculate total items and total price
+let totalItems = 0;
+let totalPrice = 0;
+ 
+if (Array.isArray(cartItems)) {
+  console.log("Calculating total items and price...");
+
+  totalItems = cartItems.reduce((acc, item) => acc + item.count, 0);
+
+  totalPrice = cartItems.reduce((acc, item) => {
+    console.log("Current item in totalPrice calculation:", item);
+    const dataItem = data.find((d) => d.id === item.eachitem.id);
+    
+    if (!dataItem) {
+      console.error("Data item not found for id:", item.eachitem.id);
+      return acc;
+    }
+
+    console.log("Adding to totalPrice:", item.count * dataItem.price);
+    return acc + item.count * dataItem.price;
+  }, 0);
+} else {
+  console.log("cartItems is not an array");
+} 
 
   const contextValue = {
     cartItems,
