@@ -1,10 +1,32 @@
 import DeliveryRibbon from "../Components/DeliveryRibbon";
-import InputField from "../Components/InputField";
+import InputField from "../Components/InputField"; 
+import React, { useState, useContext } from 'react';
+
+import CartItem from "../Components/CartItem";
+
+import { ShopContext } from '../context/shop-context'; 
 
 const CheckoutPayment = () => {
-
- const handleSubmit = async () => {
  
+  const { cartItems } =
+    useContext(ShopContext);
+   
+ const [fullname, setFullname] = useState('');
+const [delivery_instruction, setDeliveryInstruction] = useState('');
+const [country, setCountry] = useState('');
+const [street_address, setStreetAddress] = useState('');
+const [city, setCity] = useState('');
+const [zip, setZip] = useState('');
+const [phone, setPhone] = useState('');
+
+  
+function handleInputChange(e) {
+  alert("New name entered: " + e.target.value);
+  setFullname(e.target.value);
+}
+
+ const handleSubmit = async () => { 
+
  alert("my order placed");    //for development/debug purposse
  
  const customerId = '1'.padStart(36, ' ');  // placeholder values
@@ -19,12 +41,45 @@ const CheckoutPayment = () => {
     // Add other fields as required
   };
 
+ function generateRandomId() {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  for ( let i = 0; i < 36; i++ ) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
  
-const orderItems = [
-  { productId: '1'.padStart(36, ' '), price: 10 },   // Pads '1' with 36 spaces as DB has char(36) type for product id.
-   { productId: '1'.padStart(36, ' '), price: 10 },  // second item.
-  // add more items
-];
+ 
+cartItems.map(item => {
+  const productId = item.eachitem.id.padStart(36, ' ');
+  const price = item.eachitem.price;
+  
+  console.log('productId:', productId); 
+  console.log('price:', price);          
+});
+
+
+  const orderItems = cartItems.map(item => ({
+    productId: item.eachitem.id.padStart(36, ' '),
+    price: item.eachitem.price  
+  
+  }));
+
+const customerInfo = {
+  id: generateRandomId(),
+  fullname: fullname || 'Default Name', 
+  email: 'default@example.com', // Default email
+  password: 'defaultPassword', // Default password
+  delivery_instruction: delivery_instruction || '', 
+  country: country || 'Default Country', 
+  street_address: street_address || 'Default Street', 
+  city: city || 'Default City', 
+  zip: zip || '00000', 
+  phone: phone || '0000000000'
+};
+
 
 
   try {
@@ -33,7 +88,7 @@ const orderItems = [
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ orderData, orderItems }),
+      body: JSON.stringify({ customerInfo, orderData, orderItems }),
     });
 
     if (response.ok) {
@@ -70,17 +125,65 @@ const orderItems = [
             Billing details
           </h2>
           {/* name field */}
-          <div className="flex space-x-4">
-            <InputField dropDown={false} field="Full Name" />
-            {/* <InputField dropDown={false} field="Second Name" /> */}
-          </div>
-          <InputField dropDown={false} field="Delivery Address" />
-          <InputField dropDown={false} field="Delivery Instruction" />
-          <InputField dropDown={true} field="Country/Region" />
-          <InputField dropDown={false} field="Street address" />
-          <InputField dropDown={false} field="Town/City" />
-          <InputField dropDown={false} field="Zip Code" />
-          <InputField dropDown={false} field="Phone" />
+          
+           <div className="flex space-x-4">
+            
+
+<InputField 
+  dropDown={false} 
+  field="Full Name" 
+  value={fullname} 
+  onChange={e => {
+    alert("New name entered: " + e.target.value);
+    setFullname(e.target.value);
+  }}
+/>
+
+</div> 
+
+<InputField 
+  dropDown={false} 
+  field="Delivery Address" 
+  value={delivery_instruction} 
+  onChange={(e) => setDeliveryInstruction(e.target.value)} 
+/>
+<InputField 
+  dropDown={false} 
+  field="Delivery Instruction" 
+  value={delivery_instruction} 
+  onChange={(e) => setDeliveryInstruction(e.target.value)} 
+/>
+<InputField 
+  dropDown={false} 
+  field="Country/Region" 
+  value={country} 
+  onChange={(e) => setCountry(e.target.value)} 
+/>
+<InputField 
+  dropDown={false} 
+  field="Street address" 
+  value={street_address} 
+  onChange={(e) => setStreetAddress(e.target.value)} 
+/>
+<InputField 
+  dropDown={false} 
+  field="Town/City" 
+  value={city} 
+  onChange={(e) => setCity(e.target.value)} 
+/>
+<InputField 
+  dropDown={false} 
+  field="Zip Code" 
+  value={zip} 
+  onChange={(e) => setZip(e.target.value)} 
+/>
+<InputField 
+  dropDown={false} 
+  field="Phone" 
+  value={phone} 
+  onChange={(e) => setPhone(e.target.value)}
+/>
+
           <p>Payment</p>
           {/* <InputField dropDown={false} field="Wallet address" /> */}
         </div>
