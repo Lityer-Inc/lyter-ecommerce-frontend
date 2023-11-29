@@ -23,27 +23,28 @@ const CartItem = ({ data }) => {
 
   console.log('data : ', data);
 
-  useEffect(() => {}, [cartItems]);
+  useEffect(() => { }, [cartItems]);
 
   return (
     <tr class="bg-white border-b hover:bg-gray-50 w-full text-center">
-      <td class="w-4 p-4" colSpan="3">
+      <td class="w-4 p-2 pb-3 " colSpan="3">
+        <div className="w-[64px] h-[64px]relative">
+          <img
+            src={data.eachitem.img}
+            alt="product alt"
+            className="max-w-[100%] h-auto"
+          />
+        </div>
+      </td>
+      <td class="w-2 p-4 pl-0" colSpan="3">
         <div class="flex justify-evenly items-center">
-          <div className="max-w-[3.5rem] relative">
-            <img
-              src={data.eachitem.img}
-              alt="product alt"
-              className="max-w-[100%] h-auto"
-            />
-          </div>
-
-          <div className="">{data.eachitem.description}</div>
+          <div className="">{data.eachitem.title}</div>
         </div>
       </td>
       <th class="p-2 fonts fonts font-medium md:px-2 md:py-4 whitespace-nowrap text-center">
         ${data.eachitem.price}
       </th>
-      <td class="p-2 fonts text-center md:px-2 flex justify-center gap-[7px] pt-[35px] items-center self-center justify-self-center">
+      <td class="relative flex top-6 flex-row gap-2 justify-center items-center self-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           onClick={() => removeCom(data)}
