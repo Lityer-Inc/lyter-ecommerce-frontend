@@ -3,9 +3,9 @@ import React from "react";
 export default function Alert({ info }) {
     console.log('hi : ', info);
   return (
-    <div className="excuseme absolute w-[400px] h-[150px] top-[100px] right-[50px] bg-[#fff] shadow-lg shadow-[#f5f5f5]-500 flex flex-col z-[999999999] justify-center rounded-[15px] px-10">
+    <div className="excuseme absolute w-[400px] h-[150px] top-[100px] right-[50px] bg-[#fff] shadow-lg shadow-[#f5f5f5]-500 flex flex-col z-[999999999] justify-center rounded-2xl px-10">
       {/* up */}
-      <div className="flex items-center gap-[7px]">
+      <div className="flex items-center gap-4">
         <div
           className={` w-16 h-16 p-2 flex justify-center items-center rounded-[50%] ${
             info.status && info.status == "warn"
@@ -33,7 +33,7 @@ export default function Alert({ info }) {
 
       {/* down */}
       <div className="flex justify-end">
-        <button className="outline-none border-none px-[10px] bg-[#FF0066] px-5 py-2 text-white rounded">
+        <button className="outline-none border-none bg-[#FF0066] px-5 py-2 text-white rounded">
           {info.action}
         </button>
       </div>

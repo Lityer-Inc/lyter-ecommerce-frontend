@@ -2,52 +2,6 @@ import DeliveryRibbon from "../Components/DeliveryRibbon";
 import InputField from "../Components/InputField";
 
 const CheckoutPayment = () => {
-
- const handleSubmit = async () => {
- 
- alert("my order placed");    //for development/debug purposse
- 
- const customerId = '1'.padStart(36, ' ');  // placeholder values
-  const retailerId = '1'.padStart(36, ' ');   //placeholder but this may be deprecated also
-
-  const orderData = {
-    name: 'DEPRECATED ', //  placeholder dataq
-    featuredImage: 'ALSO DEPRECATED',   
-    amount: 100, // Total order amount
-    customerId: customerId,
-    retailerOrderId: retailerId
-    // Add other fields as required
-  };
-
- 
-const orderItems = [
-  { productId: '1'.padStart(36, ' '), price: 10 },   // Pads '1' with 36 spaces as DB has char(36) type for product id.
-   { productId: '1'.padStart(36, ' '), price: 10 },  // second item.
-  // add more items
-];
-
-
-  try {
-    const response = await fetch('http://localhost:8000/orders/add_order', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ orderData, orderItems }),
-    });
-
-    if (response.ok) {
-      const responseData = await response.json();
-      console.log('Order processed.', responseData); 
-    } else {
-      console.error('Error with order.'); 
-    }
-  } catch (error) {
-    console.error('Error...', error); 
-  }
-};
-
-
   return (
     // <main className='bg-[#F5F5F5] w-full h-full'>
     //   {/* left */}
@@ -63,7 +17,7 @@ const orderItems = [
       {/* <h2 className="p-10 text-center text-3xl font-bold text-black">
       Checkout
     </h2> */}
-      <main className="mx-auto flex sm:flex-row flex-col max-w-[8570px] items-start justify-between p-4">
+      <main className="mx-auto flex sm:flex-row flex-col max-w-[8570px] items-start justify-between p-4 pt-8">
         {/* billings details */}
         <div className="flex-1 bg-white w-full p-6 rounded-md flex flex-col gap-6">
           <h2 className="text-left text-2xl font-semibold text-black">
@@ -134,8 +88,6 @@ const orderItems = [
             <button
               className="mt-6 rounded-md border border-gray-100 p-2 px-9 bg-[#FF0066]
           text-white font-semibold transition-all hover:scale-x-105 hover:border-gray-200 hover:bg-primary hover:text-gray-100"
-          
-          onClick={handleSubmit}
             >
               Place order
             </button>

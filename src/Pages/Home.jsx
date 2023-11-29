@@ -5,8 +5,10 @@ import Card from "../Components/Card";
 import Ads from "../Components/Ads";
 import Filter from "../Components/Filter";
 import { ShopContext } from "../context/shop-context";
-import StoreSidebar from "../Components/StoreSidebar";
 import ProductDetails from "../Components/ProductDetails.jsx";
+
+
+
 
 export default function Home() {
   // const { cartItems, addToCart, removeFromCart, totalItems, totalPrice } =
@@ -18,14 +20,14 @@ export default function Home() {
     console.log("product Detais : ", productDetails);
   }, [productDetails]);
 
+  const {cartItems, addToCart, removeFromCart, totalItems, totalPrice} = useContext(ShopContext);
+
   return (
-    <div className="home-container relative z-0 flex flex-row">
-      <StoreSidebar />
-      <div className="flex flex-col ">
+    <div className="home-container flex flex-col">
         <WeeklySpecial />
         <Filter />
         {/*<Ads />*/}
-
+        
         <div className="cards-container-text-container">
           <p className="cards-container-text text-center mt-4 mb-4 text-3xl">
             This Week's Best Deals:
@@ -40,7 +42,6 @@ export default function Home() {
           ))}
         </ul>
         {productDetails.selected && <ProductDetails />}
-      </div>
 
       {/* <div className="home-page-list-container flex flex-wrap">
         <div className="item w-full basis-1/2">1</div>
