@@ -1,32 +1,63 @@
 import DeliveryRibbon from "../Components/DeliveryRibbon";
-import InputField from "../Components/InputField"; 
-import React, { useState, useContext } from 'react';
+//import InputField from "../Components/InputField"; 
+import React, { useState, useContext, useRef, forwardRef } from 'react';
 
 import CartItem from "../Components/CartItem";
 
 import { ShopContext } from '../context/shop-context'; 
 
-const CheckoutPayment = () => {
+
+  
+   
+const InputField = forwardRef((props, ref) => {
+  const { field, value, onChange, ...otherProps } = props;
+
+  return (
+    <input
+      type="text"
+      placeholder={field} // Assuming 'field' is used as placeholder
+      value={value}
+      onChange={onChange}
+      ref={ref}
+      {...otherProps}
+    />
+  );
+});
  
+const CheckoutPayment = () => {
+
+ 
+
+  const fullnameRef = useRef();
+  const deliveryAddressRef = useRef();
+  const deliveryInstructionRef = useRef();
+  const countryRef = useRef();
+  const streetAddressRef = useRef();
+  const cityRef = useRef();
+  const zipRef = useRef();
+  const phoneRef = useRef();
+ 
+   
+ 
+  
   const { cartItems } =
     useContext(ShopContext);
    
- const [fullname, setFullname] = useState('');
-const [delivery_instruction, setDeliveryInstruction] = useState('');
+
+const [fullname, setFullname] = useState('');
+const [deliveryAddress, setDeliveryAddress] = useState(''); // New state for Delivery Address
+const [deliveryInstruction, setDeliveryInstruction] = useState('');
 const [country, setCountry] = useState('');
 const [street_address, setStreetAddress] = useState('');
 const [city, setCity] = useState('');
 const [zip, setZip] = useState('');
 const [phone, setPhone] = useState('');
+ 
 
-  
-function handleInputChange(e) {
-  alert("New name entered: " + e.target.value);
-  setFullname(e.target.value);
-}
+   
 
  const handleSubmit = async () => { 
-
+  
  alert("my order placed");    //for development/debug purposse
  
  const customerId = '1'.padStart(36, ' ');  // placeholder values
@@ -70,15 +101,17 @@ cartItems.map(item => {
 const customerInfo = {
   id: generateRandomId(),
   fullname: fullname || 'Default Name', 
-  email: 'default@example.com', // Default email
-  password: 'defaultPassword', // Default password
-  delivery_instruction: delivery_instruction || '', 
+  email: 'default@example.com', 
+  password: 'defaultPassword', 
+  delivery_address: deliveryAddress || '', // Corrected to deliveryAddress
+  delivery_instruction: deliveryInstruction || '', 
   country: country || 'Default Country', 
   street_address: street_address || 'Default Street', 
   city: city || 'Default City', 
   zip: zip || '00000', 
   phone: phone || '0000000000'
 };
+
 
 
 
@@ -127,62 +160,66 @@ const customerInfo = {
           {/* name field */}
           
            <div className="flex space-x-4">
-            
-
-<InputField 
-  dropDown={false} 
+             
+             
+             <InputField 
   field="Full Name" 
-  value={fullname} 
-  onChange={e => {
-    alert("New name entered: " + e.target.value);
-    setFullname(e.target.value);
-  }}
+  value={fullname}  
+  ref={fullnameRef}
+  onChange={(e) => setFullname(e.target.value)} 
 />
 
-</div> 
+</div>   
 
 <InputField 
-  dropDown={false} 
   field="Delivery Address" 
-  value={delivery_instruction} 
-  onChange={(e) => setDeliveryInstruction(e.target.value)} 
+  value={deliveryAddress}  
+  ref={deliveryAddressRef}
+  onChange={(e) => setDeliveryAddress(e.target.value)} 
 />
+
 <InputField 
-  dropDown={false} 
   field="Delivery Instruction" 
-  value={delivery_instruction} 
+  value={deliveryInstruction}  
+  ref={deliveryInstructionRef}   
   onChange={(e) => setDeliveryInstruction(e.target.value)} 
 />
+
 <InputField 
-  dropDown={false} 
   field="Country/Region" 
-  value={country} 
+  value={country}  
+  ref={countryRef}  
   onChange={(e) => setCountry(e.target.value)} 
 />
+
 <InputField 
-  dropDown={false} 
-  field="Street address" 
+  field="Street Address" 
   value={street_address} 
+  ref={streetAddressRef}   
   onChange={(e) => setStreetAddress(e.target.value)} 
 />
+
 <InputField 
-  dropDown={false} 
   field="Town/City" 
-  value={city} 
+  value={city}  
+  ref={cityRef}  
   onChange={(e) => setCity(e.target.value)} 
 />
+
 <InputField 
-  dropDown={false} 
   field="Zip Code" 
-  value={zip} 
+  value={zip}  
+  ref={zipRef}  
   onChange={(e) => setZip(e.target.value)} 
 />
+
 <InputField 
-  dropDown={false} 
   field="Phone" 
-  value={phone} 
+  value={phone}  
+  ref={phoneRef}  
   onChange={(e) => setPhone(e.target.value)}
 />
+
 
           <p>Payment</p>
           {/* <InputField dropDown={false} field="Wallet address" /> */}
@@ -234,7 +271,7 @@ const customerInfo = {
 
           {/* place order button */}
           <div>
-            <button
+            <button type="submit"
               className="mt-6 rounded-md border border-gray-100 p-2 px-9 bg-[#FF0066]
           text-white font-semibold transition-all hover:scale-x-105 hover:border-gray-200 hover:bg-primary hover:text-gray-100"
           
