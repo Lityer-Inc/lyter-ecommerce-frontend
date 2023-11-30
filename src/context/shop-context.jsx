@@ -31,12 +31,13 @@ export const ShopContextProvider = (props) => {
     selected: false,
     details: {}
   });
+  const [userDetails, setUserDetails] = useState(null);
   const [alertState, setAlertState] = useState();
 
   /* ENDPOINT */
   //testing http://localhost:8000
   //production
-  const endpointHead = "https://lyter-inc.onrender.com/v1/lyter";
+  const endpointHead = "http://localhost:8000";
 
   /* CART */
   const addToCart = (itemToAdd) => {
@@ -169,6 +170,8 @@ if (Array.isArray(cartItems)) {
 } 
 
   const contextValue = {
+    userDetails,
+    setUserDetails,
     cartItems,
     addToCart,
     removeFromCart,

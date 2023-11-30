@@ -7,10 +7,13 @@ import { ShopContext } from "../context/shop-context";
 import StoreSidebar from "../Components/StoreSidebar";
 import ProductDetails from "../Components/ProductDetails.jsx";
 import apiService from '../Components/apiService'; 
+import Cookies from "js-cookie";
 
 export default function Home() {
   const [products, setProducts] = useState([]);
-  const { productDetails } = useContext(ShopContext);
+  const { productDetails, setUserDetails } = useContext(ShopContext);
+
+  const token = Cookies.get("token") ? JSON.parse(Cookies.get("token")) : null;
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -28,8 +31,20 @@ export default function Home() {
       }
     };
 
+    const getUserData = async () => {
+      console.log('hiiiiiiii');
+      const response = await apiService.decodeJwt();
+      setUserDetails({
+        email: response.userDetails.email,
+        name: response.userDetails.name
+      });
+    }
+
     fetchProducts();
-  }, []);
+    getUserData();
+  }, [token]);
+
+  console.log('products : ', products);
 
   return (
     <div className="home-container relative z-0 flex flex-row">

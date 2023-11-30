@@ -26,10 +26,10 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password.length < 6) {
-      setautherr(true);
-      return;
-    }
+    // if (password.length < 6) {
+    //   setautherr(true);
+    //   return;
+    // }
 
     try {
       const response = await axios.post(`${endpointHead}/auth/login`, {
