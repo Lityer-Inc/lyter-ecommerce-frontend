@@ -12,7 +12,7 @@ export default function Filter() {
 
 
   return (
-    <div className='w-full h-full flex gap-7 items-center p-5 my-9'>
+    <div className='w-full h-full flex gap-7 items-center md:pl-16 p-5 my-9'>
        <span>Sort by</span>
        <div className="flex gap-5 w-100 overflow-x-auto">
           {
