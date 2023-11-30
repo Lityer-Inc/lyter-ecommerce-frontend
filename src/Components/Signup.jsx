@@ -3,9 +3,11 @@ import { ShopContext } from "../context/shop-context";
 import axios from "axios";
 
 export default function Signup() {
-  const { setLoginModal, endpointHead, setAlertState, setAlert } =
-    useContext(ShopContext);
+  // is this the right way to get env values ?
+  const { storeToken, setLoginModal, endpointHead, setAlertState, setAlert } =
+  useContext(ShopContext);
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [emailerr, setEmailerr] = useState(false);
   const [passworderr, setPassworderr] = useState(false);
@@ -15,15 +17,21 @@ export default function Signup() {
     setEmail(e.target.value);
   };
 
+  const handleName = (e) => {
+    e.preventDefault();
+    setName(e.target.value);
+  };
+
   const handlePassword = (e) => {
     e.preventDefault();
     setPassword(e.target.value);
   };
 
   const handleSubmit = async (e) => {
+    console.log('endpoint : ', endpointHead);
     if (password.length < 6) {
       setPassworderr(true);
-      return;
+      alert("Password Length is too short !");
     }
 
     e.preventDefault();
@@ -35,13 +43,15 @@ export default function Signup() {
         `${endpointHead}/auth/signup_customer`,
         {
           email: email,
+          name: name,
           password: password
         }
       );
       // Handle the response from the authentication endpoint
-      console.log("resonse : ", await response.data);
+      console.log("resonse : ", await response);
       //push to local storage
       if (response.status === 200) {
+        storeToken(response.data.token);
         setAlert(true);
         setAlertState({
           icon: (
@@ -120,6 +130,18 @@ export default function Signup() {
           />
           <label>Email</label>
         </div>
+        <div className="user-box ">
+          <input
+            value={name}
+            placeholder="Full Name"
+            onChange={(e) => handleName(e)}
+            type="text"
+            className={
+              emailerr && "border-b border-red-500 .!border-red-500-important"
+            }
+          />
+          <label>Full Name</label>
+        </div>
         <div className="user-box">
           <input
             required=""
@@ -134,9 +156,7 @@ export default function Signup() {
           <label>Password</label>
         </div>
         <p
-          className={
-            passworderr && "font-semibold text-red-500 text-[1.2rem]"
-          }
+          className={passworderr && "font-semibold text-red-500 text-[1.2rem]"}
         >
           {passworderr && "Invalid Password"}
         </p>

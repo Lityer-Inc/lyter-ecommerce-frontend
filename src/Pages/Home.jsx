@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import WeeklySpecial from "../Components/WeeklySpecial";
 import data from "../DummyData/data.js";
 import Card from "../Components/Card";
@@ -6,21 +6,45 @@ import Ads from "../Components/Ads";
 import Filter from "../Components/Filter";
 import { ShopContext } from "../context/shop-context";
 import ProductDetails from "../Components/ProductDetails.jsx";
-
-
-
+import apiService from '../Components/apiService'; 
+import Cookies from "js-cookie";
 
 export default function Home() {
-  // const { cartItems, addToCart, removeFromCart, totalItems, totalPrice } =
-  //   useContext(ShopContext);
+  const [products, setProducts] = useState([]);
+  const { productDetails, setUserDetails } = useContext(ShopContext);
 
-  const { productDetails } = useContext(ShopContext);
+  const token = Cookies.get("token") ? JSON.parse(Cookies.get("token")) : null;
 
   useEffect(() => {
-    console.log("product Detais : ", productDetails);
-  }, [productDetails]);
+    const fetchProducts = async () => {
+      const fetchedProducts = await apiService.getProducts();
+      if (fetchedProducts && fetchedProducts.products) {
+        const productsWithImages = fetchedProducts.products.map(product => {
+          if (product.image && product.image.data) {
+            const imageBlob = new Blob([Uint8Array.from(product.image.data)], { type: 'image/png' });
+            const imageUrl = URL.createObjectURL(imageBlob);
+            return { ...product, imageUrl };
+          }
+          return product;
+        });
+        setProducts(productsWithImages);
+      }
+    };
 
-  const {cartItems, addToCart, removeFromCart, totalItems, totalPrice} = useContext(ShopContext);
+    const getUserData = async () => {
+      console.log('hiiiiiiii');
+      const response = await apiService.decodeJwt();
+      setUserDetails({
+        email: response.userDetails.email,
+        name: response.userDetails.name
+      });
+    }
+
+    fetchProducts();
+    getUserData();
+  }, [token]);
+
+  console.log('products : ', products);
 
   return (
     <div className="home-container flex flex-col">
