@@ -12,9 +12,9 @@ export default function Filter() {
 
 
   return (
-    <div className='w-full h-full flex gap-7 items-center p-5 my-9'>
+    <div className='w-full h-full flex gap-7 items-center md:pl-16 p-5 my-9'>
        <span>Sort by</span>
-       <div className="flex gap-[20px] w-100 overflow-x-auto">
+       <div className="flex gap-5 w-100 overflow-x-auto">
           {
           filts.map((data, key) => (
             <div className="flex text-sm border border-gray-400 rounded-[30px] p-2 cursor-pointer" key={key}>

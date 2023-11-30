@@ -2,9 +2,9 @@ import React from "react";
 
 export default function WeeklySpecial() {
   return (
-    <div className="md:flex justify-center gap-[20px] md:gap-[12px] items-center px-5 md:px-20 py-2   ">
+    <div className="md:flex justify-center gap-[20px] md:gap-[12px] items-center px-5 md:px-20 py-2">
       {/* First container */}
-      <div className="flex flex-col-reverse md:flex-row justify-center items-center md:gap-40">
+      <div className="py-10 flex flex-col-reverse md:flex-row justify-center items-center md:gap-40">
         <div className="text-center md:text-left md:w-[22%] flex justify-between items-center">
           <h2 className="font-extrabold text-[60px] leading-[70px]">
             Fastest
@@ -23,11 +23,7 @@ export default function WeeklySpecial() {
                   backgroundRepeat: 'no-repeat',
                 }}
               ></div> */}
-          <img
-            className="w-full h-auto  z-[60]"
-            src="/illustrations.png"
-            alt="Image"
-          />
+          <img className="w-full z-[60]" src="/illustrations.png" alt="Image" />
         </div>
       </div>
 

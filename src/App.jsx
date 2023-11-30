@@ -13,10 +13,11 @@ import PersonalCare from "./Pages/PersonalCare";
 import BabyCare from "./Pages/BabyCare";
 import Fruits from "./Pages/Fruits";
 import "./index.css";
-import { CheckoutPage } from "./Pages/CheckoutPage";
 import {  ShopContext } from "./context/shop-context";
 import Login from "./Components/Login";
 import Signup from "./Components/Signup";
+import StoresList from "./Pages/StoresList";
+import StoreFront from "./Pages/StoreFront";
 import Preloader from "./Components/Preloader";
 import Protectedroute from "./Components/Protectedroute";
 // import Account from "./Pages/Dashbardlayout";
@@ -27,7 +28,6 @@ import Dashboardhome from "./Pages/Dashboardhome";
 import CheckoutPayment from "./Pages/CheckoutPayment";
 
 export default function App() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const {
     loginModal,
     setLoginModal,
@@ -41,10 +41,6 @@ export default function App() {
 
   console.log(ShopContext, "shop");
   console.log(loginModal, "www");
-
-  function toggleMobileMenu() {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  }
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -74,72 +70,37 @@ export default function App() {
   }, [modal, loginModal, isLoading, alert]);
 
   return (
-    <div className="bg-[#f5f5f5] w-100 h-100 relative">
+    <div className="bg-[#fff] w-100 h-100 relative">
       {isLoading && <Preloader />}
 
       {alert && <Alert info={alertState} />}
 
-      <Navbar
-        isMobileMenuOpen={isMobileMenuOpen}
-        setIsMobileMenuOpen={setIsMobileMenuOpen}
-        toggleMobileMenu={toggleMobileMenu}
-      />
+      <Navbar/>
       <Routes>
-        {!isMobileMenuOpen && <Route path="/" element={<Home />} />}
-        {!isMobileMenuOpen && (
-          <Route path="/beverages" element={<Beverages />} />
-        )}
-        {!isMobileMenuOpen && <Route path="/bread" element={<Bakery />} />}
-        {!isMobileMenuOpen && (
-          <Route path="/vegetables" element={<Vegetables />} />
-        )}
-        {!isMobileMenuOpen && <Route path="/fruits" element={<Fruits />} />}
-        {!isMobileMenuOpen && <Route path="/dairy" element={<Dairy />} />}
-        {!isMobileMenuOpen && <Route path="/meats" element={<Meats />} />}
-        {!isMobileMenuOpen && (
-          <Route path="/frozen-foods" element={<FrozenFoods />} />
-        )}
-        {!isMobileMenuOpen && (
-          <Route path="/cleaning-supplies" element={<CleaningSupplies />} />
-        )}
-        {!isMobileMenuOpen && (
-          <Route path="/personal-care" element={<PersonalCare />} />
-        )}
-        {!isMobileMenuOpen && (
-          <Route path="/baby-care" element={<BabyCare />} />
-        )}
-        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/store" element={<StoresList/>}/>
+        <Route path="/storefront" element={<StoreFront />} />
+        <Route path="/beverages" element={<Beverages />} />
+        <Route path="/bread" element={<Bakery />} />
+        <Route path="/vegetables" element={<Vegetables />} />
+        <Route path="/fruits" element={<Fruits />} />
+        <Route path="/dairy" element={<Dairy />} />
+        <Route path="/meats" element={<Meats />} />
+        <Route path="/frozen-foods" element={<FrozenFoods />} />
+        <Route path="/cleaning-supplies" element={<CleaningSupplies />} />
+        <Route path="/personal-care" element={<PersonalCare />} />
+        <Route path="/baby-care" element={<BabyCare />} />
         <Route path="/checkout-payment" element={<CheckoutPayment />} />
-        <Route
-          path="/dashboard"
-          element={
-            <Protectedroute>
-              <Dashboardhome />
-            </Protectedroute>
-          }
-        />
-        <Route
-          path="/orders"
-          element={
-            <Protectedroute>
-              <Orders />
-            </Protectedroute>
-          }
-        />
-        <Route
-          path="/saved"
-          element={
-            <Protectedroute>
-              <Saved />
-            </Protectedroute>
-          }
-        />
+        <Route path="/dashboard" element={<Protectedroute><Dashboardhome /></Protectedroute>}/>
+        <Route path="/orders" element={<Protectedroute> <Orders /> </Protectedroute>}/>
+        <Route path="/saved" element={<Protectedroute> <Saved /> </Protectedroute>}/>
       </Routes>
+
       {loginModal !== 0 && (
         <div
-          className="login-box fixed p-10 box-border top-[50%] left-[50%] w-[80%] md:w-[400px] my-auto mx-auto translate-x-[-50%] translate-y-[-50%] rounded-[10px]"
+          className="login-box fixed p-10 box-border top-[50%] z-30 left-[50%] w-[80%] md:w-[400px] my-auto mx-auto translate-x-[-50%] translate-y-[-50%] rounded-[10px]"
           style={{
-            background: "rgba(255,255,255,.9)",
+            background: "rgba(255,255,255)",
             boxShadow: "0 15px 25px rgba(0,0,0,.6)",
           }}
           ref={modal}

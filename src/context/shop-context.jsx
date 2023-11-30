@@ -40,7 +40,7 @@ export const ShopContextProvider = (props) => {
   const endpointHead = "http://localhost:8000";
 
   /* CART */
-  const addToCart = (itemToAdd) => {
+  const addToCart = (itemToAdd, quanty) => {
     setCartItems((prev) => {
       // Create a copy of the cart array
       const updatedCart = [...prev];
@@ -53,12 +53,12 @@ export const ShopContextProvider = (props) => {
 
       if (existingItemIndex !== -1) {
         // If the item is already in the cart, update its count
-        updatedCart[existingItemIndex].count += 1;
+        updatedCart[existingItemIndex].count += quanty;
       } else {
         // If the item is not in the cart, add it with a count of 1
         updatedCart.push({
           eachitem: { ...itemToAdd },
-          count: 1
+          count: quanty
         });
       }
 
@@ -155,6 +155,7 @@ if (Array.isArray(cartItems)) {
 
   totalPrice = cartItems.reduce((acc, item) => {
     console.log("Current item in totalPrice calculation:", item);
+    console.log("ACCCCCCCCCCCCCCCCCCCCCCCCCC", acc);
     const dataItem = data.find((d) => d.id === item.eachitem.id);
     
     if (!dataItem) {
