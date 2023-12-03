@@ -13,7 +13,7 @@ import PersonalCare from "./Pages/PersonalCare";
 import BabyCare from "./Pages/BabyCare";
 import Fruits from "./Pages/Fruits";
 import "./index.css";
-import {  ShopContext } from "./context/shop-context";
+import { ShopContext } from "./context/shop-context";
 import Login from "./Components/Login";
 import Signup from "./Components/Signup";
 import StoresList from "./Pages/StoresList";
@@ -27,6 +27,8 @@ import Saved from "./Pages/Saved";
 import Dashboardhome from "./Pages/Dashboardhome";
 import CheckoutPayment from "./Pages/CheckoutPayment";
 import ProductDetails from "./Components/ProductDetails";
+import Cookies from "js-cookie";
+import apiService from "./Components/apiService.jsx";
 
 export default function App() {
   const {
@@ -36,9 +38,12 @@ export default function App() {
     alert,
     setAlert,
     setAlertState,
+    setUserDetails
   } = useContext(ShopContext);
   const [isLoading, setIsLoading] = useState(true);
   const modal = useRef(null);
+  const token = Cookies.get("token") ? JSON.parse(Cookies.get("token")) : null;
+
 
   console.log(ShopContext, "shop");
   console.log(loginModal, "www");
@@ -51,8 +56,15 @@ export default function App() {
         setLoginModal(0);
       }
     };
+    const getUserData = async () => {
+      const response = await apiService.decodeJwt();
+      setUserDetails({
+        email: response.userDetails.email,
+        name: response.userDetails.name
+      });
+    };
 
-    console.log(alertState, "checking its problem");
+    getUserData();
 
     setTimeout(() => {
       setIsLoading(false); // Set isLoading to false after the delay
@@ -68,7 +80,7 @@ export default function App() {
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
-  }, [modal, loginModal, isLoading, alert]);
+  }, [modal, loginModal, isLoading, alert, token]);
 
   return (
     <div className="bg-[#fff] w-100 h-100 relative">
@@ -80,7 +92,7 @@ export default function App() {
       <ProductDetails />
       <Routes>
         <Route path="/" element={<StoresList />} />
-        <Route path="/store" element={<StoresList/>}/>
+        <Route path="/store" element={<StoresList />} />
         <Route path="/storefront" element={<StoreFront />} />
         <Route path="/beverages" element={<Beverages />} />
         <Route path="/bread" element={<Bakery />} />
@@ -93,9 +105,32 @@ export default function App() {
         <Route path="/personal-care" element={<PersonalCare />} />
         <Route path="/baby-care" element={<BabyCare />} />
         <Route path="/checkout-payment" element={<CheckoutPayment />} />
-        <Route path="/dashboard" element={<Protectedroute><Dashboardhome /></Protectedroute>}/>
-        <Route path="/orders" element={<Protectedroute> <Orders /> </Protectedroute>}/>
-        <Route path="/saved" element={<Protectedroute> <Saved /> </Protectedroute>}/>
+        <Route
+          path="/dashboard"
+          element={
+            <Protectedroute>
+              <Dashboardhome />
+            </Protectedroute>
+          }
+        />
+        <Route
+          path="/orders"
+          element={
+            <Protectedroute>
+              {" "}
+              <Orders />{" "}
+            </Protectedroute>
+          }
+        />
+        <Route
+          path="/saved"
+          element={
+            <Protectedroute>
+              {" "}
+              <Saved />{" "}
+            </Protectedroute>
+          }
+        />
       </Routes>
 
       {loginModal !== 0 && (
@@ -103,7 +138,7 @@ export default function App() {
           className="login-box fixed p-10 box-border top-[50%] z-30 left-[50%] w-[80%] md:w-[400px] my-auto mx-auto translate-x-[-50%] translate-y-[-50%] rounded-[10px]"
           style={{
             background: "rgba(255,255,255)",
-            boxShadow: "0 15px 25px rgba(0,0,0,.6)",
+            boxShadow: "0 15px 25px rgba(0,0,0,.6)"
           }}
           ref={modal}
         >
