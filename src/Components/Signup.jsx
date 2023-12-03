@@ -5,12 +5,14 @@ import axios from "axios";
 export default function Signup() {
   // is this the right way to get env values ?
   const { storeToken, setLoginModal, endpointHead, setAlertState, setAlert } =
-  useContext(ShopContext);
+    useContext(ShopContext);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [emailerr, setEmailerr] = useState(false);
   const [passworderr, setPassworderr] = useState(false);
+  const [confirmPassworderr, setConfirmPassworderr] = useState(false);
 
   const handleEmail = (e) => {
     e.preventDefault();
@@ -27,18 +29,28 @@ export default function Signup() {
     setPassword(e.target.value);
   };
 
+  const handleConfirmPassword = (e) => {
+    e.preventDefault();
+    setConfirmPassword(e.target.value);
+    let pswMatch = password.includes(e.target.value);
+    if (pswMatch) {
+      setConfirmPassworderr(false);
+    } else {
+      setConfirmPassworderr(true);
+    }
+  };
+
   const handleSubmit = async (e) => {
-    console.log('endpoint : ', endpointHead);
-    if (password.length < 6) {
+    e.preventDefault();
+    console.log("endpoint : ", endpointHead);
+    if (password.length < 6 || confirmPassworderr) {
       setPassworderr(true);
-      alert("Password Length is too short !");
+      console.log('confirm password : ', confirmPassworderr);
+      alert("Invalid Password or Password Mismatch !");
+      throw new Error("Invalid Password or Password Mismatch !");
     }
 
-    e.preventDefault();
-    console.log("passed and running");
     try {
-      console.log("email : ", email);
-      console.log("password : ", password);
       const response = await axios.post(
         `${endpointHead}/auth/signup_customer`,
         {
@@ -78,6 +90,7 @@ export default function Signup() {
           action: "Proceed"
         });
         setLoginModal(0);
+        window.location.reload();
       } else {
         setAlert(true);
         setAlertState({
@@ -155,6 +168,26 @@ export default function Signup() {
           />
           <label>Password</label>
         </div>
+        {password.length >= 6 && (
+          <div className="user-box">
+            <input
+              required=""
+              value={confirmPassword}
+              onChange={(e) => handleConfirmPassword(e)}
+              type="password"
+              className={
+                passworderr &&
+                "border-b border-red-500 .!border-red-500-important"
+              }
+            />
+            <label>Confirm Pasword</label>
+            <p
+              className={"font-semibold text-red-500 text-[1.2rem]"}
+            >
+              {confirmPassworderr && "password mismatch !"}
+            </p>
+          </div>
+        )}
         <p
           className={passworderr && "font-semibold text-red-500 text-[1.2rem]"}
         >
