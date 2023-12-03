@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect, useRef } from "react";
 import Navbar from "./Components/Navbar";
-import Home from "./Pages/Home";
+// import Home from "./Pages/Home";
 import { Routes, Route } from "react-router-dom";
 import Beverages from "./Pages/Beverages";
 import Bakery from "./Pages/Bakery";
@@ -77,7 +77,7 @@ export default function App() {
 
       <Navbar/>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<StoresList />} />
         <Route path="/store" element={<StoresList/>}/>
         <Route path="/storefront" element={<StoreFront />} />
         <Route path="/beverages" element={<Beverages />} />
