@@ -26,6 +26,7 @@ import Alert from "./Components/Alert";
 import Saved from "./Pages/Saved";
 import Dashboardhome from "./Pages/Dashboardhome";
 import CheckoutPayment from "./Pages/CheckoutPayment";
+import ProductDetails from "./Components/ProductDetails";
 
 export default function App() {
   const {
@@ -75,7 +76,8 @@ export default function App() {
 
       {alert && <Alert info={alertState} />}
 
-      <Navbar/>
+      <Navbar />
+      <ProductDetails />
       <Routes>
         <Route path="/" element={<StoresList />} />
         <Route path="/store" element={<StoresList/>}/>
@@ -117,7 +119,7 @@ export default function App() {
             <div
               className={`${
                 loginModal === 1
-                  ? "text-base text-black font-bold text-lg"
+                  ? "text-black font-bold text-lg"
                   : "cursor-pointer z-[9999999]"
               }`}
               onClick={() => setLoginModal(1)}
@@ -127,7 +129,7 @@ export default function App() {
             <div
               className={`${
                 loginModal === 2
-                  ? "text-base text-black font-bold text-lg"
+                  ? "text-black font-bold text-lg"
                   : "cursor-pointer z-[9999999]"
               }`}
               onClick={() => setLoginModal(2)}
