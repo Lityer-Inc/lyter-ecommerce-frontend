@@ -20,7 +20,7 @@ export default function Store() {
       <div className='flex flex-row justify-between'>
           <StoreSideBar/>
           
-          <section className=" w-1/2 bg-white grow" >
+          <section className="py-10 w-1/2 bg-white grow" >
           <div className='px-8 py-4 w-full'>
             <h2 className="text-2xl font-bold ">Best Sellers</h2>
               <Carousel />
