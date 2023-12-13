@@ -29,11 +29,7 @@ const ProductDetails = () => {
   console.log()
 
   return (
-    <main
-      className={`${
-        !productDetails.selected ? "-mt-[100%]" : "top-0"
-      } fixed flex w-full h-full top-0 z-30 justify-center`}
-    >
+    <main className={`fixed flex w-full h-full top-0 z-30 justify-center ${productDetails.selected ? "" : "hidden"}`}>
       {/* background */}
       <div
         className=" absolute bg-black/20 w-full h-full"
