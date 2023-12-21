@@ -1,5 +1,6 @@
 import DeliveryRibbon from "../Components/DeliveryRibbon";
 import InputField from "../Components/InputField";
+import Footer from "../Components/Footer";
 
 const CheckoutPayment = () => {
   return (
@@ -96,6 +97,7 @@ const CheckoutPayment = () => {
       </main>
       {/* deliveryRibbon */}
       <DeliveryRibbon />
+      <Footer />
     </section>
   );
 };

@@ -6,6 +6,7 @@ import dataStores from "../DummyData/dataStores.js";
 import Footer from "../Components/Footer.jsx";
 
 
+
 export default function StoresList() {
 
   const [isLoading, setIsLoading] = useState(true);
