@@ -2,7 +2,7 @@ import { useState } from "react";
 import StoreSideBar from '../Components/StoreSideBar'
 import Preloader from '../Components/Preloader'
 import {Carousel} from '../Components/Carousel'
-
+import Footer from "../Components/Footer";
 
 export default function Store() {
 
@@ -33,10 +33,9 @@ export default function Store() {
             <h2 className="text-2xl font-bold ">Fresh Vegetables</h2>
               <Carousel />
           </div>
-             
+          <Footer/>  
           </section>
-      </div>
-
+      </div>    
     </>
   );
 }

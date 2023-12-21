@@ -7,9 +7,9 @@ import { FaList } from "react-icons/fa";
 
 const StoreSidebar = () => {
   return (
-      <main className="lg:block w-[300px] hidden ">
+      <main className="lg:block w-[280px] h-0 hidden ">
         {/* top part */}
-        <div className="fixed top-auto bg-gray-100 w-[300px] overflow-y-scroll overflow-x-hidden border-r h-screen p-6">
+        <div className="fixed top-auto bg-gray-100 w-[280px] overflow-y-scroll overflow-x-hidden border-r h-screen p-6">
         <div className="flex w-full flex-col sticky top-0 bg-gray-100/90 backdrop-blur-sm p-2 items-center gap-2">
           <img
             src="/logo-2.png"
