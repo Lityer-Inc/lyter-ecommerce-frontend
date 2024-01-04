@@ -1,5 +1,5 @@
 import Breadcrumbs from '@mui/material/Breadcrumbs';
-import React, { useContext } from "react";
+import React from "react";
 
 export default function Stores({ data }) {
   return (
@@ -35,7 +35,7 @@ export default function Stores({ data }) {
             : ""}
           {data.discount ?
             <span className="cardS-discount flex items-center">
-              <svg className="w-3 h-3" height="1em" viewBox="0 0 24 24" fill="#D43684" xmlns="http://www.w3.org/2000/svg" color="brandPromotionalRegular" class="e-0" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="m11 21-8-8L13 3h5l3 3v5L11 21Zm4.5-11a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path></svg>
+              <svg className="w-3 h-3" height="1em" viewBox="0 0 24 24" fill="#D43684" xmlns="http://www.w3.org/2000/svg" color="brandPromotionalRegular" aria-hidden="true"><path fillRule="evenodd" clipRule="evenodd" d="m11 21-8-8L13 3h5l3 3v5L11 21Zm4.5-11a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path></svg>
               Lower fees on {data.discount}
             </span>
             : ""}
