@@ -3,6 +3,7 @@ import Stores from "../Components/Stores.jsx"
 import Preloader from "../Components/Preloader"
 import { Link } from "react-router-dom"
 import dataStores from "../DummyData/dataStores.js";
+import Footer from "../Components/Footer.jsx";
 
 
 export default function StoresList() {
@@ -26,9 +27,9 @@ export default function StoresList() {
               </Link>
             ))}
           </ul>
+          <Footer/> 
         </section>
-      </div>
-
+      </div>       
     </>
   );
 }

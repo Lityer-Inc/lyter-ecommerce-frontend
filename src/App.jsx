@@ -132,7 +132,6 @@ export default function App() {
           }
         />
       </Routes>
-
       {loginModal !== 0 && (
         <div
           className="login-box fixed p-10 box-border top-[50%] z-30 left-[50%] w-[80%] md:w-[700px] my-auto mx-auto translate-x-[-50%] translate-y-[-50%] rounded-[10px]"
