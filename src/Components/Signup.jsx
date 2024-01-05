@@ -64,19 +64,27 @@ export default function Signup() {
       throw new Error("Invalid Password or Password Mismatch !");
     }
 
-
-    console.log('hsdfklsdfdsf');
-    // console.log("resonse : ", response);
     try {
-      // Handle the response from the authentication endpoint
-      const response = await axios.post(`${endpointHead}/user/register`, {
-        email: email,
-        name: name,
-        password: password,
-        city: city,
-        address: address,
-        contactNumber: number
+      const response = await fetch(`http://localhost:8000/user/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email: email,
+          name: name,
+          password: password,
+          city: city,
+          address: address,
+          contactNumber: number,
+          account_status: true
+        })
       });
+
+      const res = await response.json();
+
+      console.log('respnse : ', res);
+
       //push to local storage
       if (response.status === 200) {
         // storeToken(response.data.token);
@@ -108,7 +116,6 @@ export default function Signup() {
         setLoginModal(0);
         window.location.reload();
       } else {
-        alert("bad req");
         setAlert(true);
         setAlertState({
           icon: (
@@ -130,21 +137,21 @@ export default function Signup() {
           ),
           status: "failed",
           msg1: "Account Creation failed",
-          msg2: `Reason: ${response.message}`,
+          msg2: `Reason: ${res.error}`,
           action: "Retry"
         });
       }
     } catch (error) {
       // Handle any errors that occurred during the request
       console.log("errorr");
-      alert("server error");
+      // alert("server error");
       console.error(error);
     }
   };
 
   useEffect(() => {
     console.log(endpointHead, "test test");
-  }, [passworderr]);
+  }, []);
 
   return (
     <>
