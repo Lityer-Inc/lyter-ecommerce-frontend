@@ -29,8 +29,7 @@
     "react-select": "^5.8.0",
     "react-transition-group": "^4.4.5",
     "styled-components": "^6.1.1",
-    "swiper": "^11.0.5",
-    "vite-plugin-eslint": "^1.8.1"
+    "swiper": "^11.0.5"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
@@ -47,6 +46,7 @@
     "eslint-plugin-react-refresh": "^0.4.3",
     "postcss": "^8.4.27",
     "tailwindcss": "^3.3.3",
-    "vite": "^4.4.5"
+    "vite": "^4.4.5",
+    "vite-plugin-eslint": "^1.8.1"
   }
 }
