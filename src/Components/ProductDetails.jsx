@@ -172,12 +172,12 @@ const ProductDetails = () => {
                             aria-hidden="true"
                           >
                             <path
-                              fill-rule="evenodd"
-                              clip-rule="evenodd"
+                              fillRule="evenodd"
+                              clipRule="evenodd"
                               d="M8 3a5.5 5.5 0 0 0-5.5 5.5c0 2.974 1.57 5.67 3.29 7.746 1.734 2.096 3.732 3.696 4.82 4.5.83.61 1.948.611 2.778 0 1.088-.803 3.086-2.404 4.821-4.5C19.93 14.17 21.5 11.474 21.5 8.5A5.5 5.5 0 0 0 12 4.726 5.485 5.485 0 0 0 8 3Z"
                             ></path>
                           </svg>
-                          <span class="e-15fzge">Saved</span>
+                          <span className="e-15fzge">Saved</span>
                         </div>
                       ) : (
                         <div
@@ -197,12 +197,12 @@ const ProductDetails = () => {
                             aria-hidden="true"
                           >
                             <path
-                              fill-rule="evenodd"
-                              clip-rule="evenodd"
+                              fillRule="evenodd"
+                              clipRule="evenodd"
                               d="M8 5a3.5 3.5 0 0 0-3.5 3.5c0 2.286 1.225 4.532 2.83 6.47 1.59 1.92 3.444 3.41 4.467 4.166.124.09.28.09.403 0 1.025-.756 2.88-2.245 4.469-4.165C18.274 13.032 19.5 10.786 19.5 8.5a3.5 3.5 0 0 0-6.61-1.604l-.666 1.294a.25.25 0 0 1-.444 0l-.667-1.293A3.5 3.5 0 0 0 8 5ZM2.5 8.5A5.5 5.5 0 0 1 12 4.726 5.5 5.5 0 0 1 21.5 8.5c0 2.974-1.57 5.67-3.29 7.746-1.736 2.096-3.734 3.697-4.822 4.5a2.331 2.331 0 0 1-2.778 0c-1.088-.804-3.086-2.404-4.82-4.5C4.07 14.17 2.5 11.474 2.5 8.5Z"
                             ></path>
                           </svg>
-                          <span class="e-15fzge">Save</span>
+                          <span className="e-15fzge">Save</span>
                         </div>
                       )}
                       <div className="flex flex-row items-center gap-1">
@@ -218,7 +218,7 @@ const ProductDetails = () => {
                         >
                           <path d="M10 6h10v2H10V6ZM7 11H4v2h3v-2ZM20 11H10v2h10v-2ZM10 16h10v2H10v-2ZM7 16H4v2h3v-2ZM7 6H4v2h3V6Z"></path>
                         </svg>
-                        <span class="e-f7ygsf">Add to list</span>
+                        <span className="e-f7ygsf">Add to list</span>
                       </div>
                     </div>
                   </div>

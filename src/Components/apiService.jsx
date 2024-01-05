@@ -42,7 +42,7 @@ const apiService = {
             }
 
         } catch (err) {
-            alert("error : ", response.statusText);
+            // alert("error : ", response.statusText);
             return err;
         }
     }
