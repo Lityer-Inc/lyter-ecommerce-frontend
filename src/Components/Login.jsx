@@ -40,6 +40,7 @@ export default function Login() {
       console.log("response data : ", await response.data);
       if (response.status === 200) {
         storeToken(response.data.token);
+        setautherr(false);
         setUser(response.data.user);
         setLoginModal(0);
         setAlert(true);
@@ -125,16 +126,13 @@ export default function Login() {
             value={password}
             onChange={(e) => handlePassword(e)}
             className={
-              autherr &&
-              "border-b border-red-500 .!border-red-500-important"
+              autherr && "border-b border-red-500 .!border-red-500-important"
             }
           />
           <label>Password</label>
         </div>
-        <p
-          className={autherr && "font-semibold text-red-500 text-[1.2rem]"}
-        >
-          {/* {autherr && "Invalid Email or Password"} */}
+        <p className={autherr && "font-semibold text-red-500 text-[1.2rem]"}>
+          {autherr && "Invalid Email or Password"}
         </p>
         <button type="submit">
           <a>

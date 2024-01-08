@@ -74,12 +74,14 @@ export default function App() {
 
   useEffect(() => {
     const getUserData = async () => {
-      console.log('lorem lksdnfjkldsanfjklndsf nsdkjfn sdajknflksdnfkljsdnflknsdlkfnsd lkfnlsdf')
+      console.log(
+        "lorem lksdnfjkldsanfjklndsf nsdkjfn sdajknflksdnfkljsdnflknsdlkfnsd lkfnlsdf"
+      );
       const response = await apiService.decodeJwt();
 
       setUserDetails({
         email: await response.email,
-        name: await response.email.split('@')[0]
+        name: await response.email.split("@")[0]
       });
     };
 
