@@ -3,7 +3,7 @@ import data from "../DummyData/data";
 import Cookies from "js-cookie"; // Import the js-cookie package
 import axios from "axios";
 
-export const  ShopContext = createContext("context");
+export const ShopContext = createContext("context");
 
 console.log(data, "Cart data");
 /*
@@ -36,7 +36,7 @@ export const ShopContextProvider = (props) => {
     name: null
   });
   const [alertState, setAlertState] = useState();
-
+  const [stores, setStores] = useState([]); // includes all the products and orders in a store
   /* ENDPOINT */
   //testing http://localhost:8000
   //production
@@ -85,7 +85,7 @@ export const ShopContextProvider = (props) => {
   };
 
   const addMini = (itemToAdd) => {
-    console.log("hiiiiii ", itemToAdd)
+    console.log("hiiiiii ", itemToAdd);
     setCartItems((prev) => {
       const updatedCart = [...prev];
       const existingItemIndex = updatedCart.findIndex(
@@ -146,32 +146,31 @@ export const ShopContextProvider = (props) => {
 
   /* AUTHENTICATION */
 
+  //Calculate total items and total price
+  let totalItems = 0;
+  let totalPrice = 0;
 
-//Calculate total items and total price
-let totalItems = 0;
-let totalPrice = 0;
- 
-if (Array.isArray(cartItems)) {
-  console.log("Calculating total items and price...");
+  if (Array.isArray(cartItems)) {
+    console.log("Calculating total items and price...");
 
-  totalItems = cartItems.reduce((acc, item) => acc + item.count, 0);
+    totalItems = cartItems.reduce((acc, item) => acc + item.count, 0);
 
-  totalPrice = cartItems.reduce((acc, item) => {
-    console.log("Current item in totalPrice calculation:", item);
-    console.log("ACCCCCCCCCCCCCCCCCCCCCCCCCC", acc);
-    const dataItem = data.find((d) => d.id === item.eachitem.id);
-    
-    if (!dataItem) {
-      console.error("Data item not found for id:", item.eachitem.id);
-      return acc;
-    }
+    totalPrice = cartItems.reduce((acc, item) => {
+      console.log("Current item in totalPrice calculation:", item);
+      console.log("ACCCCCCCCCCCCCCCCCCCCCCCCCC", acc);
+      const dataItem = data.find((d) => d.id === item.eachitem.id);
 
-    console.log("Adding to totalPrice:", item.count * dataItem.price);
-    return acc + item.count * dataItem.price;
-  }, 0);
-} else {
-  console.log("cartItems is not an array");
-} 
+      if (!dataItem) {
+        console.error("Data item not found for id:", item.eachitem.id);
+        return acc;
+      }
+
+      console.log("Adding to totalPrice:", item.count * dataItem.price);
+      return acc + item.count * dataItem.price;
+    }, 0);
+  } else {
+    console.log("cartItems is not an array");
+  }
 
   const contextValue = {
     userDetails,
@@ -195,7 +194,9 @@ if (Array.isArray(cartItems)) {
     alertState,
     setAlertState,
     productDetails,
-    setProductDetails
+    setProductDetails,
+    stores,
+    setStores
   };
 
   // Save cart data to cookies whenever cartItems change
