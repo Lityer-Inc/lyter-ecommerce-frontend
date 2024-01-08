@@ -11,9 +11,9 @@ export default function Account() {
   const accModal = useRef(null);
   const balModal = useRef(null);
 
-  const token = Cookies.get('token') ? JSON.parse(Cookies.get('token')) : null;
+  const token = Cookies.get("token") ? JSON.parse(Cookies.get("token")) : null;
 
-  console.log('token : ', token);
+  console.log("token : ", token);
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -109,7 +109,7 @@ export default function Account() {
             </Link>
           </div>
 
-          {userDetails.email!=null ? (
+          {(userDetails.email !== null) | undefined ? (
             <div className="flex gap-2 cursor-pointer w-full rounded hover:bg-[#f5f5f5] p-2">
               <span>
                 <svg
@@ -140,11 +140,11 @@ export default function Account() {
         </div>
       )}
 
-      {userDetails.email!=null && (
+      {userDetails.email !== null && (
         <div className="flex items-center">
           <h2
             className="text-[1.2rem] font-semibold pr-3 cursor-pointer"
-            onClick={() => setLoginModal(1)}
+            // onClick={() => setLoginModal(1)}
           >
             {userDetails.name}
           </h2>{" "}
