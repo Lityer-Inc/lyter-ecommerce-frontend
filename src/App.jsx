@@ -1,4 +1,4 @@
-import React,{ useContext, useState, useEffect, useRef } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import Navbar from "./Components/Navbar";
 // import Home from "./Pages/Home";
 import { Routes, Route } from "react-router-dom";
@@ -44,7 +44,6 @@ export default function App() {
   const modal = useRef(null);
   const token = Cookies.get("token") ? JSON.parse(Cookies.get("token")) : null;
 
-
   console.log(ShopContext, "shop");
   console.log(loginModal, "www");
 
@@ -56,15 +55,6 @@ export default function App() {
         setLoginModal(0);
       }
     };
-    const getUserData = async () => {
-      const response = await apiService.decodeJwt();
-      setUserDetails({
-        email: response.userDetails.email,
-        name: response.userDetails.name
-      });
-    };
-
-    getUserData();
 
     setTimeout(() => {
       setIsLoading(false); // Set isLoading to false after the delay
@@ -82,12 +72,26 @@ export default function App() {
     };
   }, [modal, loginModal, isLoading, alert, token]);
 
+  useEffect(() => {
+    const getUserData = async () => {
+      console.log('lorem lksdnfjkldsanfjklndsf nsdkjfn sdajknflksdnfkljsdnflknsdlkfnsd lkfnlsdf')
+      const response = await apiService.decodeJwt();
+
+      setUserDetails({
+        email: await response.email,
+        name: await response.email.split('@')[0]
+      });
+    };
+
+    getUserData();
+  }, []);
+
   return (
     <div className="bg-[#fff] w-100 h-100 relative">
       {isLoading && <Preloader />}
 
       {alert && <Alert info={alertState} />}
-      
+
       <Navbar />
       <ProductDetails />
       <Routes>

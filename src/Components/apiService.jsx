@@ -25,9 +25,13 @@ const apiService = {
         try {
             const token = Cookies.get("token") ? JSON.parse(Cookies.get("token")) : null;
 
-            // console.log('token')
+            console.log('token : ', token);
+            if (token == null) {
+                // alert("token is null");
+                return;
+            }
             
-            const response = await axios.get(`${API_BASE_URL}/decodeJwt`, {
+            const response = await axios.get(`${API_BASE_URL}/user/decodeJwt`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                   }
