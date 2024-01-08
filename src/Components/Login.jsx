@@ -68,6 +68,7 @@ export default function Login() {
           msg2: "",
           action: "Start shopping"
         });
+        window.location.reload();
       } else {
         setAlert(true);
         setAlertState({
