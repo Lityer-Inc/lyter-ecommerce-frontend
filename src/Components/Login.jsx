@@ -32,13 +32,12 @@ export default function Login() {
     // }
 
     try {
-      const response = await axios.post(`${endpointHead}/auth/login`, {
+      const response = await axios.post(`${endpointHead}/user/login`, {
         email: email,
         password: password
       });
       // Handle the response from the authentication endpoint
       console.log("response data : ", await response.data);
-      //push to local storage
       if (response.status === 200) {
         storeToken(response.data.token);
         setUser(response.data.user);
@@ -135,7 +134,7 @@ export default function Login() {
         <p
           className={autherr && "font-semibold text-red-500 text-[1.2rem]"}
         >
-          {autherr && "Invalid Email or Password"}
+          {/* {autherr && "Invalid Email or Password"} */}
         </p>
         <button type="submit">
           <a>

@@ -31,7 +31,10 @@ export const ShopContextProvider = (props) => {
     selected: false,
     details: {}
   });
-  const [userDetails, setUserDetails] = useState(null);
+  const [userDetails, setUserDetails] = useState({
+    email: null,
+    name: null
+  });
   const [alertState, setAlertState] = useState();
 
   /* ENDPOINT */
@@ -125,21 +128,21 @@ export const ShopContextProvider = (props) => {
     Cookies.set("token", JSON.stringify(token));
   };
 
-  const CheckToken = async () => {
-    try {
-      const response = await axios.post(`${endpointHead}/check`, null, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+  // const CheckToken = async () => {
+  //   try {
+  //     const response = await axios.post(`${endpointHead}/check`, null, {
+  //       headers: { Authorization: `Bearer ${token}` }
+  //     });
 
-      console.log(response.data);
+  //     console.log(response.data);
 
-      if (response.status === 200) {
-        setUser(response.data.user);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //     if (response.status === 200) {
+  //       setUser(response.data.user);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   /* AUTHENTICATION */
 
@@ -197,9 +200,9 @@ if (Array.isArray(cartItems)) {
 
   // Save cart data to cookies whenever cartItems change
   useEffect(() => {
-    if (!token) {
-      CheckToken();
-    }
+    // if (!token) {
+    //   CheckToken();
+    // }
   }, [cartItems, loginModal]);
 
   return (
