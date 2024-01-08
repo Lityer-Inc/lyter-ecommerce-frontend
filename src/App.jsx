@@ -28,7 +28,7 @@ import Dashboardhome from "./Pages/Dashboardhome";
 import CheckoutPayment from "./Pages/CheckoutPayment";
 import ProductDetails from "./Components/ProductDetails";
 import Cookies from "js-cookie";
-import apiService from "./Components/apiService.jsx";
+import apiService from "./utils/apiService.jsx";
 
 export default function App() {
   const {
@@ -38,7 +38,9 @@ export default function App() {
     alert,
     setAlert,
     setAlertState,
-    setUserDetails
+    setUserDetails,
+    stores,
+    setStores
   } = useContext(ShopContext);
   const [isLoading, setIsLoading] = useState(true);
   const modal = useRef(null);
@@ -74,9 +76,6 @@ export default function App() {
 
   useEffect(() => {
     const getUserData = async () => {
-      console.log(
-        "lorem lksdnfjkldsanfjklndsf nsdkjfn sdajknflksdnfkljsdnflknsdlkfnsd lkfnlsdf"
-      );
       const response = await apiService.decodeJwt();
 
       setUserDetails({
@@ -85,7 +84,18 @@ export default function App() {
       });
     };
 
+    const getStores = async () => {
+      const response = await apiService.getStores();
+      console.log("respnse : ", response);
+      if (response) {
+        setStores(response);
+      } else {
+        alert("somehting wrong !!!");
+      }
+    };
+
     getUserData();
+    getStores();
   }, []);
 
   return (
