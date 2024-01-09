@@ -64,7 +64,7 @@ const ProductDetails = () => {
             <div className="flex justify-center self-center w-[70%] p-10 
             lg:w-[450px]">
               <img
-                src={productDetails.details?.img}
+                src={productDetails.details?.image}
                 alt={productDetails.details?.name}
                 className="w-full h-full self-center object-fit object-center"
               />
@@ -86,7 +86,7 @@ const ProductDetails = () => {
                   <Link className="text-cyan-700 font-semibold text-[14px] inline-flex mb-1">{item}</Link>
                 ))}
                 </Breadcrumbs> */}
-                <p className="mt-2">{productDetails.details?.weight} oz</p>
+              <p className="mt-2">{productDetails.details?.weight} oz</p>
                 <h1 className="font-semibold pb-2 text-[1.2rem]">Details</h1>
                 <p className="text-gray-700 flex">
                   {productDetails.details?.description}
