@@ -5,9 +5,10 @@ import { Carousel } from "../Components/Carousel";
 import Footer from "../Components/Footer";
 import { ShopContext } from "../context/shop-context";
 import { useParams, useSearchParams } from "react-router-dom";
+import axios from "axios";
 
 export default function Store() {
-  const { stores } = useContext(ShopContext);
+  const { stores, endpointHead } = useContext(ShopContext);
   const [params] = useSearchParams();
 
   const storeId = useRef(params.get("id"));
@@ -19,13 +20,23 @@ export default function Store() {
   //   setIsLoading(false); // Set isLoading to false after the delay
   // }, 1500);
 
-  useEffect(() => {
-    (async () => {
-      const storeData = await stores.find((store) => store._id == storeId.current);
-      setStore(storeData);
-      setIsLoading(false);
-    })();
-  }, []);
+  useEffect(()=>{
+    const fetchData = async () =>{
+      try{
+        // fetch stored data
+        const response = await axios.get(`${endpointHead}/stores/${storeId.current}/products`)
+        const productsData = response.data;
+        console.log("data:", productsData)
+        setStore(productsData)
+        setIsLoading(false)
+
+      }
+      catch (error){
+        console.log("error on fetch:", error)
+      }
+    };
+    fetchData();
+  },[])
 
   if (isLoading) {
     return <Preloader />
@@ -39,7 +50,7 @@ export default function Store() {
         <section className="py-10 w-1/2 bg-white grow">
           <div className="px-8 py-4 w-full">
             <h2 className="text-2xl font-bold ">Best Sellers</h2>
-            <Carousel products={store.products} />
+            <Carousel products={store} />
           </div>
           {/* <div className="px-8 py-4 w-full">
             <h2 className="text-2xl font-bold ">Fresh Fruit</h2>
