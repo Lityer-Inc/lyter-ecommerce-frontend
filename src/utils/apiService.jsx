@@ -50,14 +50,14 @@ const apiService = {
       console.log("decodeReponse : ", response.data);
       console.log("rseponse : ", response.status);
       if (response.status === 200) {
-        return response.data;
+        return {status: 200, data: response.data};
       } else {
         alert("error : " + response.statusText);
-        return null;
+        return { status: 404, data: response.statusText };
       }
     } catch (err) {
       // alert("error : ", response.statusText);
-      return err;
+      return { status: 500, data: "Server Error" };
     }
   }
 };

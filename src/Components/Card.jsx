@@ -38,7 +38,7 @@ export default function Card({ data }) {
 
       <div className="card rounded-md">
         <div onClick={clickHandler} className="card-img flex justify-center items-center">
-          <img className="h-[160px] py-3 object-cover " src={data.img} />
+          <img className="h-[160px] py-3 object-cover " alt='product-image' src={data.image} />
         </div>
 
         <div className="card-info">
