@@ -231,10 +231,10 @@ const ProductDetails = () => {
               Similar Products
             </h1>
             {/* Carousel */}
-            <Carousel
+            {/* <Carousel
               filter={productDetails.details?.category}
               productDetails={productDetails.details?.id}
-            />
+            /> */}
           </section>
         </div>
       </div>

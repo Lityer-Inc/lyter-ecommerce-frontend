@@ -43,11 +43,9 @@ export default function App() {
     setStores
   } = useContext(ShopContext);
   const [isLoading, setIsLoading] = useState(true);
+  const [isErr, setIsErr] = useState(null);
   const modal = useRef(null);
   const token = Cookies.get("token") ? JSON.parse(Cookies.get("token")) : null;
-
-  console.log(ShopContext, "shop");
-  console.log(loginModal, "www");
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -77,11 +75,15 @@ export default function App() {
   useEffect(() => {
     const getUserData = async () => {
       const response = await apiService.decodeJwt();
-
-      setUserDetails({
-        email: await response.email,
-        name: await response.email.split("@")[0]
-      });
+      if (response.status !== 200) {
+        setIsErr(response.data);
+        return;
+      } else {
+        setUserDetails({
+          email: await response.data.email,
+          name: await response.data.email.split("@")[0]
+        });  
+      }
     };
 
     const getStores = async () => {
@@ -93,10 +95,13 @@ export default function App() {
         alert("somehting wrong !!!");
       }
     };
-
     getUserData();
     getStores();
   }, []);
+
+  if (isErr != null) {
+    return alert('Error : ' + isErr);
+  }
 
   return (
     <div className="bg-[#fff] w-100 h-100 relative">

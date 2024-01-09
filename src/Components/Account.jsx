@@ -11,9 +11,7 @@ export default function Account() {
   const accModal = useRef(null);
   const balModal = useRef(null);
 
-  const token = Cookies.get("token") ? JSON.parse(Cookies.get("token")) : null;
-
-  console.log("token : ", token);
+  // const token = Cookies.get("token") ? JSON.parse(Cookies.get("token")) : null;
 
   useEffect(() => {
     const handleOutsideClick = (event) => {

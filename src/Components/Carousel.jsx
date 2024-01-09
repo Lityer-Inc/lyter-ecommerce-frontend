@@ -9,7 +9,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/bundle';
 
-export const Carousel = ({ filter, productDetails }) => {
+export const Carousel = ({ filter, products }) => {
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
     useEffect(() => {
@@ -43,15 +43,15 @@ export const Carousel = ({ filter, productDetails }) => {
                 >
                     {filter ? (
                         // Filter items based on the provided filter
-                        data.filter(isProduct).map((item, i) => (
+                        products.filter(isProduct).map((item, i) => (
                             <SwiperSlide key={i}>
                                 <Card data={item} />
                             </SwiperSlide>
                         ))
                     ) : (
                         // Show all items if no filter is provided
-                        data.map((item) => (
-                            <SwiperSlide key={item.id}>
+                        products.map((item) => (
+                            <SwiperSlide key={item._id}>
                                 <Card data={item} />
                             </SwiperSlide>
                         ))
@@ -71,15 +71,15 @@ export const Carousel = ({ filter, productDetails }) => {
                 >
                     {filter ? (
                         // Filter items based on the provided filter
-                        data.filter(isProduct).map((item, i) => (
+                        products.filter(isProduct).map((item, i) => (
                             <SwiperSlide key={i}>
                                 <Card data={item} />
                             </SwiperSlide>
                         ))
                     ) : (
                         // Show all items if no filter is provided
-                        data.map((item) => (
-                            <SwiperSlide key={item.id}>
+                        products.map((item) => (
+                            <SwiperSlide key={item._id}>
                                 <Card data={item} />
                             </SwiperSlide>
                         ))

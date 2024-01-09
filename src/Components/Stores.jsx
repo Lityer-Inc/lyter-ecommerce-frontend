@@ -4,7 +4,7 @@ import React from "react";
 export default function Stores({ data }) {
   return (
     <>
-      <div className="cardS">
+      <div className="cardS bg-gray-50 max-w-[400px]">
         {/* image */}
         <div className="cardS-img h-16 w-16">
           {/* <img className="h-16 py-3 object-cover" src={data?.products[0].image} /> */}
