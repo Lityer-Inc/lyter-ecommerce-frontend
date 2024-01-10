@@ -1,6 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 import { ShopContext } from "../context/shop-context";
 import { Carousel } from "../Components/Carousel.jsx";
@@ -8,12 +8,19 @@ import { Carousel } from "../Components/Carousel.jsx";
 import TextField from "@mui/material/TextField";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import ComboBox from "@mui/material/Autocomplete";
+import Preloader from "./Preloader.jsx";
+import axios from "axios";
 
 const ProductDetails = () => {
-  const { productDetails, setProductDetails, addToCart } =
+  const { productSelected, setProductSelected, addToCart,endpointHead } =
     useContext(ShopContext);
   const [savedItem, setsavedItem] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [quantityPro, setQuantityPro] = useState(1);
+  const [productDetails, setProductDetails] = useState();
+  const [params] = useSearchParams();
+
+  const storeId = useRef(params.get("id"));
 
   // Regular combo box options
   const options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -26,16 +33,35 @@ const ProductDetails = () => {
     setQuantityPro(newValue);
   };
 
-  console.log()
+  useEffect(()=>{
+    const fetchData = async () =>{
+      try{
+        const response = await axios.get(`${endpointHead}/stores/${storeId.current}/products/${productSelected.id}`);
+        const productData = await response.data;
+        console.log("data:", productData);
+        setProductDetails(productData);
+        setLoading(false);
+      }
+      catch (error){
+        console.log("error on fetch:", error)
+      }
+    };
+    fetchData();
+  }, [])
+  
+  if (loading) {
+    return <Preloader />;
+  }
+
 
   return (
-    <main className={`fixed flex w-full h-full top-0 z-30 justify-center ${productDetails.selected ? "" : "hidden"}`}>
+    <main className={`fixed flex w-full h-full top-0 z-30 justify-center ${productSelected.selected ? "" : "hidden"}`}>
       {/* background */}
       <div
         className=" absolute bg-black/20 w-full h-full"
         onClick={(e) => {
           e.preventDefault();
-          setProductDetails({ selected: false });
+          setProductSelected({ selected: false });
         }}
       />
 
@@ -64,8 +90,8 @@ const ProductDetails = () => {
             <div className="flex justify-center self-center w-[70%] p-10 
             lg:w-[450px]">
               <img
-                src={productDetails.details?.image}
-                alt={productDetails.details?.name}
+                src={productDetails?.image}
+                alt={productDetails?.name}
                 className="w-full h-full self-center object-fit object-center"
               />
             </div>
@@ -73,23 +99,23 @@ const ProductDetails = () => {
             <div className=" flex-auto gap-5 lg:flex-row flex flex-col justify-between">
               <div className="flex flex-col h-full py-4 px-2 self-start">
                 <Link
-                  to={productDetails.details?.category}
+                  to={productDetails?.category}
                   className="-mt-3 text-cyan-500 font-bold hover:underline"
                 >
-                  {productDetails.details?.category}
+                  {productDetails?.category}
                 </Link>
                 <h1 className="sm:text-[2rem] font-semibold text-[1.5rem]">
-                  {productDetails.details?.title}
+                  {productDetails?.title}
                 </h1>
                 {/* tags of products */}
                 {/* <Breadcrumbs className='separator categoryS inline-block' separator="•">{productDetails.details.tags.map((item) => (
                   <Link className="text-cyan-700 font-semibold text-[14px] inline-flex mb-1">{item}</Link>
                 ))}
                 </Breadcrumbs> */}
-              <p className="mt-2">{productDetails.details?.weight} oz</p>
+              <p className="mt-2">{productDetails?.weight} oz</p>
                 <h1 className="font-semibold pb-2 text-[1.2rem]">Details</h1>
                 <p className="text-gray-700 flex">
-                  {productDetails.details?.description}
+                  {productDetails?.description}
                 </p>
               </div>
 
@@ -99,13 +125,13 @@ const ProductDetails = () => {
                 <div className="p-5 w-[320px] xl:w-[450px]
                 self-center lg:self-end h-full rounded-md border border-gray-400">
                   <h1 className="text-[21px] font-bold text-[#39393c] leading-normal font-inherit">
-                    ${productDetails.details?.price}
+                    ${productDetails?.price}
                   </h1>
                   <h1 className="text-[16px] font-semibold text-[#636367] mb-1 leading-normal font-['Helvetica']">
                     $
                     {(
-                      productDetails.details?.weight /
-                      productDetails.details?.price
+                      productDetails?.weight /
+                      productDetails?.price
                     ).toFixed(2)}{" "}
                     each
                   </h1>
@@ -141,7 +167,7 @@ const ProductDetails = () => {
                           : "bg-green-700"
                       }`}
                       onClick={() => {
-                        addToCart(productDetails.details, quantityPro);
+                        addToCart(productDetails, quantityPro);
                       }}
                       disabled={
                         quantityPro > 100 ||

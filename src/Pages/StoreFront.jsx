@@ -24,7 +24,9 @@ export default function Store() {
     const fetchData = async () =>{
       try{
         // fetch stored data
-        const response = await axios.get(`${endpointHead}/stores/${storeId.current}/products`)
+        const response = await axios.get(`${endpointHead}/stores/${storeId.current}/products`, {
+          // headers: 
+        })
         const productsData = response.data;
         console.log("data:", productsData)
         setStore(productsData)

@@ -40,7 +40,8 @@ export default function App() {
     setAlertState,
     setUserDetails,
     stores,
-    setStores
+    setStores,
+    productSelected
   } = useContext(ShopContext);
   const [isLoading, setIsLoading] = useState(true);
   const [isErr, setIsErr] = useState(null);
@@ -82,7 +83,7 @@ export default function App() {
         setUserDetails({
           email: await response.data.email,
           name: await response.data.email.split("@")[0]
-        });  
+        });
       }
     };
 
@@ -100,7 +101,7 @@ export default function App() {
   }, []);
 
   if (isErr != null) {
-    return alert('Error : ' + isErr);
+    return alert("Error : " + isErr);
   }
 
   return (
@@ -110,7 +111,7 @@ export default function App() {
       {alert && <Alert info={alertState} />}
 
       <Navbar />
-      <ProductDetails />
+      {productSelected.selected && <ProductDetails />}
       <Routes>
         <Route path="/" element={<StoresList />} />
         <Route path="/store" element={<StoresList />} />
