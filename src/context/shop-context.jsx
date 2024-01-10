@@ -27,9 +27,9 @@ export const ShopContextProvider = (props) => {
   //state for alert icon, msg1, msg2, action
   const [alert, setAlert] = useState(false);
   // state for productDetails
-  const [productDetails, setProductDetails] = useState({
+  const [productSelected, setProductSelected] = useState({
     selected: false,
-    details: {}
+    id: null
   });
   const [userDetails, setUserDetails] = useState({
     email: null,
@@ -193,8 +193,8 @@ export const ShopContextProvider = (props) => {
     setAlert,
     alertState,
     setAlertState,
-    productDetails,
-    setProductDetails,
+    productSelected,
+    setProductSelected,
     stores,
     setStores
   };

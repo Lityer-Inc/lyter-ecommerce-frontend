@@ -9,11 +9,11 @@ export default function Card({ data }) {
     totalItems,
     totalPrice,
     productDetails,
-    setProductDetails
+    setProductSelected
   } = useContext(ShopContext);
   
   const clickHandler = () => {
-    setProductDetails({ selected: true, details: data });
+    setProductSelected({ selected: true, id: data._id });
   };
 
   return (
