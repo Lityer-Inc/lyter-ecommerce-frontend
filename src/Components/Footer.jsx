@@ -10,7 +10,7 @@ export default function Footer() {
   const [moreInfo, setmoreInfo] = useState(false);
   return (
     //Main container - Footer*
-    <footer className="w-full mt-16 border-t-2 bg-white border-b-0">
+    <footer className="w-full sticky bottom-0 mt-16 border-t-2 bg-[#e7e7e7] border-b-0">
       <div className="flex relative flex-col">
         <button className={`flex absolute bottom-[99%] rounded border-2 border-b-0 font-semibold text-[13px] px-[20px] h-[32px] items-center self-center  ${moreInfo ? "bg-[#f7f7f7]" : "bg-[#fff]"}`}
           onClick={() => { setmoreInfo(!moreInfo) }}>

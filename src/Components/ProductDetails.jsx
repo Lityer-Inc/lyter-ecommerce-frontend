@@ -102,17 +102,17 @@ const ProductDetails = () => {
                   to={productDetails?.category}
                   className="-mt-3 text-cyan-500 font-bold hover:underline"
                 >
-                  {productDetails?.category}
+                  {productDetails?.category ? productDetails?.category : "Random"}
                 </Link>
                 <h1 className="sm:text-[2rem] font-semibold text-[1.5rem]">
-                  {productDetails?.title}
+                  {productDetails?.name}
                 </h1>
                 {/* tags of products */}
                 {/* <Breadcrumbs className='separator categoryS inline-block' separator="•">{productDetails.details.tags.map((item) => (
                   <Link className="text-cyan-700 font-semibold text-[14px] inline-flex mb-1">{item}</Link>
                 ))}
                 </Breadcrumbs> */}
-              <p className="mt-2">{productDetails?.weight} oz</p>
+              <p className="mt-2 text-red-500">{productDetails?.weight} Available</p>
                 <h1 className="font-semibold pb-2 text-[1.2rem]">Details</h1>
                 <p className="text-gray-700 flex">
                   {productDetails?.description}
