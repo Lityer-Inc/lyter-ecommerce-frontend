@@ -37,13 +37,13 @@ export default function Card({ data }) {
         */}
 
       <div className="card rounded-md">
-        <div onClick={clickHandler} className="card-img flex justify-center items-center">
-          <img className="h-[160px] py-3 object-cover " alt='product-image' src={data.image} />
+        <div onClick={clickHandler} className=" card-img flex justify-center items-center">
+          <img className="h-full w-full py-3 object-cover bg-gray-100 rounded-md border-none" src={data?.image} />
         </div>
 
         <div className="card-info">
-          <p className="text-title">{data.title}</p>
-          <p className="text-body w-[200px] md:w-auto text-ellipsis">{data.description}</p>
+          <p className="text-title">{data.name}</p>
+          <p className="text-body text-gray-700 w-[200px] md:w-auto text-ellipsis">{data.description}</p>
         </div>
         <div className="card-footer">
           <span className="text-title">${data.price}</span>
