@@ -30,7 +30,7 @@ export const CheckoutPage = ({ isCartOpen2, toggleMobileCart }) => {
   const checkoutHandler = async () => {
     if (token != null) {
       // user is logged in
-      navigate('/about', {replace: true});
+      navigate("/about", { replace: true });
       toggleMobileCart(false);
     } else {
       toggleMobileCart(false);
@@ -84,16 +84,17 @@ export const CheckoutPage = ({ isCartOpen2, toggleMobileCart }) => {
           toggleMobileCart(false);
         }}
       />
-      <div id="cart-items" className="z-40 self-center w-[90%]">
+
+      <div id="cart-items" className="z-40 self-center w-[90%] max-w-[1400px]">
         {cartItems ? (
           <div className="bg-[#fff] rounded-lg overflow-x-auto md:overflow-x-hidden h-100 md:h-auto p-2 md:p-10 flex flex-col justify-center items-center gap-5 shadow-lg">
             <div className=" w-[692px] overflow-x-scroll pl-[176px] md:w-full md:overflow-x-hidden md:pl-0 ">
-              <table className="w-full text-sm text-left text-gray-500 w-100">
+              <table className="w-full text-sm text-left text-gray-500">
                 <thead className="text-xs bg-slate-100 text-gray-700 px-5 fonts uppercase">
                   <tr>
                     <th
                       scope="col"
-                      colSpan="6"
+                      // colSpan="6"
                       className="px-2 py-4 fonts uppercase text-center"
                     >
                       Product
@@ -119,7 +120,7 @@ export const CheckoutPage = ({ isCartOpen2, toggleMobileCart }) => {
                   </tr>
                 </thead>
 
-                <tbody className="w-100 md:w-[400px] overflow-y-auto overflow-x-auto">
+                <tbody className="w-full overflow-y-auto overflow-x-auto">
                   {cartItems.map((item, index) => {
                     if (index > 5) {
                       return;
@@ -135,7 +136,7 @@ export const CheckoutPage = ({ isCartOpen2, toggleMobileCart }) => {
               <div className="">{totalPrice}</div>
             </div>
             <Link
-              to={`${token!=null ? 'checkout-payment' : ""}`}
+              to={`${token != null ? "checkout-payment" : ""}`}
               onClick={checkoutHandler}
               className="bg-[#FF0066] max-w-[200px] transition-all hover:bg-[#ff0f6f] text-center 
           py-3 mb-2 mr-2 self-end rounded-md font-bold text-white

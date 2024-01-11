@@ -51,7 +51,7 @@ export const ShopContextProvider = (props) => {
       console.log(prev, "prev");
       // Check if the item is already in the cart
       const existingItemIndex = updatedCart.findIndex(
-        (item) => item.eachitem.id === itemToAdd.id
+        (item) => item.eachitem._id === itemToAdd._id
       );
 
       if (existingItemIndex !== -1) {
