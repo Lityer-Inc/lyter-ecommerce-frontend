@@ -30,7 +30,7 @@ export const CheckoutPage = ({ isCartOpen2, toggleMobileCart }) => {
   const checkoutHandler = async () => {
     if (token != null) {
       // user is logged in
-      navigate('/about', {replace: true});
+      navigate("/about", { replace: true });
       toggleMobileCart(false);
     } else {
       toggleMobileCart(false);
@@ -84,7 +84,8 @@ export const CheckoutPage = ({ isCartOpen2, toggleMobileCart }) => {
           toggleMobileCart(false);
         }}
       />
-      <div id="cart-items" className="z-40 self-center w-[90%]">
+
+      <div id="cart-items" className="z-40 self-center w-[90%] max-w-[1400px]">
         {cartItems ? (
           <div className="bg-[#fff] rounded-lg overflow-x-auto md:overflow-x-hidden h-100 md:h-auto p-2 md:p-10 flex flex-col justify-center items-center gap-5 shadow-lg">
             <div className=" w-[692px] overflow-x-scroll pl-[176px] md:w-full md:overflow-x-hidden md:pl-0 ">
@@ -135,7 +136,7 @@ export const CheckoutPage = ({ isCartOpen2, toggleMobileCart }) => {
               <div className="">{totalPrice}</div>
             </div>
             <Link
-              to={`${token!=null ? 'checkout-payment' : ""}`}
+              to={`${token != null ? "checkout-payment" : ""}`}
               onClick={checkoutHandler}
               className="bg-[#FF0066] max-w-[200px] transition-all hover:bg-[#ff0f6f] text-center 
           py-3 mb-2 mr-2 self-end rounded-md font-bold text-white
