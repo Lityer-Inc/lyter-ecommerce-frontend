@@ -7,7 +7,7 @@ export default function Stores({ data }) {
       <div className="cardS bg-gray-50 max-w-[400px]">
         {/* image */}
         <div className="cardS-img h-16 w-16">
-          {/* <img className="h-16 py-3 object-cover" src={data?.products[0].image} /> */}
+          <img className="h-16 py-3 object-cover" src={data?.avatar} />
         </div>
 
         {/* title, categorys and tags */}
@@ -33,12 +33,14 @@ export default function Stores({ data }) {
               Delivery by {data.deliveryTime}
             </span>
             : ""}
-          {data.description ?
-            <span className="cardS-discount flex items-center">
-              <svg className="w-3 h-3" height="1em" viewBox="0 0 24 24" fill="#D43684" xmlns="http://www.w3.org/2000/svg" color="brandPromotionalRegular" aria-hidden="true"><path fillRule="evenodd" clipRule="evenodd" d="m11 21-8-8L13 3h5l3 3v5L11 21Zm4.5-11a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path></svg>
-              Lower fees on {data.description}
-            </span>
-            : ""}
+            {data.description ?
+              <span className="cardS-discount flex items-center">
+                <svg className="w-3 h-3" height="1em" viewBox="0 0 24 24" fill="#D43684" xmlns="http://www.w3.org/2000/svg" color="brandPromotionalRegular" aria-hidden="true">
+                  <path fillRule="evenodd" clipRule="evenodd" d="m11 21-8-8L13 3h5l3 3v5L11 21Zm4.5-11a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path>
+                </svg>
+                Lower fees on {data.description.length > 10 ? `${data.description.substring(0, 10)}...` : data.description}
+              </span>
+              : ""}
         </div>
       </div >
     </>

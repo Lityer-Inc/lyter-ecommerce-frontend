@@ -15,7 +15,6 @@ import SearchIcon from '@mui/icons-material/Search';
 export default function Navbar() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
 
@@ -25,27 +24,10 @@ export default function Navbar() {
     isMenuOpen ? document.body.style.overflow = "initial" : document.body.style.overflow = "hidden";
   }
 
-  function handleCategoriesClick() {
-    setIsCategoriesOpen(!isCategoriesOpen)
-  }
 
   function handleCartShopClick() {
     setIsCartOpen(!isCartOpen)
   }
-
-
-  const menu = [
-    { name: 'Vegetables', Icon: 'carrot.png', linkTo: '/vegetables' },
-    { name: 'Fruits', Icon: 'pear.png', linkTo: '/fruits' },
-    { name: 'Dairy', Icon: 'milk.png', linkTo: '/dairy' },
-    { name: 'Meats', Icon: 'meat2.png', linkTo: '/meats' },
-    { name: 'Bakery', Icon: 'bakery2.png', linkTo: '/bread' },
-    { name: 'Frozen Foods', Icon: 'frozen-fish.png', linkTo: '/frozen-foods' },
-    { name: 'Beverages', Icon: 'beverages.png', linkTo: '/beverages' },
-    { name: 'Cleaning Supplies', Icon: 'cleaning-products2.png', linkTo: '/cleaning-supplies' },
-    { name: 'Personal Care', Icon: 'facial-mask.png', linkTo: '/personal-care' },
-    { name: 'Baby Care', Icon: 'baby.png', linkTo: '/baby-care' },
-  ]
 
 
 
@@ -73,7 +55,7 @@ export default function Navbar() {
   return (
     <>
       {/*Main container - navbar*/}
-      <div className={`sticky top-0 z-20 transition-all duration-500 ${isCategoriesOpen ? "" : "md:mb-12"}`}>
+      <div className={`sticky top-0 z-20 transition-all duration-500`}>
         <div className="p-3 pb-1 w-full sticky top-0 z-20 bg-[#F5F5F5] shadow">
           <div className="flex w-full justify-evenly md:justify-between items-center ">
 
