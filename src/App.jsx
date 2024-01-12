@@ -38,9 +38,11 @@ export default function App() {
     alert,
     setAlert,
     setAlertState,
+    userDetails,
     setUserDetails,
     stores,
     setStores,
+    cartItems,
     productSelected
   } = useContext(ShopContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -74,13 +76,23 @@ export default function App() {
   }, [modal, loginModal, isLoading, alert, token]);
 
   useEffect(() => {
+    
+    
+    // if (cartItems && cartItems.length > 0) {
+    //   return null;
+    // }
+
+
     const getUserData = async () => {
       const response = await apiService.decodeJwt();
+    apiService.getCart(response.data.id);
+      console.log("user Reponse : ", response);
       if (response.status !== 200) {
         setIsErr(response.data);
         return;
       } else {
         setUserDetails({
+          id: await response.data.id,
           email: await response.data.email,
           name: await response.data.email.split("@")[0]
         });
