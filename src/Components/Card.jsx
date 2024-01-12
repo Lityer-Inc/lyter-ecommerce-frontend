@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { ShopContext } from "../context/shop-context";
 
 export default function Card({ data }) {
+  console.log(data)
   const {
     cartItems,
     addToCart,
