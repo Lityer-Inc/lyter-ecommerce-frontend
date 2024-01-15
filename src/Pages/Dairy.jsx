@@ -37,7 +37,7 @@ export default function Dairy() {
           Delicious dairy products you &nbsp;<u>love</u>!
         </div>
       </div>
-      <div className="dairy-items category-items">
+      <div className="vegetables-items grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-10 category-items mt-12">
         {filteredDairy.map((dairyProduct) => (
           <div key={dairyProduct.id}>
             <Card
