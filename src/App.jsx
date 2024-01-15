@@ -29,6 +29,7 @@ import CheckoutPayment from "./Pages/CheckoutPayment";
 import ProductDetails from "./Components/ProductDetails";
 import Cookies from "js-cookie";
 import apiService from "./utils/apiService.jsx";
+import Footer from "./Components/Footer.jsx";
 
 export default function App() {
   const {
@@ -117,7 +118,7 @@ export default function App() {
   }
 
   return (
-    <div className="bg-[#fff] w-100 h-100 relative">
+    <div className="bg-[#fff] w-[100dvw] h-[100dvh] relative">
       {isLoading && <Preloader />}
 
       {alert && <Alert info={alertState} />}
@@ -166,6 +167,7 @@ export default function App() {
           }
         />
       </Routes>
+      <Footer />
       {loginModal !== 0 && (
         <div
           className="login-box fixed p-10 box-border top-[50%] z-30 left-[50%] w-[80%] md:w-[700px] my-auto mx-auto translate-x-[-50%] translate-y-[-50%] rounded-[10px]"

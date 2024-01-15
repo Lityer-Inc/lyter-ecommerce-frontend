@@ -5,12 +5,11 @@ export default function Stores({ data }) {
   console.log("dta : ", data);
   return (
     <>
-      <div className="cardS bg-gray-50 max-w-[400px]">
+      <div className="cardS bg-gray-50 max-w-[440px]">
         {/* image */}
         <div className="cardS-img h-16 w-16">
-          {/* <img className="h-16 py-3 object-cover" src={data?.products[0].image} /> */}
+          <img className="h-16 py-3 object-cover" src={data?.products[0].image} />
         </div>
-
         {/* title, categorys and tags */}
         <div className="cardS-content h-full">
           <div className="cardS-title">{data.name}</div>

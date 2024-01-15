@@ -62,7 +62,7 @@ export default function Store() {
             <h2 className="text-2xl font-bold ">Fresh Vegetables</h2>
             <Carousel />
           </div> */}
-          <Footer />
+          {/* <Footer /> */}
         </section>
       </div>
     </>
