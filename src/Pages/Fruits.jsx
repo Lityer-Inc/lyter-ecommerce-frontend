@@ -1,9 +1,37 @@
-import React from "react";
-import data from "../DummyData/data.js";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Card from "../Components/Card";
 import { nanoid } from "nanoid";
-export default function Fruits({ img, title, description, price }) {
-  const fruitsData = data.find((data) => data.name === "fruits");
+import { useSearchParams } from "react-router-dom";
+import { ShopContext } from "../context/shop-context.jsx";
+
+export default function Fruits() {
+  const { endpointHead } = useContext(ShopContext);
+  const [params] = useSearchParams();
+
+  const storeId = useRef(params.get("id"));
+  const [fruitsData, setFruitsData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `${endpointHead}/stores/${storeId.current}/products`
+        );
+        const data = await response.json();
+        setFruitsData(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [endpointHead, storeId]);
+
+  // Filter Fruits based on the category
+  const filteredFruits = fruitsData.filter(
+    (fruit) => fruit.category === "Fruits"
+  );
+
   return (
     <div className="page-wrapper">
       <div className="fruits-page-container category-page-container">
@@ -11,18 +39,14 @@ export default function Fruits({ img, title, description, price }) {
           Nothing gets you going like&nbsp;<u>fresh</u>&nbsp;fruit.
         </div>
       </div>
-      <div className="fruits-items category-items">
-        {
+      <div className="vegetables-items grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-10 category-items mt-12">
+        {filteredFruits.map((fruit) => (
           <div key={nanoid()}>
             <Card
-              img={fruitsData.img}
-              title={fruitsData.title}
-              description={fruitsData.description}
-              price={fruitsData.price}
-              id={fruitsData.id}
+              data={fruit}
             />
           </div>
-        }
+        ))}
       </div>
     </div>
   );

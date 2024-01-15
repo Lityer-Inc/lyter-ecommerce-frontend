@@ -77,7 +77,7 @@ const CheckoutPayment = () => {
 
           <p className="text-left text-sm text-gray-500">
             Your personal data will be used to support your experience
-            throughout this website, to manage access to your account, and for
+           throughout this website, to manage access to your account, and for
             other purposes described in our{" "}
             <span className="text-blue-600 cursor-pointer">
               privacy policy.
