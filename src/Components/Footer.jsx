@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"; 
 
 import SouthIcon from '@mui/icons-material/South';
 import { ShopContext } from '../context/shop-context';
@@ -23,7 +23,7 @@ export default function Footer() {
               <h3 className="nav-footer-title">About</h3>
               <ul>
                 <li>
-                  <Link>About us</Link>
+                  <Link>About us</Link>            
                 </li>
                 <li>
                   <Link>Investor relations</Link>

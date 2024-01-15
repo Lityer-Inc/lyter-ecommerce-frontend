@@ -137,7 +137,7 @@ export default function Account() {
         </div>
       )}
 
-      {userDetails.email !== null && (
+      {userDetails && userDetails.email !== null && (
         <div className="flex items-center">
           <h2
             className="text-[1.2rem] font-semibold pr-3 cursor-pointer"

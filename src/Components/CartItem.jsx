@@ -32,12 +32,12 @@ const CartItem = ({ data }) => {
       <td class="flex p-2 pb-3 ">
         <div className="flex justify-between space-x-6 items-center m-auto relative">
           <img
-            src={data.eachitem.image}
+            src={data.eachitem?.image}
             alt=""
             className="max-w-[65px] h-auto"
           />
 
-          <h2 className="font-semibold text-[1.3rem]">{data.eachitem.name}</h2>
+          <h2 className="font-semibold text-[1.3rem]">{data.eachitem?.name}</h2>
         </div>
       </td>
       {/* <td class="w-2 p-4 pl-0" colSpan="3">
@@ -45,7 +45,7 @@ const CartItem = ({ data }) => {
         </div>
       </td> */}
       <td class="p-2 fonts font-medium md:px-2 md:py-4 whitespace-nowrap text-center">
-        ${data.eachitem.price}
+        ${data.eachitem?.price}
       </td>
       <td class="p-2 fonts font-medium md:px-2 md:py-4 whitespace-nowrap text-center">
         <div className="flex gap-4 mx-auto max-w-max items-center">
@@ -79,7 +79,7 @@ const CartItem = ({ data }) => {
         </svg>
       </td> */}
       <td class="p-2 fonts md:px-2 md:py-4 text-center">
-        ${data.eachitem.price * data.count}
+        {/* ${data.eachitem.price * data.count} */}
       </td>
     </tr>
   );

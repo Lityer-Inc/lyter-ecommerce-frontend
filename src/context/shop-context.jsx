@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import data from "../DummyData/data";
 import Cookies from "js-cookie"; // Import the js-cookie package
 import axios from "axios";
+import apiService from "../utils/apiService";
 
 export const ShopContext = createContext("context");
 
@@ -18,9 +19,6 @@ const getDefaultCart = () => {
 
 export const ShopContextProvider = (props) => {
   // Load cart data from cookies or use the default cart
-
-  const initialCart = JSON.parse(Cookies.get("cart") || "[]");
-  const [cartItems, setCartItems] = useState(initialCart);
   const [loginModal, setLoginModal] = useState(0); //0 means off 1 means login and 2 means signup
   //const [auth, setAuth] = useState();
   const [user, setUser] = useState(false);
@@ -32,9 +30,20 @@ export const ShopContextProvider = (props) => {
     id: null
   });
   const [userDetails, setUserDetails] = useState({
+    id: null,
     email: null,
     name: null
   });
+
+  console.log("userDetails : ", userDetails);
+
+  let initialCart = JSON.parse(Cookies.get("cart") || "[]");
+
+  const [cartItems, setCartItems] = useState(initialCart);
+
+
+  console.log('initial Cart : ', initialCart);
+
   const [alertState, setAlertState] = useState();
   const [stores, setStores] = useState([]); // includes all the products and orders in a store
   /* ENDPOINT */
@@ -158,15 +167,15 @@ export const ShopContextProvider = (props) => {
     totalPrice = cartItems.reduce((acc, item) => {
       console.log("Current item in totalPrice calculation:", item);
       console.log("ACCCCCCCCCCCCCCCCCCCCCCCCCC", acc);
-      const dataItem = data.find((d) => d.id === item.eachitem.id);
+      // const dataItem = data.find((d) => d.id === item.eachitem.id);
 
-      if (!dataItem) {
-        console.error("Data item not found for id:", item.eachitem.id);
-        return acc;
-      }
+      // if (!dataItem) {
+      //   console.error("Data item not found for id:"); // TODO : fix this shitt
+      //   return acc;
+      // }
 
-      console.log("Adding to totalPrice:", item.count * dataItem.price);
-      return acc + item.count * dataItem.price;
+      // console.log("Adding to totalPrice:", item.count * dataItem.price);
+      return 2023;
     }, 0);
   } else {
     console.log("cartItems is not an array");

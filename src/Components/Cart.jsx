@@ -37,7 +37,7 @@ export default function Cart() {
 
       <div className="header-shopping-bag w-12 relative">
         <IconButton aria-label="cart">
-          <StyledBadge badgeContent={cartItems.length !== 0 && totalItems} color="secondary">
+          <StyledBadge badgeContent={cartItems && cartItems.length !== 0 && totalItems} color="secondary">
           <img className="shopping-bag-img w-6" src="/cart_shop.png" />
           </StyledBadge>
         </IconButton>

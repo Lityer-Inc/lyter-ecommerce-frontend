@@ -44,7 +44,9 @@ export default function App() {
     stores,
     setStores,
     cartItems,
-    productSelected
+    productSelected,
+    addToCart,
+    setCartItems
   } = useContext(ShopContext);
   const [isLoading, setIsLoading] = useState(true);
   const [isErr, setIsErr] = useState(null);
@@ -77,17 +79,27 @@ export default function App() {
   }, [modal, loginModal, isLoading, alert, token]);
 
   useEffect(() => {
-    
-    
     // if (cartItems && cartItems.length > 0) {
     //   return null;
     // }
 
-
     const getUserData = async () => {
       const response = await apiService.decodeJwt();
-    apiService.getCart(response.data.id);
-      console.log("user Reponse : ", response);
+      if (userDetails && userDetails.id != null) { // PENDING 
+        const fetchCartItems = async () => {
+          try {
+            let cartItemsResponse = await apiService.getCart(userDetails.id);
+            console.log("cart items response: ", cartItemsResponse);
+            setCartItems(cartItemsResponse);
+          } catch (error) {
+            console.error("Error fetching cart items:", error);
+          }
+        };
+
+        fetchCartItems();
+      }
+
+      // console.log("user Reponse : ", response);
       if (response.status !== 200) {
         setIsErr(response.data);
         return;
@@ -124,7 +136,7 @@ export default function App() {
       {alert && <Alert info={alertState} />}
 
       <Navbar />
-      {productSelected.selected && <ProductDetails />}
+      {productSelected && productSelected.selected && <ProductDetails />}
       <Routes>
         <Route path="/" element={<StoresList />} />
         <Route path="/store" element={<StoresList />} />
