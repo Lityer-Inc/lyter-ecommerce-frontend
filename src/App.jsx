@@ -30,6 +30,7 @@ import ProductDetails from "./Components/ProductDetails";
 import Cookies from "js-cookie";
 import apiService from "./utils/apiService.jsx";
 import Footer from "./Components/Footer.jsx";
+import { Toaster } from "sonner";
 
 export default function App() {
   const {
@@ -55,9 +56,7 @@ export default function App() {
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
-      console.log("listening 1");
       if (loginModal !== 0 && !modal.current.contains(event.target)) {
-        console.log("listening 2");
         setLoginModal(0);
       }
     };
@@ -83,23 +82,29 @@ export default function App() {
     //   return null;
     // }
 
+    const fetchAndAddToCart = async (userId) => {
+      try {
+        let cartItemsResponse = await apiService.getCart(userId);
+        if (cartItemsResponse.length > 0) {
+          cartItemsResponse.forEach((item) => {
+            addToCart(item.product, item.quantity);
+          });
+        }
+        // console.log("cart items response: ", cartItemsResponse);
+      } catch (error) {
+        console.error("Error fetching cart items:", error);
+      }
+    };
+
+    // Check if user is logged in
+    if (userDetails && userDetails.id != null) {
+      console.log("userdeaaaaaaaaails : ", userDetails);
+      fetchAndAddToCart(userDetails.id);
+    }
+
     const getUserData = async () => {
       const response = await apiService.decodeJwt();
-      if (userDetails && userDetails.id != null) { // PENDING 
-        const fetchCartItems = async () => {
-          try {
-            let cartItemsResponse = await apiService.getCart(userDetails.id);
-            console.log("cart items response: ", cartItemsResponse);
-            setCartItems(cartItemsResponse);
-          } catch (error) {
-            console.error("Error fetching cart items:", error);
-          }
-        };
 
-        fetchCartItems();
-      }
-
-      // console.log("user Reponse : ", response);
       if (response.status !== 200) {
         setIsErr(response.data);
         return;
@@ -221,6 +226,7 @@ export default function App() {
           {loginModal === 1 ? <Login /> : <Signup />}
         </div>
       )}
+      <Toaster />
     </div>
   );
 }

@@ -5,8 +5,6 @@ import axios from "axios";
 import apiService from "../utils/apiService";
 
 export const ShopContext = createContext("context");
-
-console.log(data, "Cart data");
 /*
 const getDefaultCart = () => {
   let cart = {};
@@ -35,12 +33,9 @@ export const ShopContextProvider = (props) => {
     name: null
   });
 
-  console.log("userDetails : ", userDetails);
-
   let initialCart = JSON.parse(Cookies.get("cart") || "[]");
 
   const [cartItems, setCartItems] = useState(initialCart);
-
 
   console.log('initial Cart : ', initialCart);
 
@@ -165,8 +160,7 @@ export const ShopContextProvider = (props) => {
     totalItems = cartItems.reduce((acc, item) => acc + item.count, 0);
 
     totalPrice = cartItems.reduce((acc, item) => {
-      console.log("Current item in totalPrice calculation:", item);
-      console.log("ACCCCCCCCCCCCCCCCCCCCCCCCCC", acc);
+      // console.log("Current item in totalPrice calculation:", item);
       // const dataItem = data.find((d) => d.id === item.eachitem.id);
 
       // if (!dataItem) {

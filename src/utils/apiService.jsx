@@ -36,7 +36,7 @@ const apiService = {
         ? JSON.parse(Cookies.get("token"))
         : null;
 
-      console.log("token : ", token);
+      // console.log("token : ", token);
       if (token == null) {
         // alert("token is null");
         return;
@@ -63,6 +63,19 @@ const apiService = {
   getCart: async (userId) => {
     try {
       const response = await axios.get(`${API_BASE_URL}/user/${userId}/cart`);
+      return response.data;
+    } catch (e) {
+      console.log("server error !");
+    }
+  },
+  pushCart: async (userId, productId, storeId, quantity) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/user/${userId}/cart`, {
+        productId,
+        storeId,
+        quantity
+      });
+      console.log("response.data : ", response.data);
       return response.data;
     } catch (e) {
       console.log("server error !");
