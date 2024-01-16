@@ -32,15 +32,17 @@ export default function Login() {
     // }
 
     try {
-      const response = await axios.post(`${endpointHead}/auth/login`, {
+      const response = await axios.post(`${endpointHead}/user/login`, {
         email: email,
         password: password
       });
       // Handle the response from the authentication endpoint
-      console.log("response data : ", await response.data);
-      //push to local storage
+      
+      const token = String(response.data.token);
+      console.log("response data : ", await response);
       if (response.status === 200) {
-        storeToken(response.data.token);
+        storeToken(token);
+        setautherr(false);
         setUser(response.data.user);
         setLoginModal(0);
         setAlert(true);
@@ -55,8 +57,8 @@ export default function Login() {
               <g
                 fill="none"
                 stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
                 <path d="m4 8l2.05 1.64a.48.48 0 0 0 .4.1a.5.5 0 0 0 .34-.24L10 4" />
                 <circle cx="7" cy="7" r="6.5" />
@@ -68,6 +70,7 @@ export default function Login() {
           msg2: "",
           action: "Start shopping"
         });
+        window.location.reload();
       } else {
         setAlert(true);
         setAlertState({
@@ -78,13 +81,13 @@ export default function Login() {
               height="32"
               viewBox="0 0 24 24"
             >
-              <g fill="none" stroke="currentColor" stroke-linejoin="round">
+              <g fill="none" stroke="currentColor" strokeLinejoin="round">
                 <path
-                  stroke-width="2"
+                  strokeWidth="2"
                   d="M2 14.5A4.5 4.5 0 0 0 6.5 19h12a3.5 3.5 0 0 0 .5-6.965a7 7 0 0 0-13.76-1.857A4.502 4.502 0 0 0 2 14.5Z"
                 />
-                <path stroke-width="3" d="M12 15.5h.01v.01H12z" />
-                <path stroke-linecap="round" stroke-width="2" d="M12 12V9" />
+                <path strokeWidth="3" d="M12 15.5h.01v.01H12z" />
+                <path strokeLinecap="round" strokeWidth="2" d="M12 12V9" />
               </g>
             </svg>
           ),
@@ -126,15 +129,12 @@ export default function Login() {
             value={password}
             onChange={(e) => handlePassword(e)}
             className={
-              autherr &&
-              "border-b border-red-500 .!border-red-500-important"
+              autherr && "border-b border-red-500 .!border-red-500-important"
             }
           />
           <label>Password</label>
         </div>
-        <p
-          className={autherr && "font-semibold text-red-500 text-[1.2rem]"}
-        >
+        <p className={autherr && "font-semibold text-red-500 text-[1.2rem]"}>
           {autherr && "Invalid Email or Password"}
         </p>
         <button type="submit">
@@ -148,8 +148,8 @@ export default function Login() {
         </button>
       </form>
       <p>
-        Don't have an account?{" "}
-        <a href="" class="a2">
+        {"Don't have an account?"}{" "}
+        <a href="" className="a2">
           Sign up!
         </a>
       </p>

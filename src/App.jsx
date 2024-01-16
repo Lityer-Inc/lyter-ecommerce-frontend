@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect, useRef } from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import Navbar from "./Components/Navbar";
 // import Home from "./Pages/Home";
 import { Routes, Route } from "react-router-dom";
@@ -28,7 +28,9 @@ import Dashboardhome from "./Pages/Dashboardhome";
 import CheckoutPayment from "./Pages/CheckoutPayment";
 import ProductDetails from "./Components/ProductDetails";
 import Cookies from "js-cookie";
-import apiService from "./Components/apiService.jsx";
+import apiService from "./utils/apiService.jsx";
+import Footer from "./Components/Footer.jsx";
+import { Toaster } from "sonner";
 
 export default function App() {
   const {
@@ -38,33 +40,26 @@ export default function App() {
     alert,
     setAlert,
     setAlertState,
-    setUserDetails
+    userDetails,
+    setUserDetails,
+    stores,
+    setStores,
+    cartItems,
+    productSelected,
+    addToCart,
+    setCartItems
   } = useContext(ShopContext);
   const [isLoading, setIsLoading] = useState(true);
+  const [isErr, setIsErr] = useState(null);
   const modal = useRef(null);
   const token = Cookies.get("token") ? JSON.parse(Cookies.get("token")) : null;
 
-
-  console.log(ShopContext, "shop");
-  console.log(loginModal, "www");
-
   useEffect(() => {
     const handleOutsideClick = (event) => {
-      console.log("listening 1");
       if (loginModal !== 0 && !modal.current.contains(event.target)) {
-        console.log("listening 2");
         setLoginModal(0);
       }
     };
-    const getUserData = async () => {
-      const response = await apiService.decodeJwt();
-      setUserDetails({
-        email: response.userDetails.email,
-        name: response.userDetails.name
-      });
-    };
-
-    getUserData();
 
     setTimeout(() => {
       setIsLoading(false); // Set isLoading to false after the delay
@@ -82,14 +77,71 @@ export default function App() {
     };
   }, [modal, loginModal, isLoading, alert, token]);
 
+  useEffect(() => {
+    // if (cartItems && cartItems.length > 0) {
+    //   return null;
+    // }
+
+    const fetchAndAddToCart = async (userId) => {
+      try {
+        let cartItemsResponse = await apiService.getCart(userId);
+        if (cartItemsResponse.length > 0) {
+          cartItemsResponse.forEach((item) => {
+            addToCart(item.product, item.quantity);
+          });
+        }
+        // console.log("cart items response: ", cartItemsResponse);
+      } catch (error) {
+        console.error("Error fetching cart items:", error);
+      }
+    };
+
+    // Check if user is logged in
+    if (userDetails && userDetails.id != null) {
+      console.log("userdeaaaaaaaaails : ", userDetails);
+      fetchAndAddToCart(userDetails.id);
+    }
+
+    const getUserData = async () => {
+      const response = await apiService.decodeJwt();
+
+      if (response.status !== 200) {
+        setIsErr(response.data);
+        return;
+      } else {
+        setUserDetails({
+          id: await response.data.id,
+          email: await response.data.email,
+          name: await response.data.email.split("@")[0]
+        });
+      }
+    };
+
+    const getStores = async () => {
+      const response = await apiService.getStores();
+      console.log("respnse : ", response);
+      if (response) {
+        setStores(response);
+      } else {
+        alert("somehting wrong !!!");
+      }
+    };
+    getUserData();
+    getStores();
+  }, []);
+
+  if (isErr != null) {
+    return alert("Error : " + isErr);
+  }
+
   return (
-    <div className="bg-[#fff] w-100 h-100 relative">
+    <div className="bg-[#fff] w-[100dvw] h-[100dvh] relative">
       {isLoading && <Preloader />}
 
       {alert && <Alert info={alertState} />}
 
       <Navbar />
-      <ProductDetails />
+      {productSelected && productSelected.selected && <ProductDetails />}
       <Routes>
         <Route path="/" element={<StoresList />} />
         <Route path="/store" element={<StoresList />} />
@@ -132,10 +184,10 @@ export default function App() {
           }
         />
       </Routes>
-
+      <Footer />
       {loginModal !== 0 && (
         <div
-          className="login-box fixed p-10 box-border top-[50%] z-30 left-[50%] w-[80%] md:w-[400px] my-auto mx-auto translate-x-[-50%] translate-y-[-50%] rounded-[10px]"
+          className="login-box fixed p-10 box-border top-[50%] z-30 left-[50%] w-[80%] md:w-[700px] my-auto mx-auto translate-x-[-50%] translate-y-[-50%] rounded-[10px]"
           style={{
             background: "rgba(255,255,255)",
             boxShadow: "0 15px 25px rgba(0,0,0,.6)"
@@ -146,11 +198,9 @@ export default function App() {
             <div className="w-24">
               <img className="header-logo-img w-24" src="/logo.png" />
             </div>
-
-            {/*<svg xmlns="http://www.w3.org/2000/svg" onClick={() => setLoginModal(0)} className="cursor-pointer" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="m8.4 17l3.6-3.6l3.6 3.6l1.4-1.4l-3.6-3.6L17 8.4L15.6 7L12 10.6L8.4 7L7 8.4l3.6 3.6L7 15.6L8.4 17Zm3.6 5q-2.075 0-3.9-.788t-3.175-2.137q-1.35-1.35-2.137-3.175T2 12q0-2.075.788-3.9t2.137-3.175q1.35-1.35 3.175-2.137T12 2q2.075 0 3.9.788t3.175 2.137q1.35 1.35 2.138 3.175T22 12q0 2.075-.788 3.9t-2.137 3.175q-1.35 1.35-3.175 2.138T12 22Z"/></svg>*/}
           </div>
 
-          <div className="flex justify-center items-center gap-[10px]">
+          <div className="flex justify-center items-center gap-[10px] py-6">
             <div
               className={`${
                 loginModal === 1
@@ -176,6 +226,7 @@ export default function App() {
           {loginModal === 1 ? <Login /> : <Signup />}
         </div>
       )}
+      <Toaster />
     </div>
   );
 }

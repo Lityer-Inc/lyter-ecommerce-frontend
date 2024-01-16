@@ -2,10 +2,9 @@ import React, { createContext, useEffect, useState } from "react";
 import data from "../DummyData/data";
 import Cookies from "js-cookie"; // Import the js-cookie package
 import axios from "axios";
+import apiService from "../utils/apiService";
 
-export const  ShopContext = createContext("context");
-
-console.log(data, "Cart data");
+export const ShopContext = createContext("context");
 /*
 const getDefaultCart = () => {
   let cart = {};
@@ -18,22 +17,30 @@ const getDefaultCart = () => {
 
 export const ShopContextProvider = (props) => {
   // Load cart data from cookies or use the default cart
-
-  const initialCart = JSON.parse(Cookies.get("cart") || "[]");
-  const [cartItems, setCartItems] = useState(initialCart);
   const [loginModal, setLoginModal] = useState(0); //0 means off 1 means login and 2 means signup
   //const [auth, setAuth] = useState();
   const [user, setUser] = useState(false);
   //state for alert icon, msg1, msg2, action
   const [alert, setAlert] = useState(false);
   // state for productDetails
-  const [productDetails, setProductDetails] = useState({
+  const [productSelected, setProductSelected] = useState({
     selected: false,
-    details: {}
+    id: null
   });
-  const [userDetails, setUserDetails] = useState(null);
-  const [alertState, setAlertState] = useState();
+  const [userDetails, setUserDetails] = useState({
+    id: null,
+    email: null,
+    name: null
+  });
 
+  let initialCart = JSON.parse(Cookies.get("cart") || "[]");
+
+  const [cartItems, setCartItems] = useState(initialCart);
+
+  console.log('initial Cart : ', initialCart);
+
+  const [alertState, setAlertState] = useState();
+  const [stores, setStores] = useState([]); // includes all the products and orders in a store
   /* ENDPOINT */
   //testing http://localhost:8000
   //production
@@ -48,7 +55,7 @@ export const ShopContextProvider = (props) => {
       console.log(prev, "prev");
       // Check if the item is already in the cart
       const existingItemIndex = updatedCart.findIndex(
-        (item) => item.eachitem.id === itemToAdd.id
+        (item) => item.eachitem._id === itemToAdd._id
       );
 
       if (existingItemIndex !== -1) {
@@ -82,7 +89,7 @@ export const ShopContextProvider = (props) => {
   };
 
   const addMini = (itemToAdd) => {
-    console.log("hiiiiii ", itemToAdd)
+    console.log("hiiiiii ", itemToAdd);
     setCartItems((prev) => {
       const updatedCart = [...prev];
       const existingItemIndex = updatedCart.findIndex(
@@ -125,50 +132,48 @@ export const ShopContextProvider = (props) => {
     Cookies.set("token", JSON.stringify(token));
   };
 
-  const CheckToken = async () => {
-    try {
-      const response = await axios.post(`${endpointHead}/check`, null, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+  // const CheckToken = async () => {
+  //   try {
+  //     const response = await axios.post(`${endpointHead}/check`, null, {
+  //       headers: { Authorization: `Bearer ${token}` }
+  //     });
 
-      console.log(resposne.data);
+  //     console.log(response.data);
 
-      if (response.status === 200) {
-        setUser(response.data.user);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //     if (response.status === 200) {
+  //       setUser(response.data.user);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   /* AUTHENTICATION */
 
+  //Calculate total items and total price
+  let totalItems = 0;
+  let totalPrice = 0;
 
-//Calculate total items and total price
-let totalItems = 0;
-let totalPrice = 0;
- 
-if (Array.isArray(cartItems)) {
-  console.log("Calculating total items and price...");
+  if (Array.isArray(cartItems)) {
+    console.log("Calculating total items and price...");
 
-  totalItems = cartItems.reduce((acc, item) => acc + item.count, 0);
+    totalItems = cartItems.reduce((acc, item) => acc + item.count, 0);
 
-  totalPrice = cartItems.reduce((acc, item) => {
-    console.log("Current item in totalPrice calculation:", item);
-    console.log("ACCCCCCCCCCCCCCCCCCCCCCCCCC", acc);
-    const dataItem = data.find((d) => d.id === item.eachitem.id);
-    
-    if (!dataItem) {
-      console.error("Data item not found for id:", item.eachitem.id);
-      return acc;
-    }
+    totalPrice = cartItems.reduce((acc, item) => {
+      // console.log("Current item in totalPrice calculation:", item);
+      // const dataItem = data.find((d) => d.id === item.eachitem.id);
 
-    console.log("Adding to totalPrice:", item.count * dataItem.price);
-    return acc + item.count * dataItem.price;
-  }, 0);
-} else {
-  console.log("cartItems is not an array");
-} 
+      // if (!dataItem) {
+      //   console.error("Data item not found for id:"); // TODO : fix this shitt
+      //   return acc;
+      // }
+
+      // console.log("Adding to totalPrice:", item.count * dataItem.price);
+      return 2023;
+    }, 0);
+  } else {
+    console.log("cartItems is not an array");
+  }
 
   const contextValue = {
     userDetails,
@@ -191,15 +196,17 @@ if (Array.isArray(cartItems)) {
     setAlert,
     alertState,
     setAlertState,
-    productDetails,
-    setProductDetails
+    productSelected,
+    setProductSelected,
+    stores,
+    setStores
   };
 
   // Save cart data to cookies whenever cartItems change
   useEffect(() => {
-    if (!token) {
-      CheckToken();
-    }
+    // if (!token) {
+    //   CheckToken();
+    // }
   }, [cartItems, loginModal]);
 
   return (

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { ShopContext } from '../context/shop-context';
 import Cartcard from './Cartcard';
@@ -6,6 +6,7 @@ import Badge from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { toast } from 'sonner';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -29,13 +30,22 @@ export default function Cart() {
     setIsHovering(false);
   };
 
+  useEffect(() => {
+    if (cartItems.length > 0) {
+      toast('Cart Items appeared !');
+      return;
+    }
+  }, [cartItems]);
+
+  // console.log("cartItmes : ", cartItems);
+
   
   return (
     <div className='relative hover:bg-black/10 hover:rounded' onClick={handleMouseOver} onMouseOut={handleMouseOut} >
 
       <div className="header-shopping-bag w-12 relative">
         <IconButton aria-label="cart">
-          <StyledBadge badgeContent={cartItems.length !== 0 && totalItems} color="secondary">
+          <StyledBadge badgeContent={cartItems && cartItems.length !== 0 && totalItems} color="secondary">
           <img className="shopping-bag-img w-6" src="/cart_shop.png" />
           </StyledBadge>
         </IconButton>

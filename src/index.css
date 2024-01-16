@@ -218,6 +218,7 @@ svg {
   overflow: hidden;
   white-space: nowrap;
 }
+
 /*Button*/
 .card-button {
   border: 1px solid #252525;
@@ -323,25 +324,31 @@ svg {
   transition: all 0.5s;
   position: relative;
 }
+
 .separator li.MuiBreadcrumbs-separator.css-1wuw8dw-MuiBreadcrumbs-separator {
   position: relative;
   top: 1.5px;
   margin-right: -2.5px;
   margin-left: -5px;
 }
+
 .separator.categoryS {
   color: #0e7490;
 }
+
 .separator.categoryS li.MuiBreadcrumbs-separator.css-1wuw8dw-MuiBreadcrumbs-separator {
   margin-left: 3px;
   margin-right: 3.5px;
 }
+
 .table-cart {
   justify-items: end;
 }
-.table-cart .MuiTableCell-root.MuiTableCell-head{
+
+.table-cart .MuiTableCell-root.MuiTableCell-head {
   font-weight: 1000;
 }
+
 .numer-select {
   position: absolute;
   flex-direction: column;
@@ -358,14 +365,17 @@ svg {
   color: rgb(52, 53, 56);
   font-family: 'Roboto';
 }
+
 .numer-select li {
   padding: 2px 6px;
   border-radius: 4px;
   font-size: 14px;
 }
+
 .numer-select li:hover {
   background: rgb(214, 214, 218);
 }
+
 /* button */
 
 .button {
@@ -692,8 +702,26 @@ svg {
   border-radius: 5px;
 }
 
+.nav-footer-col {
+  font-size: 13px;
+  display: inline-block;
+  vertical-align: top;
+  line-height: 1.6;
+  width: auto;
+  margin: 25px 0;
+}
 
+.nav-footer-title {
+  font-weight: 700;
+  margin: 0 0 5px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  color: #333;
+}
 
+.MuiSvgIcon-root.MuiSvgIcon-fontSizeMedium.icon-footer.css-i4bv87-MuiSvgIcon-root {
+  height: 15px;
+}
 /* preloader */
 
 .loader {
