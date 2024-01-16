@@ -64,7 +64,7 @@ const ProductDetails = () => {
             <div className="flex justify-center self-center w-[70%] p-10 
             lg:w-[450px]">
               <img
-                src={productDetails.details?.img}
+                src={productDetails.details?.image}
                 alt={productDetails.details?.name}
                 className="w-full h-full self-center object-fit object-center"
               />
