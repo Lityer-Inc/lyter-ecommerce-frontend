@@ -30,6 +30,7 @@ import ProductDetails from "./Components/ProductDetails";
 import Cookies from "js-cookie";
 import apiService from "./utils/apiService.jsx";
 import Footer from "./Components/Footer.jsx";
+import useFetchAndAddToCart from "./hooks/useFetchCart.js";
 
 export default function App() {
   const {
@@ -86,8 +87,6 @@ export default function App() {
 
     const getUserData = async () => {
       const response = await apiService.decodeJwt();
-    apiService.getCart(response.data.id);
-      console.log("user Reponse : ", response);
       if (response.status !== 200) {
         setIsErr(response.data);
         return;
@@ -112,6 +111,8 @@ export default function App() {
     getUserData();
     getStores();
   }, []);
+
+  useFetchAndAddToCart(userDetails);
 
   if (isErr != null) {
     return alert("Error : " + isErr);
