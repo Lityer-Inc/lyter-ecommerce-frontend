@@ -29,6 +29,8 @@ export default function Cart() {
     setIsHovering(false);
   };
 
+  console.log("cartItmes : ", cartItems);
+
   
   return (
     <div className='relative hover:bg-black/10 hover:rounded' onClick={handleMouseOver} onMouseOut={handleMouseOut} >

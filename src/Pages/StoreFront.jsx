@@ -24,7 +24,9 @@ export default function Store() {
     const fetchData = async () =>{
       try{
         // fetch stored data
-        const response = await axios.get(`${endpointHead}/stores/${storeId.current}/products`)
+        const response = await axios.get(`${endpointHead}/stores/${storeId.current}/products`, {
+          // headers: 
+        })
         const productsData = response.data;
         console.log("data:", productsData)
         setStore(productsData)
@@ -86,7 +88,7 @@ export default function Store() {
             <h2 className="text-2xl font-bold ">Fresh Vegetables</h2>
             <Carousel />
           </div> */}
-          <Footer />
+          {/* <Footer /> */}
         </section>
       </div>
     </>

@@ -29,6 +29,7 @@ import CheckoutPayment from "./Pages/CheckoutPayment";
 import ProductDetails from "./Components/ProductDetails";
 import Cookies from "js-cookie";
 import apiService from "./utils/apiService.jsx";
+import Footer from "./Components/Footer.jsx";
 
 export default function App() {
   const {
@@ -38,9 +39,12 @@ export default function App() {
     alert,
     setAlert,
     setAlertState,
+    userDetails,
     setUserDetails,
     stores,
-    setStores
+    setStores,
+    cartItems,
+    productSelected
   } = useContext(ShopContext);
   const [isLoading, setIsLoading] = useState(true);
   const [isErr, setIsErr] = useState(null);
@@ -73,16 +77,26 @@ export default function App() {
   }, [modal, loginModal, isLoading, alert, token]);
 
   useEffect(() => {
+    
+    
+    // if (cartItems && cartItems.length > 0) {
+    //   return null;
+    // }
+
+
     const getUserData = async () => {
       const response = await apiService.decodeJwt();
+    apiService.getCart(response.data.id);
+      console.log("user Reponse : ", response);
       if (response.status !== 200) {
         setIsErr(response.data);
         return;
       } else {
         setUserDetails({
+          id: await response.data.id,
           email: await response.data.email,
           name: await response.data.email.split("@")[0]
-        });  
+        });
       }
     };
 
@@ -100,17 +114,17 @@ export default function App() {
   }, []);
 
   if (isErr != null) {
-    return alert('Error : ' + isErr);
+    return alert("Error : " + isErr);
   }
 
   return (
-    <div className="bg-[#fff] w-100 h-100 relative">
+    <div className="bg-[#fff] w-[100dvw] h-[100dvh] relative">
       {isLoading && <Preloader />}
 
       {alert && <Alert info={alertState} />}
 
       <Navbar />
-      <ProductDetails />
+      {productSelected.selected && <ProductDetails />}
       <Routes>
         <Route path="/" element={<StoresList />} />
         <Route path="/store" element={<StoresList />} />
@@ -153,6 +167,7 @@ export default function App() {
           }
         />
       </Routes>
+      <Footer />
       {loginModal !== 0 && (
         <div
           className="login-box fixed p-10 box-border top-[50%] z-30 left-[50%] w-[80%] md:w-[700px] my-auto mx-auto translate-x-[-50%] translate-y-[-50%] rounded-[10px]"

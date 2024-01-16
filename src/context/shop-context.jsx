@@ -27,9 +27,9 @@ export const ShopContextProvider = (props) => {
   //state for alert icon, msg1, msg2, action
   const [alert, setAlert] = useState(false);
   // state for productDetails
-  const [productDetails, setProductDetails] = useState({
+  const [productSelected, setProductSelected] = useState({
     selected: false,
-    details: {}
+    id: null
   });
   const [userDetails, setUserDetails] = useState({
     email: null,
@@ -51,7 +51,7 @@ export const ShopContextProvider = (props) => {
       console.log(prev, "prev");
       // Check if the item is already in the cart
       const existingItemIndex = updatedCart.findIndex(
-        (item) => item.eachitem.id === itemToAdd.id
+        (item) => item.eachitem._id === itemToAdd._id
       );
 
       if (existingItemIndex !== -1) {
@@ -193,8 +193,8 @@ export const ShopContextProvider = (props) => {
     setAlert,
     alertState,
     setAlertState,
-    productDetails,
-    setProductDetails,
+    productSelected,
+    setProductSelected,
     stores,
     setStores
   };

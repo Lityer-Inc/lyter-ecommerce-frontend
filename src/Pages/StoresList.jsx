@@ -31,7 +31,7 @@ export default function StoresList() {
     <>
       <div className="flex flex-row justify-between">
         <section className=" w-[800px] bg-white grow">
-          <ul className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 items-center px-12 mt-10">
+          <ul className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 items-center px-12 mt-10">
             {stores &&
               stores.map((item, i) => (
                 <Link
@@ -44,7 +44,7 @@ export default function StoresList() {
                 </Link>
               ))}
           </ul>
-          <Footer />
+          {/* <Footer /> */}
         </section>
       </div>
     </>
