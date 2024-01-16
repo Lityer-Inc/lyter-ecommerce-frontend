@@ -5,17 +5,23 @@ import { FaBagShopping } from "react-icons/fa6";
 import { IoReloadOutline } from "react-icons/io5";
 import { FaList } from "react-icons/fa";
 
-const StoreSidebar = () => {
+const StoreSidebar = ({ store }) => {
+
+  if (!store) {
+    return;
+  }
+
   return (
-      <main className="lg:block w-[280px] h-0 hidden ">
-        {/* top part */}
-        <div className="fixed top-auto bg-gray-100 w-[280px] overflow-y-scroll overflow-x-hidden border-r h-screen p-6">
+    <main className="lg:block w-[280px] h-0 hidden ">
+      {/* top part */}
+      <div className="fixed top-auto bg-gray-100 w-[280px] overflow-y-scroll overflow-x-hidden border-r h-screen p-6">
         <div className="flex w-full flex-col sticky top-0 bg-gray-100/90 backdrop-blur-sm p-2 items-center gap-2">
           <img
             src="/logo-2.png"
             className="rounded-full w-[60px] h-[60px] border border-gray-300 p-3"
           />
-          <h2 className="text-[1.2rem] font-semibold">Lityer</h2>
+          <h2 className="text-[1.2rem] font-semibold">{store.name}</h2>
+          <p className="text-[0.9rem] -mt-3 text-gray-700 font-semibold">{store.description}</p>
           <Link to={"/pricing-policy"}>View Pricing Policy {">"}</Link>
           <Link to="/">
             <span className="flex items-center">
@@ -90,9 +96,8 @@ const StoreSidebar = () => {
             Frozon Ice
           </button>
         </section>
-        </div>
-        
-      </main>
+      </div>
+    </main>
   );
 };
 

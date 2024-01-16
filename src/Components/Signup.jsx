@@ -65,7 +65,7 @@ export default function Signup() {
     }
 
     try {
-      const response = await fetch(`http://localhost:8000/user/register`, {
+      const response = await fetch(`${endpointHead}/user/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -83,11 +83,9 @@ export default function Signup() {
 
       const res = await response.json();
 
-      console.log('respnse : ', res);
-
       //push to local storage
       if (response.status === 200) {
-        // storeToken(response.data.token);
+        storeToken(res.token);
         setAlert(true);
         setAlertState({
           icon: (

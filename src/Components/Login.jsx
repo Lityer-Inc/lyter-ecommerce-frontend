@@ -37,9 +37,11 @@ export default function Login() {
         password: password
       });
       // Handle the response from the authentication endpoint
-      console.log("response data : ", await response.data);
+      
+      const token = String(response.data.token);
+      console.log("response data : ", await response);
       if (response.status === 200) {
-        storeToken(response.data.token);
+        storeToken(token);
         setautherr(false);
         setUser(response.data.user);
         setLoginModal(0);
@@ -68,6 +70,7 @@ export default function Login() {
           msg2: "",
           action: "Start shopping"
         });
+        window.location.reload();
       } else {
         setAlert(true);
         setAlertState({

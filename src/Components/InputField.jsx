@@ -1,7 +1,7 @@
 import { AiOutlineCaretDown } from 'react-icons/ai'
 
 
-const InputField = ({dropDown, field}) => {
+const InputField = ({dropDown, field, defaultValue}) => {
   return (
     <div className="text-md flex flex-col items-start gap-4 font-semibold">
       <h4>{field}</h4>
@@ -9,6 +9,7 @@ const InputField = ({dropDown, field}) => {
         <input
           type="text"
           className="h-full w-[90%] text-gray-700 outline-none"
+          defaultValue={defaultValue}
         />
         <AiOutlineCaretDown
           className={`absolute ${dropDown ? 'visible' : 'invisible'}

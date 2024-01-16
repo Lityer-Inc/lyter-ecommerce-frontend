@@ -1,56 +1,73 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import jwt from 'jsonwebtoken';
+import { useContext } from "react";
 
-const API_BASE_URL = 'http://localhost:8000';
-
+const API_BASE_URL = "http://localhost:8000";
 
 const apiService = {
-    
-    // getProducts: async () => {
-    //     try { 
-    //         const response = await fetch(`${API_BASE_URL}/products/get_products`); 
-    //         if (response.ok) {
-    //             const products = await response.json(); 
-    //             return products;
-    //         } else {
-    //             // Handle bad response
-    //             alert('Error: ' + response.statusText);
-    //             return null;
-    //         }
-    //     } catch (error) {
-    //         alert('Fetch error: ' + error);
-    //         return null;
-    //     }
-    // }, 
-    decodeJwt: async () => {
-        try {
-            const token = "dfsfsdf";
+  getStores: async () => {
+    try {
+      const token = Cookies.get("token")
+        ? JSON.parse(Cookies.get("token"))
+        : null;
 
-            console.log('token', token);
-            if (token === null) {
-                return;
-            }
-            
-            const response = await axios.get(`${API_BASE_URL}/user/jwt`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                  }
-            });
-            console.log('decodeReponse : ', response.data);
-            console.log('rseponse : ', response.status);
-            if (response.status === 200) {
-                return response.data;
-            } else {
-                alert('error : ' + response.statusText);
-                return null;
-            }
-
-        } catch (err) {
-            alert("error : ", response.statusText);
-            return err;
+      const response = await axios.get(`${API_BASE_URL}/stores/`, {
+        headers: {
+          Authorization: `Bearer ${token}`
         }
+      });
+
+      if (response.status === 200) {
+        const stores = await response.data;
+        return stores;
+      } else {
+        // Handle bad response
+        alert("Error: " + response.statusText);
+        return null;
+      }
+    } catch (error) {
+      alert("please login to access the application");
+      return null;
     }
+  },
+  decodeJwt: async () => {
+    try {
+      const token = Cookies.get("token")
+        ? JSON.parse(Cookies.get("token"))
+        : null;
+
+      console.log("token : ", token);
+      if (token == null) {
+        // alert("token is null");
+        return;
+      }
+
+      const response = await axios.get(`${API_BASE_URL}/user/decodeJwt`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      console.log("decodeReponse : ", response.data);
+      console.log("rseponse : ", response.status);
+      if (response.status === 200) {
+        return { status: 200, data: response.data };
+      } else {
+        alert("error : " + response.statusText);
+        return { status: 404, data: response.statusText };
+      }
+    } catch (err) {
+      // alert("error : ", response.statusText);
+      return { status: 500, data: "Server Error" };
+    }
+  },
+  getCart: async (userId) => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/user/${userId}/cart`);
+      console.log('response carttt : ', response);
+    } catch (e) {
+      console.log("server error !");
+    }
+  }
 };
 
 export default apiService;

@@ -11,9 +11,6 @@ export default function Account() {
   const accModal = useRef(null);
   const balModal = useRef(null);
 
-  const token = Cookies.get("token") ? JSON.parse(Cookies.get("token")) : null;
-
-  console.log("token : ", token);
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -110,7 +107,7 @@ export default function Account() {
           </div>
 
           {(userDetails.email !== null) | undefined ? (
-            <div className="flex gap-2 cursor-pointer w-full rounded hover:bg-[#f5f5f5] p-2">
+            <div onClick={logout} className="flex gap-2 cursor-pointer w-full rounded hover:bg-[#f5f5f5] p-2">
               <span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
