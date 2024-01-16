@@ -64,6 +64,7 @@ const apiService = {
     try {
       const response = await axios.get(`${API_BASE_URL}/user/${userId}/cart`);
       console.log('response carttt : ', response);
+      return response.data;
     } catch (e) {
       console.log("server error !");
     }
