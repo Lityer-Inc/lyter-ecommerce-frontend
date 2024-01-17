@@ -29,7 +29,6 @@ export default function Cart() {
     setIsHovering(false);
   };
 
-  console.log("cartItmes : ", cartItems);
 
   return (
     <div

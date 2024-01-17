@@ -54,9 +54,7 @@ export default function App() {
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
-      console.log("listening 1");
       if (loginModal !== 0 && !modal.current.contains(event.target)) {
-        console.log("listening 2");
         setLoginModal(0);
       }
     };
@@ -101,11 +99,10 @@ export default function App() {
 
     const getStores = async () => {
       const response = await apiService.getStores();
-      console.log("respnse : ", response);
       if (response) {
         setStores(response);
       } else {
-        alert("somehting wrong !!!");
+        window.alert("somehting wrong !!!");
       }
     };
     getUserData();

@@ -11,7 +11,6 @@ const useFetchAndAddToCart = (userDetails) => {
       try {
         let cartItemsResponse = await apiService.getCart(userId);
         if (cartItemsResponse.length > 0) {
-          console.log('cart items response: ', cartItemsResponse);
           setCartItems(cartItemsResponse);
         }
         // console.log("cart items response: ", cartItemsResponse);
@@ -22,7 +21,6 @@ const useFetchAndAddToCart = (userDetails) => {
 
     // Check if user is logged in
     if (userDetails && userDetails.id != null) {
-      console.log('user details: ', userDetails);
       fetchAndAddToCart(userDetails.id);
     }
   }, [userDetails]); // Only re-run the effect if userDetails or setCartItems change

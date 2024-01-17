@@ -3,7 +3,6 @@ import { ShopContext } from "../context/shop-context";
 
 export default function Cartcard({data}) {
 
-  console.log('data : ', data);
 
   const {cartItems, addToCart, removeFromCart, totalItems, totalPrice} = useContext(ShopContext);
 

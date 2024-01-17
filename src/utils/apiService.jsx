@@ -36,7 +36,6 @@ const apiService = {
         ? JSON.parse(Cookies.get("token"))
         : null;
 
-      console.log("token : ", token);
       if (token == null) {
         // alert("token is null");
         return;
@@ -47,8 +46,6 @@ const apiService = {
           Authorization: `Bearer ${token}`
         }
       });
-      console.log("decodeReponse : ", response.data);
-      console.log("rseponse : ", response.status);
       if (response.status === 200) {
         return { status: 200, data: response.data };
       } else {
@@ -63,7 +60,6 @@ const apiService = {
   getCart: async (userId) => {
     try {
       const response = await axios.get(`${API_BASE_URL}/user/${userId}/cart`);
-      console.log('response carttt : ', response);
       return response.data;
     } catch (e) {
       console.log("server error !");

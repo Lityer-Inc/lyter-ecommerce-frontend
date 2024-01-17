@@ -5,7 +5,6 @@ import axios from "axios";
 
 export const ShopContext = createContext("context");
 
-console.log(data, "Cart data");
 /*
 const getDefaultCart = () => {
   let cart = {};
@@ -47,8 +46,6 @@ export const ShopContextProvider = (props) => {
     setCartItems((prev) => {
       // Create a copy of the cart array
       const updatedCart = [...prev];
-      console.log(updatedCart, "update copy");
-      console.log(prev, "prev");
       // Check if the item is already in the cart
       const existingItemIndex = updatedCart.findIndex(
         (item) => item.eachitem._id === itemToAdd._id
@@ -73,19 +70,16 @@ export const ShopContextProvider = (props) => {
   };
 
   const removeFromCart = (itemToRemove) => {
-    console.log(cartItems, itemToRemove, "inin");
     setCartItems((prev) => {
       const updatedCart = prev.filter(
         (item) => item.eachitem.id !== itemToRemove
       );
-      console.log(updatedCart, "updatedCart Li");
       Cookies.set("cart", JSON.stringify(updatedCart));
       return updatedCart;
     });
   };
 
   const addMini = (itemToAdd) => {
-    console.log("hiiiiii ", itemToAdd);
     setCartItems((prev) => {
       const updatedCart = [...prev];
       const existingItemIndex = updatedCart.findIndex(
@@ -102,13 +96,11 @@ export const ShopContextProvider = (props) => {
   };
 
   const removeMini = (itemToRemove) => {
-    console.log(cartItems, itemToRemove, "inin");
     setCartItems((prev) => {
       const updatedCart = [...prev];
       const existingItemIndex = updatedCart.findIndex(
         (item) => item.eachitem.id === itemToRemove
       );
-      console.log(existingItemIndex, "Hello");
       if (existingItemIndex !== -1) {
         // If the item is already in the cart, update its count
         updatedCart[existingItemIndex].count -= 1;

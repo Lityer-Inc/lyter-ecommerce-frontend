@@ -7,7 +7,6 @@ import Dashbardlayout from "../Pages/Dashbardlayout";
 function Protectedroute({ children }) {
   const { token } = useContext(ShopContext);
 
-  console.log(token, "getting token");
 
   if (!token) {
     return <Navigate to="/" />;
