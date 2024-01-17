@@ -38,7 +38,6 @@ const ProductDetails = () => {
       try{
         const response = await axios.get(`${endpointHead}/stores/${storeId.current}/products/${productSelected.id}`);
         const productData = await response.data;
-        console.log("data:", productData);
         setProductDetails(productData);
         setLoading(false);
       }
@@ -150,7 +149,7 @@ const ProductDetails = () => {
                             {...params}
                             label=""
                             type="number"
-                            placeholder={quantityPro}
+                            placeholder={String(quantityPro)}
                             variant="outlined"
                           />
                         )}

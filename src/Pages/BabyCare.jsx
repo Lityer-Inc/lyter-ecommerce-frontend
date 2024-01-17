@@ -4,7 +4,6 @@ import Card from "../Components/Card";
 import { nanoid } from "nanoid";
 export default function BabyCare({ img, title, description, price }) {
   const babyCareData = data.find((data) => data.name === "baby_care");
-  console.log(babyCareData);
   return (
     <div className="page-wrapper">
       <div className="baby-care-page-container category-page-container">

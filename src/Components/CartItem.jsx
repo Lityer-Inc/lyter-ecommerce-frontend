@@ -23,13 +23,12 @@ const CartItem = ({ data }) => {
     }
   };
 
-  console.log("data : ", data);
 
   useEffect(() => {}, [cartItems]);
 
   return (
-    <tr class="bg-white border-b hover:bg-gray-50 w-full text-center">
-      <td class="flex p-2 pb-3 ">
+    <tr className="bg-white border-b hover:bg-gray-50 w-full text-center">
+      <td className="flex p-2 pb-3 ">
         <div className="flex justify-between space-x-6 items-center m-auto relative">
           <img
             src={data.product.image}
@@ -44,10 +43,10 @@ const CartItem = ({ data }) => {
         <div class="flex justify-evenly items-center">
         </div>
       </td> */}
-      <td class="p-2 fonts font-medium md:px-2 md:py-4 whitespace-nowrap text-center">
+      <td className="p-2 fonts font-medium md:px-2 md:py-4 whitespace-nowrap text-center">
         ${data.product.price}
       </td>
-      <td class="p-2 fonts font-medium md:px-2 md:py-4 whitespace-nowrap text-center">
+      <td className="p-2 fonts font-medium md:px-2 md:py-4 whitespace-nowrap text-center">
         <div className="flex gap-4 mx-auto max-w-max items-center">
           <CiSquarePlus onClick={() => removeCom(data)} />
           <span className="text-black text-semibold">{data.count}</span>
@@ -78,7 +77,7 @@ const CartItem = ({ data }) => {
           />
         </svg>
       </td> */}
-      <td class="p-2 fonts md:px-2 md:py-4 text-center">
+      <td className="p-2 fonts md:px-2 md:py-4 text-center">
         {/* ${data.eachitem.price * data.count} */} {/* COMMENTED */}
       </td>
     </tr>

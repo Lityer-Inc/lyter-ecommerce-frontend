@@ -21,7 +21,7 @@ export default function StoresList() {
   //   return;
   // }
 
-  console.log("stores : ", stores);
+  // console.log("stores : ", stores);
 
   if (isLoading) {
     <Preloader />;

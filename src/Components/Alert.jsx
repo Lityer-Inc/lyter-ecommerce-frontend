@@ -1,7 +1,6 @@
 import React from "react";
 
 export default function Alert({ info }) {
-    console.log('hi : ', info);
   return (
     <div className="excuseme absolute w-[400px] h-[150px] top-[100px] right-[50px] bg-[#fff] shadow-lg shadow-[#f5f5f5]-500 flex flex-col z-[999999999] justify-center rounded-2xl px-10">
       {/* up */}

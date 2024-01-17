@@ -60,7 +60,6 @@ export default function Navbar() {
       setScreenWidth(window.innerWidth);
     };
 
-    console.log(screenWidth, "checkers");
     // Attach the handleResize function to the window resize event
     window.addEventListener("resize", handleResize);
 

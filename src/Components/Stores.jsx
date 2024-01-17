@@ -2,7 +2,6 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import React from "react";
 
 export default function Stores({ data }) {
-  console.log("dta : ", data);
   return (
     <>
       <div className="cardS bg-gray-50 max-w-[440px]">
@@ -13,20 +12,20 @@ export default function Stores({ data }) {
         {/* title, categorys and tags */}
         <div className="cardS-content h-full">
           <div className="cardS-title">{data.name}</div>
-          <p className="mt-2 relative">
+          <div className="mt-2 relative">
             <Breadcrumbs className="separator" separator="•">
-              {data.category.map((item) => (
-                <div className="cardS-category text-[#636367]/90 font-semibold inline-flex mr-1 px-1">
+              {data.category.map((item, i) => (
+                <div className="cardS-category text-[#636367]/90 font-semibold inline-flex mr-1 px-1" key={i}>
                   {item}
                 </div>
               ))}
             </Breadcrumbs>
-          </p>
-          <p className=" inline-block mt-1">
-            {data.tags.map((item) => (
-              <div className="cardS-tags inline-flex mr-1 px-1">{item}</div>
+          </div>
+          <div className=" inline-block mt-1">
+            {data.tags.map((item, i) => (
+              <div className="cardS-tags inline-flex mr-1 px-1" key={i}>{item}</div>
             ))}
-          </p>
+          </div>
         </div>
 
         {/* delivery and discount */}
