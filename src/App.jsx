@@ -76,12 +76,9 @@ export default function App() {
   }, [modal, loginModal, isLoading, alert, token]);
 
   useEffect(() => {
-    
-    
     // if (cartItems && cartItems.length > 0) {
     //   return null;
     // }
-
 
     const getUserData = async () => {
       const response = await apiService.decodeJwt();
@@ -107,6 +104,7 @@ export default function App() {
     };
     getUserData();
     getStores();
+
   }, []);
 
   useFetchAndAddToCart(userDetails);

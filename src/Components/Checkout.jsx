@@ -150,7 +150,7 @@ export const CheckoutPage = ({ isCartOpen2, toggleMobileCart }) => {
             <div className="mx-auto w-[60%]">
               <img
                 src="/empty-cart.png"
-                className="m-auto bg-black
+                className="m-auto
                          w-[90%] h-full"
                 alt="empycart"
               />
