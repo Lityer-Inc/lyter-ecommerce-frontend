@@ -3,10 +3,13 @@ import { ShopContext } from "../context/shop-context";
 import CartItem from "../Components/CartItem";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { useQuery } from "@tanstack/react-query";
+import apiService from "../utils/apiService";
+import Preloader from "./Preloader";
 
 export const CheckoutPage = ({ isCartOpen2, toggleMobileCart }) => {
   const {
-    cartItems,
+    // cartItems,
     setProductSelected,
     addToCart,
     removeFromCart,
@@ -14,63 +17,76 @@ export const CheckoutPage = ({ isCartOpen2, toggleMobileCart }) => {
     totalPrice,
     setLoginModal,
     setAlert,
+    userDetails,
     setAlertState
   } = useContext(ShopContext);
 
+  const { getCart } = apiService;
   const token = Cookies.get("token") ? JSON.parse(Cookies.get("token")) : null;
   const navigate = useNavigate();
 
-  const handleResize = () => {
-    const width = window.innerWidth;
-    if (isCartOpen2 && width < 766) {
-      toggleMobileCart(false);
-    }
-  };
+  // const handleResize = () => {
+  //   const width = window.innerWidth;
+  //   if (isCartOpen2 && width < 766) {
+  //     toggleMobileCart(false);
+  //   }
+  // };
 
-  const checkoutHandler = async () => {
-    if (token != null) {
-      // user is logged in
-      navigate("/about", { replace: true });
-      toggleMobileCart(false);
-    } else {
-      toggleMobileCart(false);
-      setAlert(true);
-      setAlertState({
-        icon: (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="32"
-            viewBox="0 0 24 24"
-          >
-            <g fill="none" stroke="currentColor" strokeLinejoin="round">
-              <path
-                strokeWidth="2"
-                d="M2 14.5A4.5 4.5 0 0 0 6.5 19h12a3.5 3.5 0 0 0 .5-6.965a7 7 0 0 0-13.76-1.857A4.502 4.502 0 0 0 2 14.5Z"
-              />
-              <path strokeWidth="3" d="M12 15.5h.01v.01H12z" />
-              <path strokeLinecap="round" strokeWidth="2" d="M12 12V9" />
-            </g>
-          </svg>
-        ),
-        status: "Checkout Failed",
-        msg1: "Please Login Before Checking Out the Products",
-        // msg2: `Reason: ${res.error}`,
-        action: "Retry"
-      });
-      setTimeout(() => {
-        setLoginModal(true);
-      }, 2000);
-    }
-  };
+  // const checkoutHandler = async () => {
+  //   if (token != null) {
+  //     // user is logged in
+  //     navigate("/about", { replace: true });
+  //     toggleMobileCart(false);
+  //   } else {
+  //     toggleMobileCart(false);
+  //     setAlert(true);
+  //     setAlertState({
+  //       icon: (
+  //         <svg
+  //           xmlns="http://www.w3.org/2000/svg"
+  //           width="32"
+  //           height="32"
+  //           viewBox="0 0 24 24"
+  //         >
+  //           <g fill="none" stroke="currentColor" strokeLinejoin="round">
+  //             <path
+  //               strokeWidth="2"
+  //               d="M2 14.5A4.5 4.5 0 0 0 6.5 19h12a3.5 3.5 0 0 0 .5-6.965a7 7 0 0 0-13.76-1.857A4.502 4.502 0 0 0 2 14.5Z"
+  //             />
+  //             <path strokeWidth="3" d="M12 15.5h.01v.01H12z" />
+  //             <path strokeLinecap="round" strokeWidth="2" d="M12 12V9" />
+  //           </g>
+  //         </svg>
+  //       ),
+  //       status: "Checkout Failed",
+  //       msg1: "Please Login Before Checking Out the Products",
+  //       // msg2: `Reason: ${res.error}`,
+  //       action: "Retry"
+  //     });
+  //     setTimeout(() => {
+  //       setLoginModal(true);
+  //     }, 2000);
+  //   }
+  // };
 
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
+  const { data: cartItems, isLoading } = useQuery({
+    queryFn: () => getCart(userDetails.id),
+    queryKey: ["cart"]
+  });
 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
+  // useEffect(() => {
+  //   window.addEventListener("resize", handleResize);
+
+  //   return () => {
+  //     window.removeEventListener("resize", handleResize);
+  //   };
+  // }, []);
+
+  console.log('cartTiems : ', cartItems);
+
+  if (isLoading) {
+    return <Preloader />
+  }
 
   return (
     <main
@@ -122,9 +138,9 @@ export const CheckoutPage = ({ isCartOpen2, toggleMobileCart }) => {
 
                 <tbody className="w-full overflow-y-auto overflow-x-auto">
                   {cartItems.map((item, index) => {
-                    if (index > 5) {
-                      return;
-                    }
+                    // if (index > 5) {
+                    //   return;
+                    // }
                     return <CartItem data={item} key={index} />;
                   })}
                 </tbody>
@@ -137,7 +153,7 @@ export const CheckoutPage = ({ isCartOpen2, toggleMobileCart }) => {
             </div>
             <Link
               to={`${token != null ? "checkout-payment" : ""}`}
-              onClick={checkoutHandler}
+              // onClick={checkoutHandler}
               className="bg-[#FF0066] max-w-[200px] transition-all hover:bg-[#ff0f6f] text-center 
           py-3 mb-2 mr-2 self-end rounded-md font-bold text-white
           w-full h-12"

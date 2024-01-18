@@ -6,6 +6,7 @@ import { MdDelete } from "react-icons/md";
 import { Toaster, toast } from "sonner";
 import apiService from "../utils/apiService";
 import useFetchAndAddToCart from "../hooks/useFetchCart.js";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const CartItem = ({ data }) => {
   //const { img, title, description, price, id } = props.data;
@@ -22,6 +23,8 @@ const CartItem = ({ data }) => {
     productSelected,
     setProductSelected
   } = useContext(ShopContext);
+
+  const queryClient = useQueryClient();
 
   const removeCom = (data) => {
     if (data.count === 1) {
@@ -41,18 +44,24 @@ const CartItem = ({ data }) => {
         toast("Error while deleting the item from cart !");
       }
     } catch (e) {
-      console.log('error');
-      toast('Server Error !');
+      console.log("error");
+      toast("Server Error !");
     }
     // useFetchAndAddToCart(userDetails);
-    toast(
-      "Error while deleting the item from cart !" + productSelected.selected
-    );
   };
 
-  useEffect(() => {
-    // console.log("rendingrreering !");
-  }, [cartItems]);
+  // useEffect(() => {
+  // }, [cartItems]);
+
+  const { mutateAsync: deleteCartItem } = useMutation({
+    mutationFn: deleteHandler,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["cart"], {
+        refetchInactive: true,
+        refetchOnWindowFocus: true,
+      });
+    }
+  });
 
   return (
     <tr className="bg-white border-b hover:bg-gray-50 w-full text-center">
@@ -108,9 +117,17 @@ const CartItem = ({ data }) => {
         {/* ${data.eachitem.price * data.count} */} {/* COMMENTED */}
         <div className="flex items-center justify-center space-x-4 px-3">
           <span>32</span>
-          <span onClick={() => deleteHandler(data.product._id)}>
+          <button
+            onClick={async () => {
+              try {
+                await deleteCartItem(data.product._id);
+              } catch (e) {
+                console.log("error in deleting cart item");
+              }
+            }}
+          >
             <MdDelete className="text-2xl text-black cursor-pointer" />
-          </span>
+          </button>
         </div>
       </td>
       <Toaster />
