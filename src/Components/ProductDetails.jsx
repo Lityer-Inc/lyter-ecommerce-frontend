@@ -3,7 +3,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { Link, useSearchParams } from "react-router-dom";
 
 import { ShopContext } from "../context/shop-context";
-import { Carousel } from "../Components/Carousel.jsx";
+import { Carousel } from "./Carousel.jsx";
 
 import TextField from "@mui/material/TextField";
 import Breadcrumbs from "@mui/material/Breadcrumbs";

@@ -3,12 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import MobileNav from "./MobileNav";
 import { CSSTransition } from "react-transition-group";
 import Account from "./Account";
-import Cart from "./Cart";
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
 import { ShopContext } from "../context/shop-context";
 import { useContext } from "react";
 import { CheckoutPage } from "./Checkout";
 import SearchIcon from "@mui/icons-material/Search";
+import CartMain from "./CartMain";
 
 export default function Navbar() {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -134,13 +134,14 @@ export default function Navbar() {
                 {/* Account */}
                 <Account />
                 {/* Cart */}
-                {screenWidth <= 766 ? (
-                  <Cart />
+                <CartMain />
+                {/* {screenWidth <= 766 ? (
+                  <CartMain />
                 ) : (
                   <div onClick={handleCartShopClick}>
-                    <Cart />
+                    <CartMain />
                   </div>
-                )}
+                )} */}
                 <CheckoutPage
                   isCartOpen2={isCartOpen}
                   toggleMobileCart={handleCartShopClick}

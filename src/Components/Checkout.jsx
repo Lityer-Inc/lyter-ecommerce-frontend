@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { ShopContext } from "../context/shop-context";
-import CartItem from "../Components/CartItem";
+import CartItem from "./CartItem";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useQuery } from "@tanstack/react-query";

@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "../Components/Card.jsx";
+import Card from "../components/Card.jsx";
 import data from "../DummyData/data.js";
 import { nanoid } from "nanoid";
 export default function Bakery({ img, title, description, price }) {

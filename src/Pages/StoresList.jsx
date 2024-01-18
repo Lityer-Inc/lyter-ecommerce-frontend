@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-import Stores from "../Components/Stores.jsx";
-import Preloader from "../Components/Preloader";
+import Stores from "../components/Stores.jsx";
+import Preloader from "../components/Preloader.jsx";
 import { Link } from "react-router-dom";
 import dataStores from "../DummyData/dataStores.js";
-import Footer from "../Components/Footer.jsx";
+import Footer from "../components/Footer.jsx";
 import { ShopContext } from "../context/shop-context.jsx";
 import { useQuery } from "@tanstack/react-query";
 import apiService from "../utils/apiService.jsx";

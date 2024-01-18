@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import data from "../DummyData/data";
 import { ShopContext } from "../context/shop-context";
-import CartItem from "../Components/CartItem";
+import CartItem from "../components/CartItem";
 import { Link, useNavigate } from "react-router-dom";
 
 export const CheckoutPage = () => {

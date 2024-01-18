@@ -6,6 +6,7 @@ import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import CartMain from "./CartMain";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -44,6 +45,7 @@ export default function Cart() {
             <img className="shopping-bag-img w-6" src="/cart_shop.png" />
           </StyledBadge>
         </IconButton>
+        <CartMain />
       </div>
 
       {isHovering && (
