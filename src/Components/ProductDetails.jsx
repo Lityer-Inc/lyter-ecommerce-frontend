@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useState } from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { ShopContext } from "../context/shop-context";
 import { Carousel } from "../Components/Carousel.jsx";
@@ -8,19 +8,12 @@ import { Carousel } from "../Components/Carousel.jsx";
 import TextField from "@mui/material/TextField";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import ComboBox from "@mui/material/Autocomplete";
-import Preloader from "./Preloader.jsx";
-import axios from "axios";
 
 const ProductDetails = () => {
-  const { productSelected, setProductSelected, addToCart,endpointHead } =
+  const { productDetails, setProductDetails, addToCart } =
     useContext(ShopContext);
   const [savedItem, setsavedItem] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [quantityPro, setQuantityPro] = useState(1);
-  const [productDetails, setProductDetails] = useState();
-  const [params] = useSearchParams();
-
-  const storeId = useRef(params.get("id"));
 
   // Regular combo box options
   const options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -33,34 +26,16 @@ const ProductDetails = () => {
     setQuantityPro(newValue);
   };
 
-  useEffect(()=>{
-    const fetchData = async () =>{
-      try{
-        const response = await axios.get(`${endpointHead}/stores/${storeId.current}/products/${productSelected?.id}`);
-        const productData = await response.data;
-        setProductDetails(productData);
-        setLoading(false);
-      }
-      catch (error){
-        console.log("error on fetch:", error)
-      }
-    };
-    fetchData();
-  }, [])
-  
-  if (loading) {
-    return <Preloader />;
-  }
-
+  console.log()
 
   return (
-    <main className={`fixed flex w-full h-full top-0 z-30 justify-center ${productSelected.selected ? "" : "hidden"}`}>
+    <main className={`fixed flex w-full h-full top-0 z-30 justify-center ${productDetails.selected ? "" : "hidden"}`}>
       {/* background */}
       <div
         className=" absolute bg-black/20 w-full h-full"
         onClick={(e) => {
           e.preventDefault();
-          setProductSelected({ selected: false });
+          setProductDetails({ selected: false });
         }}
       />
 
@@ -89,8 +64,8 @@ const ProductDetails = () => {
             <div className="flex justify-center self-center w-[70%] p-10 
             lg:w-[450px]">
               <img
-                src={productDetails?.image}
-                alt={productDetails?.name}
+                src={productDetails.details?.image}
+                alt={productDetails.details?.name}
                 className="w-full h-full self-center object-fit object-center"
               />
             </div>
@@ -98,23 +73,23 @@ const ProductDetails = () => {
             <div className=" flex-auto gap-5 lg:flex-row flex flex-col justify-between">
               <div className="flex flex-col h-full py-4 px-2 self-start">
                 <Link
-                  to={productDetails?.category}
+                  to={productDetails.details?.category}
                   className="-mt-3 text-cyan-500 font-bold hover:underline"
                 >
-                  {productDetails?.category ? productDetails?.category : "Random"}
+                  {productDetails.details?.category}
                 </Link>
                 <h1 className="sm:text-[2rem] font-semibold text-[1.5rem]">
-                  {productDetails?.name}
+                  {productDetails.details?.title}
                 </h1>
                 {/* tags of products */}
                 {/* <Breadcrumbs className='separator categoryS inline-block' separator="•">{productDetails.details.tags.map((item) => (
                   <Link className="text-cyan-700 font-semibold text-[14px] inline-flex mb-1">{item}</Link>
                 ))}
                 </Breadcrumbs> */}
-              <p className="mt-2 text-red-500">{productDetails?.weight} Available</p>
+                <p className="mt-2">{productDetails.details?.weight} oz</p>
                 <h1 className="font-semibold pb-2 text-[1.2rem]">Details</h1>
                 <p className="text-gray-700 flex">
-                  {productDetails?.description}
+                  {productDetails.details?.description}
                 </p>
               </div>
 
@@ -124,13 +99,13 @@ const ProductDetails = () => {
                 <div className="p-5 w-[320px] xl:w-[450px]
                 self-center lg:self-end h-full rounded-md border border-gray-400">
                   <h1 className="text-[21px] font-bold text-[#39393c] leading-normal font-inherit">
-                    ${productDetails?.price}
+                    ${productDetails.details?.price}
                   </h1>
                   <h1 className="text-[16px] font-semibold text-[#636367] mb-1 leading-normal font-['Helvetica']">
                     $
                     {(
-                      productDetails?.weight /
-                      productDetails?.price
+                      productDetails.details?.weight /
+                      productDetails.details?.price
                     ).toFixed(2)}{" "}
                     each
                   </h1>
@@ -149,7 +124,7 @@ const ProductDetails = () => {
                             {...params}
                             label=""
                             type="number"
-                            placeholder={String(quantityPro)}
+                            placeholder={quantityPro}
                             variant="outlined"
                           />
                         )}
@@ -166,7 +141,7 @@ const ProductDetails = () => {
                           : "bg-green-700"
                       }`}
                       onClick={() => {
-                        addToCart(productDetails, quantityPro);
+                        addToCart(productDetails.details, quantityPro);
                       }}
                       disabled={
                         quantityPro > 100 ||
