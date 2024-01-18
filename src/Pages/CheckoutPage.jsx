@@ -1,14 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import data from "../DummyData/data";
 import { ShopContext } from "../context/shop-context";
 import CartItem from "../Components/CartItem";
 import { Link, useNavigate } from "react-router-dom";
 
 export const CheckoutPage = () => {
-  const { cartItems, addToCart, removeFromCart, totalItems, totalPrice } =
+  const { productSelected, cartItems, addToCart, removeFromCart, totalItems, totalPrice } =
     useContext(ShopContext);
   
   const navigate = useNavigate();
+
 
   return (
     <div className="flex justify-center items-start md:w-full min-h-[85dvh]">

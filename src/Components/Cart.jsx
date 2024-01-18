@@ -29,7 +29,6 @@ export default function Cart() {
     setIsHovering(false);
   };
 
-
   return (
     <div
       className="relative hover:bg-black/10 hover:rounded"
@@ -72,8 +71,6 @@ export default function Cart() {
             </div>
           ) : (
             <div className="bg-[#fff] rounded absolute right-4 shadow min-w-[18.75rem] max-w-[20%] flex flex-col justify-center items-center p-5 z-[99999999]">
-              <h1>asdfsfsd</h1>
-
               <div className="bg-[#f5f5f5] rounded-full p-14">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

@@ -1,7 +1,11 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { ShopContext } from "../context/shop-context";
 import { CiSquarePlus } from "react-icons/ci";
 import { CiSquareMinus } from "react-icons/ci";
+import { MdDelete } from "react-icons/md";
+import { Toaster, toast } from "sonner";
+import apiService from "../utils/apiService";
+import useFetchAndAddToCart from "../hooks/useFetchCart.js";
 
 const CartItem = ({ data }) => {
   //const { img, title, description, price, id } = props.data;
@@ -12,7 +16,11 @@ const CartItem = ({ data }) => {
     totalItems,
     totalPrice,
     removeMini,
-    addMini
+    addMini,
+    userDetails,
+    product,
+    productSelected,
+    setProductSelected
   } = useContext(ShopContext);
 
   const removeCom = (data) => {
@@ -23,8 +31,28 @@ const CartItem = ({ data }) => {
     }
   };
 
+  const deleteHandler = async (productId) => {
+    try {
+      const res = await apiService.deleteCart(userDetails.id, productId);
+      if (res.status === 200) {
+        console.log("deleteHnadler response : ", res);
+        toast("Product Succesfully Removed !");
+      } else {
+        toast("Error while deleting the item from cart !");
+      }
+    } catch (e) {
+      console.log('error');
+      toast('Server Error !');
+    }
+    // useFetchAndAddToCart(userDetails);
+    toast(
+      "Error while deleting the item from cart !" + productSelected.selected
+    );
+  };
 
-  useEffect(() => {}, [cartItems]);
+  useEffect(() => {
+    // console.log("rendingrreering !");
+  }, [cartItems]);
 
   return (
     <tr className="bg-white border-b hover:bg-gray-50 w-full text-center">
@@ -35,7 +63,6 @@ const CartItem = ({ data }) => {
             alt=""
             className="max-w-[65px] h-auto"
           />
-
           <h2 className="font-semibold text-[1.3rem]">{data.product.title}</h2>
         </div>
       </td>
@@ -79,7 +106,14 @@ const CartItem = ({ data }) => {
       </td> */}
       <td className="p-2 fonts md:px-2 md:py-4 text-center">
         {/* ${data.eachitem.price * data.count} */} {/* COMMENTED */}
+        <div className="flex items-center justify-center space-x-4 px-3">
+          <span>32</span>
+          <span onClick={() => deleteHandler(data.product._id)}>
+            <MdDelete className="text-2xl text-black cursor-pointer" />
+          </span>
+        </div>
       </td>
+      <Toaster />
     </tr>
   );
 };

@@ -10,8 +10,12 @@ const useFetchAndAddToCart = (userDetails) => {
     const fetchAndAddToCart = async (userId) => {
       try {
         let cartItemsResponse = await apiService.getCart(userId);
-        if (cartItemsResponse.length > 0) {
-          setCartItems(cartItemsResponse);
+        if (cartItemsResponse.data.length > 0) {
+          setCartItems(cartItemsResponse.data);
+        }
+
+        if (cartItemsResponse.status !== 200) {
+          return 'Server Error !';
         }
         // console.log("cart items response: ", cartItemsResponse);
       } catch (error) {

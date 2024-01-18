@@ -60,9 +60,25 @@ const apiService = {
   getCart: async (userId) => {
     try {
       const response = await axios.get(`${API_BASE_URL}/user/${userId}/cart`);
-      return response.data;
+      return response;
     } catch (e) {
       console.log("server error !");
+    }
+  },
+  deleteCart: async (userId, productId) => {
+    console.log("rpdocut id : ", productId);
+    try {
+      const response = await axios.delete(
+        `${API_BASE_URL}/user/${userId}/cart`,
+        {
+          data: {
+            productId: productId
+          }
+        }
+      );
+      return response;
+    } catch (e) {
+      throw Error("server error !");
     }
   }
 };
