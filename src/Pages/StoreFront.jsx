@@ -1,8 +1,8 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import StoreSideBar from "../Components/StoreSideBar";
-import Preloader from "../Components/Preloader";
-import { Carousel } from "../Components/Carousel";
-import Footer from "../Components/Footer";
+import StoreSideBar from "../components/StoreSidebar";
+import Preloader from "../components/Preloader";
+import { Carousel } from "../components/Carousel";
+import Footer from "../components/Footer";
 import { ShopContext } from "../context/shop-context";
 import { useParams, useSearchParams } from "react-router-dom";
 import axios from "axios";

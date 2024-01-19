@@ -1,6 +1,6 @@
 import React from "react";
 import data from "../DummyData/data.js";
-import Card from "../Components/Card";
+import Card from "../components/Card.jsx";
 import { nanoid } from "nanoid";
 export default function Fruits({ img, title, description, price }) {
   const fruitsData = data.find((data) => data.name === "fruits");

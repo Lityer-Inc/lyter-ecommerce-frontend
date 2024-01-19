@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { ShopContext } from "../context/shop-context";
+import { useMutation } from "@tanstack/react-query";
 
 export default function Card({ data }) {
   console.log(data)
@@ -16,6 +17,32 @@ export default function Card({ data }) {
   const clickHandler = () => {
     setProductDetails({ selected: true, details: data });
   };
+
+  // const deleteHandler = async (productId) => {
+  //   try {
+  //     const res = await apiService.deleteCart(userDetails.id, productId);
+  //     if (res.status === 200) {
+  //       console.log("deleteHnadler response : ", res);
+  //       toast("Product Succesfully Removed !");
+  //     } else {
+  //       toast("Error while deleting the item from cart !");
+  //     }
+  //   } catch (e) {
+  //     console.log("error");
+  //     toast("Server Error !");
+  //   }
+  //   // useFetchAndAddToCart(userDetails);
+  // };
+
+  // const { mutateAsync: deleteCartItem } = useMutation({
+  //   mutationFn: deleteHandler,
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries(["cart"], {
+  //       refetchInactive: true,
+  //       refetchOnWindowFocus: true
+  //     });
+  //   }
+  // });
 
   return (
     <>

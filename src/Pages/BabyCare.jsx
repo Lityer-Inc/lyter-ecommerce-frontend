@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import Card from "../Components/Card";
+import data from "../DummyData/data.js";
+import Card from "../components/Card.jsx";
 import { nanoid } from "nanoid";
 import { ShopContext } from "../context/shop-context";
 import { useSearchParams } from "react-router-dom";

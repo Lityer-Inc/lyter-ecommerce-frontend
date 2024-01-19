@@ -1,19 +1,16 @@
 import { useContext, useEffect, useState } from "react";
-import Stores from "../Components/Stores.jsx";
-import Preloader from "../Components/Preloader";
+import Stores from "../components/Stores.jsx";
+import Preloader from "../components/Preloader.jsx";
 import { Link } from "react-router-dom";
 import dataStores from "../DummyData/dataStores.js";
-import Footer from "../Components/Footer.jsx";
+import Footer from "../components/Footer.jsx";
 import { ShopContext } from "../context/shop-context.jsx";
+import { useQuery } from "@tanstack/react-query";
+import apiService from "../utils/apiService.jsx";
 
 export default function StoresList() {
-  const { stores } = useContext(ShopContext);
   // const [storesData, setStoresData] = useEffect();
-  const [isLoading, setIsLoading] = useState(true);
-
-  setTimeout(() => {
-    setIsLoading(false); // Set isLoading to false after the delay
-  }, 1500);
+  const { getStores } = apiService;
 
   // if (stores) {
   //   setIsLoading(false);
@@ -22,6 +19,12 @@ export default function StoresList() {
   // }
 
   // console.log("stores : ", stores);
+
+  const { data: stores, isLoading } = useQuery({
+    queryFn: () => getStores(),
+    queryKey: ["stores"],
+  });
+
 
   if (isLoading) {
     <Preloader />;
@@ -33,7 +36,7 @@ export default function StoresList() {
         <section className=" w-[800px] bg-white grow">
           <ul className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 items-center px-12 mt-10">
             {stores &&
-              stores.map((item, i) => (
+              stores?.map((item, i) => (
                 <Link
                   to={`/storefront?id=${item._id}`}
                   className="w-full"

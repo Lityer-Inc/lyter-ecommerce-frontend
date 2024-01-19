@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
-import Navbar from "./Components/Navbar";
+import Navbar from "./components/Navbar";
 // import Home from "./Pages/Home";
 import { Routes, Route } from "react-router-dom";
 import Beverages from "./Pages/Beverages";
@@ -14,23 +14,24 @@ import BabyCare from "./Pages/BabyCare";
 import Fruits from "./Pages/Fruits";
 import "./index.css";
 import { ShopContext } from "./context/shop-context";
-import Login from "./Components/Login";
-import Signup from "./Components/Signup";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
 import StoresList from "./Pages/StoresList";
 import StoreFront from "./Pages/StoreFront";
-import Preloader from "./Components/Preloader";
-import Protectedroute from "./Components/Protectedroute";
+import Preloader from "./components/Preloader";
+import Protectedroute from "./components/Protectedroute";
 // import Account from "./Pages/Dashbardlayout";
 import Orders from "./Pages/Orders";
-import Alert from "./Components/Alert";
+import Alert from "./components/Alert";
 import Saved from "./Pages/Saved";
 import Dashboardhome from "./Pages/Dashboardhome";
 import CheckoutPayment from "./Pages/CheckoutPayment";
-import ProductDetails from "./Components/ProductDetails";
+import ProductDetails from "./components/ProductDetails";
 import Cookies from "js-cookie";
 import apiService from "./utils/apiService.jsx";
-import Footer from "./Components/Footer.jsx";
+import Footer from "./components/Footer.jsx";
 import useFetchAndAddToCart from "./hooks/useFetchCart.js";
+import { Button } from "./components/ui/button";
 
 export default function App() {
   const {
@@ -104,7 +105,6 @@ export default function App() {
     };
     getUserData();
     getStores();
-
   }, []);
 
   useFetchAndAddToCart(userDetails);

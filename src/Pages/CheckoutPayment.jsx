@@ -1,6 +1,6 @@
-import DeliveryRibbon from "../Components/DeliveryRibbon";
-import InputField from "../Components/InputField";
-import Footer from "../Components/Footer";
+import DeliveryRibbon from "../components/DeliveryRibbon";
+import InputField from "../components/InputField";
+import Footer from "../components/Footer";
 import { useContext } from "react";
 import { ShopContext } from "../context/shop-context";
 

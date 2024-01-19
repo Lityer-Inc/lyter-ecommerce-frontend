@@ -7,15 +7,7 @@ const API_BASE_URL = "http://localhost:8000";
 const apiService = {
   getStores: async () => {
     try {
-      const token = Cookies.get("token")
-        ? JSON.parse(Cookies.get("token"))
-        : null;
-
-      const response = await axios.get(`${API_BASE_URL}/stores/`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      const response = await axios.get(`${API_BASE_URL}/stores/`);
 
       if (response.status === 200) {
         const stores = await response.data;
@@ -59,14 +51,14 @@ const apiService = {
   },
   getCart: async (userId) => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/user/${userId}/cart`);
-      return response;
+      const response = await axios.get(`${API_BASE_URL}/user/${'65a567337e4098286d11e349'}/cart`);
+      return response.data;
     } catch (e) {
       console.log("server error !");
     }
   },
   deleteCart: async (userId, productId) => {
-    console.log("rpdocut id : ", productId);
+    // console.log("rpdocut id : ", productId);
     try {
       const response = await axios.delete(
         `${API_BASE_URL}/user/${userId}/cart`,
@@ -84,3 +76,5 @@ const apiService = {
 };
 
 export default apiService;
+
+
