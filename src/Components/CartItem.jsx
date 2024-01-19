@@ -21,7 +21,9 @@ const CartItem = ({ data }) => {
     userDetails,
     product,
     productSelected,
-    setProductSelected
+    setProductSelected,
+    isCartOpen,
+    setIsCheckoutOpen
   } = useContext(ShopContext);
 
   const queryClient = useQueryClient();
@@ -33,6 +35,10 @@ const CartItem = ({ data }) => {
       removeMini(data.product._id);
     }
   };
+ 
+  const checkoutHandler = () => {
+    setIsCheckoutOpen(true);
+  }
 
   const deleteHandler = async (productId) => {
     try {
@@ -84,7 +90,7 @@ const CartItem = ({ data }) => {
               <h2 className="font-semibold text-[1.3rem]">
                 {data.product.title}
               </h2>
-              <span className="self-start">Lorem ipsum dolor sit .</span>
+              <span className="self-start">{data.product.description}</span>
             </div>
 
             <span className="fonts font-semibold text-xl text-blue-500 md:px-2 md:py-4 whitespace-nowrap text-center">
@@ -98,7 +104,7 @@ const CartItem = ({ data }) => {
                rounded-full gap-3"
             >
               <CiSquareMinus onClick={() => addMini(data.product)} />
-              <span className="text-black text-bold text-[1.1rem]">{1}</span>
+              <span className="text-black text-bold text-[1.1rem]">{data?.quantity}</span>
               <CiSquarePlus
                 className="text-[5rem] "
                 onClick={() => removeCom(data)}
@@ -112,7 +118,7 @@ const CartItem = ({ data }) => {
                   console.log("error in deleting cart item");
                 }
               }}
-              className='flex items-center gap-4 p-1 px-4 border-b border-red-300 rounde-full'
+              className="flex items-center gap-4 p-1 px-4 border-b border-red-300 rounde-full"
             >
               Remove <MdDelete className="text-2xl text-black cursor-pointer" />
             </button>
@@ -124,7 +130,7 @@ const CartItem = ({ data }) => {
               Continue Shopping
             </button>
             {}
-            <button className="bg-red-400 hover:bg-red-500 rounded-full px-6 py-2 w-full">
+            <button className="bg-red-400 hover:bg-red-500 rounded-full px-6 py-2 w-full" onClick={checkoutHandler} >
               CheckOut
             </button>
           </div>
