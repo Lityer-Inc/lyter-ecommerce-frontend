@@ -7,7 +7,10 @@ export default function Stores({ data }) {
       <div className="cardS bg-gray-50 max-w-[440px]">
         {/* image */}
         <div className="cardS-img h-16 w-16">
-          <img className="h-16 py-3 object-cover" src={data?.products[0]?.image} />
+          <img
+            className="h-16 py-3 object-cover"
+            src={data?.products[0]?.image}
+          />
         </div>
         {/* title, categorys and tags */}
         <div className="cardS-content h-full">
@@ -15,7 +18,10 @@ export default function Stores({ data }) {
           <div className="mt-2 relative">
             <Breadcrumbs className="separator" separator="•">
               {data.category.map((item, i) => (
-                <div className="cardS-category text-[#636367]/90 font-semibold inline-flex mr-1 px-1" key={i}>
+                <div
+                  className="cardS-category text-[#636367]/90 font-semibold inline-flex mr-1 px-1"
+                  key={i}
+                >
                   {item}
                 </div>
               ))}
@@ -23,7 +29,9 @@ export default function Stores({ data }) {
           </div>
           <div className=" inline-block mt-1">
             {data.tags.map((item, i) => (
-              <div className="cardS-tags inline-flex mr-1 px-1" key={i}>{item}</div>
+              <div className="cardS-tags inline-flex mr-1 px-1" key={i}>
+                {item}
+              </div>
             ))}
           </div>
         </div>
@@ -65,7 +73,9 @@ export default function Stores({ data }) {
                   d="m11 21-8-8L13 3h5l3 3v5L11 21Zm4.5-11a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"
                 ></path>
               </svg>
-              Lower fees on $10.0$
+              {data.description.length > 10
+                ? `${data.description.substring(0, 10)}...`
+                : data.description}
             </span>
           ) : (
             ""
@@ -75,3 +85,4 @@ export default function Stores({ data }) {
     </>
   );
 }
+
