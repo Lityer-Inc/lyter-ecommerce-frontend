@@ -39,7 +39,6 @@ export default function Login() {
       // Handle the response from the authentication endpoint
       
       const token = String(response.data.token);
-      console.log("response data : ", await response);
       if (response.status === 200) {
         storeToken(token);
         setautherr(false);
@@ -103,7 +102,6 @@ export default function Login() {
       // setAlert(true);
       console.error(error);
     }
-    // console.log(response)
   };
 
   return (

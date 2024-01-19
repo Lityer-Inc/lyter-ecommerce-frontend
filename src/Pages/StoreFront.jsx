@@ -1,8 +1,8 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import StoreSideBar from "../Components/StoreSideBar";
-import Preloader from "../Components/Preloader";
-import { Carousel } from "../Components/Carousel";
-import Footer from "../Components/Footer";
+import StoreSideBar from "../components/StoreSidebar";
+import Preloader from "../components/Preloader";
+import { Carousel } from "../components/Carousel";
+import Footer from "../components/Footer";
 import { ShopContext } from "../context/shop-context";
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import axios from "axios";
@@ -24,7 +24,9 @@ export default function Store() {
     const fetchData = async () =>{
       try{
         // fetch stored data
-        const response = await axios.get(`${endpointHead}/stores/${storeId.current}/products`)
+        const response = await axios.get(`${endpointHead}/stores/${storeId.current}/products`, {
+          // headers: 
+        })
         const productsData = response.data;
         console.log("data:", productsData)
         setStore(productsData)
@@ -86,7 +88,7 @@ export default function Store() {
             <h2 className="text-2xl font-bold ">Fresh Vegetables</h2>
             <Carousel />
           </div> */}
-          <Footer />
+          {/* <Footer /> */}
         </section>
       </div>
     </>

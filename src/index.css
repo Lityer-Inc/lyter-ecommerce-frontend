@@ -379,20 +379,21 @@ svg {
 /* button */
 
 .button {
-  --width: 100px;
+  --width: 200px;
   --height: 35px;
   --tooltip-height: 35px;
   --tooltip-width: 90px;
   --gap-between-tooltip-to-button: 18px;
-  --button-color: rgba(255, 0, 102, 0.4);
+  --button-color: #FF0066;
   --tooltip-color: #fff;
   width: var(--width);
   height: var(--height);
-  background: var(--button-color);
+  /* background: var(--button-color); */
   position: relative;
   text-align: center;
-  border-radius: 0.18em;
+  border-radius: 10px;
   transition: background 0.3s;
+  cursor: pointer;
 }
 
 

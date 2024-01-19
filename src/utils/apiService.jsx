@@ -7,19 +7,11 @@ const API_BASE_URL = "http://localhost:8000";
 const apiService = {
   getStores: async () => {
     try {
-      const token = Cookies.get("token")
-        ? JSON.parse(Cookies.get("token"))
-        : null;
-
-      const response = await axios.get(`${API_BASE_URL}/stores/`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      const response = await axios.get(`${API_BASE_URL}/stores/`);
 
       if (response.status === 200) {
         const stores = await response.data;
-        return stores; 
+        return stores;
       } else {
         // Handle bad response
         alert("Error: " + response.statusText);
@@ -36,7 +28,6 @@ const apiService = {
         ? JSON.parse(Cookies.get("token"))
         : null;
 
-      console.log("token : ", token);
       if (token == null) {
         // alert("token is null");
         return;
@@ -47,10 +38,8 @@ const apiService = {
           Authorization: `Bearer ${token}`
         }
       });
-      console.log("decodeReponse : ", response.data);
-      console.log("rseponse : ", response.status);
       if (response.status === 200) {
-        return {status: 200, data: response.data};
+        return { status: 200, data: response.data };
       } else {
         alert("error : " + response.statusText);
         return { status: 404, data: response.statusText };
@@ -59,7 +48,33 @@ const apiService = {
       // alert("error : ", response.statusText);
       return { status: 500, data: "Server Error" };
     }
+  },
+  getCart: async (userId) => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/user/${'65a567337e4098286d11e349'}/cart`);
+      return response.data;
+    } catch (e) {
+      console.log("server error !");
+    }
+  },
+  deleteCart: async (userId, productId) => {
+    // console.log("rpdocut id : ", productId);
+    try {
+      const response = await axios.delete(
+        `${API_BASE_URL}/user/${userId}/cart`,
+        {
+          data: {
+            productId: productId
+          }
+        }
+      );
+      return response;
+    } catch (e) {
+      throw Error("server error !");
+    }
   }
 };
 
 export default apiService;
+
+

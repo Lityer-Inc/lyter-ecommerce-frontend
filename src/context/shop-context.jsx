@@ -5,7 +5,6 @@ import axios from "axios";
 
 export const ShopContext = createContext("context");
 
-console.log(data, "Cart data");
 /*
 const getDefaultCart = () => {
   let cart = {};
@@ -27,9 +26,9 @@ export const ShopContextProvider = (props) => {
   //state for alert icon, msg1, msg2, action
   const [alert, setAlert] = useState(false);
   // state for productDetails
-  const [productDetails, setProductDetails] = useState({
+  const [productSelected, setProductSelected] = useState({
     selected: false,
-    details: {}
+    id: null
   });
   const [userDetails, setUserDetails] = useState({
     email: null,
@@ -47,11 +46,9 @@ export const ShopContextProvider = (props) => {
     setCartItems((prev) => {
       // Create a copy of the cart array
       const updatedCart = [...prev];
-      console.log(updatedCart, "update copy");
-      console.log(prev, "prev");
       // Check if the item is already in the cart
       const existingItemIndex = updatedCart.findIndex(
-        (item) => item.eachitem.id === itemToAdd.id
+        (item) => item.eachitem._id === itemToAdd._id
       );
 
       if (existingItemIndex !== -1) {
@@ -73,19 +70,16 @@ export const ShopContextProvider = (props) => {
   };
 
   const removeFromCart = (itemToRemove) => {
-    console.log(cartItems, itemToRemove, "inin");
     setCartItems((prev) => {
       const updatedCart = prev.filter(
         (item) => item.eachitem.id !== itemToRemove
       );
-      console.log(updatedCart, "updatedCart Li");
       Cookies.set("cart", JSON.stringify(updatedCart));
       return updatedCart;
     });
   };
 
   const addMini = (itemToAdd) => {
-    console.log("hiiiiii ", itemToAdd);
     setCartItems((prev) => {
       const updatedCart = [...prev];
       const existingItemIndex = updatedCart.findIndex(
@@ -102,13 +96,11 @@ export const ShopContextProvider = (props) => {
   };
 
   const removeMini = (itemToRemove) => {
-    console.log(cartItems, itemToRemove, "inin");
     setCartItems((prev) => {
       const updatedCart = [...prev];
       const existingItemIndex = updatedCart.findIndex(
         (item) => item.eachitem.id === itemToRemove
       );
-      console.log(existingItemIndex, "Hello");
       if (existingItemIndex !== -1) {
         // If the item is already in the cart, update its count
         updatedCart[existingItemIndex].count -= 1;
@@ -150,32 +142,34 @@ export const ShopContextProvider = (props) => {
   let totalItems = 0;
   let totalPrice = 0;
 
-  if (Array.isArray(cartItems)) {
-    console.log("Calculating total items and price...");
+  // ? COMMENTED
+  // if (Array.isArray(cartItems)) {
+  //   console.log("Calculating total items and price...");
 
-    totalItems = cartItems.reduce((acc, item) => acc + item.count, 0);
+  //   totalItems = cartItems.reduce((acc, item) => acc + item.count, 0);
 
-    totalPrice = cartItems.reduce((acc, item) => {
-      console.log("Current item in totalPrice calculation:", item);
-      console.log("ACCCCCCCCCCCCCCCCCCCCCCCCCC", acc);
-      const dataItem = data.find((d) => d.id === item.eachitem.id);
+  //   totalPrice = cartItems.reduce((acc, item) => {
+  //     console.log("Current item in totalPrice calculation:", item);
+  //     console.log("ACCCCCCCCCCCCCCCCCCCCCCCCCC", acc);
+  //     const dataItem = data.find((d) => d.id === item.eachitem.id);
 
-      if (!dataItem) {
-        console.error("Data item not found for id:", item.eachitem.id);
-        return acc;
-      }
+  //     if (!dataItem) {
+  //       console.error("Data item not found for id:", item.eachitem.id);
+  //       return acc;
+  //     }
 
-      console.log("Adding to totalPrice:", item.count * dataItem.price);
-      return acc + item.count * dataItem.price;
-    }, 0);
-  } else {
-    console.log("cartItems is not an array");
-  }
+  //     console.log("Adding to totalPrice:", item.count * dataItem.price);
+  //     return acc + item.count * dataItem.price;
+  //   }, 0);
+  // } else {
+  //   console.log("cartItems is not an array");
+  // }
 
   const contextValue = {
     userDetails,
     setUserDetails,
     cartItems,
+    setCartItems,
     addToCart,
     removeFromCart,
     setLoginModal,
@@ -193,8 +187,8 @@ export const ShopContextProvider = (props) => {
     setAlert,
     alertState,
     setAlertState,
-    productDetails,
-    setProductDetails,
+    productSelected,
+    setProductSelected,
     stores,
     setStores
   };

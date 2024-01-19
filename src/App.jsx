@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
-import Navbar from "./Components/Navbar";
+import Navbar from "./components/Navbar";
 // import Home from "./Pages/Home";
 import { Routes, Route } from "react-router-dom";
 import Beverages from "./Pages/Beverages";
@@ -14,21 +14,24 @@ import BabyCare from "./Pages/BabyCare";
 import Fruits from "./Pages/Fruits";
 import "./index.css";
 import { ShopContext } from "./context/shop-context";
-import Login from "./Components/Login";
-import Signup from "./Components/Signup";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
 import StoresList from "./Pages/StoresList";
 import StoreFront from "./Pages/StoreFront";
-import Preloader from "./Components/Preloader";
-import Protectedroute from "./Components/Protectedroute";
+import Preloader from "./components/Preloader";
+import Protectedroute from "./components/Protectedroute";
 // import Account from "./Pages/Dashbardlayout";
 import Orders from "./Pages/Orders";
-import Alert from "./Components/Alert";
+import Alert from "./components/Alert";
 import Saved from "./Pages/Saved";
 import Dashboardhome from "./Pages/Dashboardhome";
 import CheckoutPayment from "./Pages/CheckoutPayment";
-import ProductDetails from "./Components/ProductDetails";
+import ProductDetails from "./components/ProductDetails";
 import Cookies from "js-cookie";
 import apiService from "./utils/apiService.jsx";
+import Footer from "./components/Footer.jsx";
+import useFetchAndAddToCart from "./hooks/useFetchCart.js";
+import { Button } from "./components/ui/button";
 
 export default function App() {
   const {
@@ -38,9 +41,12 @@ export default function App() {
     alert,
     setAlert,
     setAlertState,
+    userDetails,
     setUserDetails,
     stores,
-    setStores
+    setStores,
+    cartItems,
+    productSelected
   } = useContext(ShopContext);
   const [isLoading, setIsLoading] = useState(true);
   const [isErr, setIsErr] = useState(null);
@@ -49,9 +55,7 @@ export default function App() {
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
-      console.log("listening 1");
       if (loginModal !== 0 && !modal.current.contains(event.target)) {
-        console.log("listening 2");
         setLoginModal(0);
       }
     };
@@ -73,6 +77,10 @@ export default function App() {
   }, [modal, loginModal, isLoading, alert, token]);
 
   useEffect(() => {
+    // if (cartItems && cartItems.length > 0) {
+    //   return null;
+    // }
+
     const getUserData = async () => {
       const response = await apiService.decodeJwt();
       if (response.status !== 200) {
@@ -80,37 +88,39 @@ export default function App() {
         return;
       } else {
         setUserDetails({
+          id: await response.data.id,
           email: await response.data.email,
           name: await response.data.email.split("@")[0]
-        });  
+        });
       }
     };
 
     const getStores = async () => {
       const response = await apiService.getStores();
-      console.log("respnse : ", response);
       if (response) {
         setStores(response);
       } else {
-        alert("somehting wrong !!!");
+        window.alert("somehting wrong !!!");
       }
     };
     getUserData();
     getStores();
   }, []);
 
+  useFetchAndAddToCart(userDetails);
+
   if (isErr != null) {
-    return alert('Error : ' + isErr);
+    return alert("Error : " + isErr);
   }
 
   return (
-    <div className="bg-[#fff] w-100 h-100 relative">
+    <div className="bg-[#fff] w-[100dvw] h-[100dvh] relative">
       {isLoading && <Preloader />}
 
       {alert && <Alert info={alertState} />}
 
       <Navbar />
-      <ProductDetails />
+      {productSelected.selected && <ProductDetails />}
       <Routes>
         <Route path="/" element={<StoresList />} />
         <Route path="/store" element={<StoresList />} />
@@ -153,6 +163,7 @@ export default function App() {
           }
         />
       </Routes>
+      <Footer />
       {loginModal !== 0 && (
         <div
           className="login-box fixed p-10 box-border top-[50%] z-30 left-[50%] w-[80%] md:w-[700px] my-auto mx-auto translate-x-[-50%] translate-y-[-50%] rounded-[10px]"

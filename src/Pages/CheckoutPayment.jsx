@@ -1,8 +1,12 @@
-import DeliveryRibbon from "../Components/DeliveryRibbon";
-import InputField from "../Components/InputField";
-import Footer from "../Components/Footer";
+import DeliveryRibbon from "../components/DeliveryRibbon";
+import InputField from "../components/InputField";
+import Footer from "../components/Footer";
+import { useContext } from "react";
+import { ShopContext } from "../context/shop-context";
 
 const CheckoutPayment = () => {
+  
+const {totalPrice, userDetails} = useContext(ShopContext)
   return (
     // <main className='bg-[#F5F5F5] w-full h-full'>
     //   {/* left */}
@@ -26,7 +30,7 @@ const CheckoutPayment = () => {
           </h2>
           {/* name field */}
           <div className="flex space-x-4">
-            <InputField dropDown={false} field="Full Name" />
+            <InputField dropDown={false} field="Full Name" defaultValue={userDetails.name}/>
             {/* <InputField dropDown={false} field="Second Name" /> */}
           </div>
           <InputField dropDown={false} field="Delivery Address" />
@@ -35,7 +39,7 @@ const CheckoutPayment = () => {
           <InputField dropDown={false} field="Street address" />
           <InputField dropDown={false} field="Town/City" />
           <InputField dropDown={false} field="Zip Code" />
-          <InputField dropDown={false} field="Phone" />
+          <InputField dropDown={false} field="Phone"  defaultValue={userDetails.contactNumber}/>
           <p>Payment</p>
           {/* <InputField dropDown={false} field="Wallet address" /> */}
         </div>
@@ -47,7 +51,7 @@ const CheckoutPayment = () => {
           </div>
           <div className="text-md flex items-center justify-between text-xl text-gray-700">
             <h5>{"ItemsSubtotal"}</h5>
-            <h5>{34234}</h5>
+            <h5>{totalPrice}</h5>
           </div>
           <div className="text-md flex items-center justify-between text-xl text-gray-700">
             <h5 className="text-gray-800">Delivery Charges</h5>

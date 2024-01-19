@@ -3,7 +3,7 @@ import { ShopContext } from "../context/shop-context";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 
-export default function Account() {
+export default function Account({visible = false}) {
   const { setLoginModal, userDetails, user } = useContext(ShopContext);
   const [selectCurrency, setSelectCurrency] = useState("usdt");
   const [openCurrency, setOpenCurrency] = useState(false);
@@ -11,7 +11,6 @@ export default function Account() {
   const accModal = useRef(null);
   const balModal = useRef(null);
 
-  // const token = Cookies.get("token") ? JSON.parse(Cookies.get("token")) : null;
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -37,7 +36,7 @@ export default function Account() {
   };
 
   return (
-    <div className="flex gap-2 text-sm relative max-md:hidden">
+    <div className={`flex gap-2 text-sm relative ${!visible && "max-md:hidden"}`}>
       <div
         className="flex gap-1 self-center cursor-pointer shadow-[0_0px_5px_0.5px_rgba(0,0,0,0.06)] rounded-full items-center"
         onClick={() => setAccountModal(!accountModal)}
@@ -108,7 +107,7 @@ export default function Account() {
           </div>
 
           {(userDetails.email !== null) | undefined ? (
-            <div className="flex gap-2 cursor-pointer w-full rounded hover:bg-[#f5f5f5] p-2">
+            <div onClick={logout} className="flex gap-2 cursor-pointer w-full rounded hover:bg-[#f5f5f5] p-2">
               <span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

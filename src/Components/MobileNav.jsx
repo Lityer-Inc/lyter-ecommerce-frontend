@@ -4,6 +4,7 @@ import { ShopContext } from '../context/shop-context';
 import SpaceDashboardIcon from '@mui/icons-material/SpaceDashboard';
 import CottageIcon from '@mui/icons-material/Cottage';
 import Divider from '@mui/material/Divider';
+import Account from "./Account";
 
 export default function MobileNav({ isMenuOpen, toggleMobileMenu }) {
 
@@ -122,8 +123,9 @@ export default function MobileNav({ isMenuOpen, toggleMobileMenu }) {
           }
         }>
           <div className="header-account w-14 h-14 mt-4 flex items-center gap-3">
-            <img className="account-icon-img" src="/account-icon.png" />
-            <p className="sign-in-text">Sign&nbsp;In</p>
+            {/* <img className="account-icon-img" src="/account-icon.png" />
+            <p className="sign-in-text">Sign&nbsp;In</p> */}
+            <Account visible={true} />
           </div>
         </button>
       }
