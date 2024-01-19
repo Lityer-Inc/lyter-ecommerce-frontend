@@ -42,14 +42,14 @@ const CartMain = () => {
           className="h-9 w-9 flex-shrink-0 text-black group-hover:text-gray-900"
         />
         <span className="ml-2 text-[1.1rem] font- text-gray-900 group-hover:text-gray-800">
-          {cartItems.length}
+          {cartItems?.length}
         </span>
       </SheetTrigger>
       <SheetContent className="flex w-full flex-col pr-0 sm:max-w-lg">
         {" "}
         {/* the actual cart component which slides over on cick of cart icon */}
         <SheetHeader className="space-y-2.5 pr-6">
-          <SheetTitle>Cart ({cartItems.length})</SheetTitle>
+          <SheetTitle>Cart ({cartItems?.length})</SheetTitle>
         </SheetHeader>
         {itemCount == 0 ? (
           <>
@@ -72,7 +72,7 @@ const CartMain = () => {
               </div>
               <div className="pt-10 flex w-full flex-col pr-6">
                 {/* TODO : cart logic */}
-                {cartItems.map((item, index) => {
+                {cartItems?.map((item, index) => {
                   return <CartItem data={item} key={index} />;
                 })}
               </div>

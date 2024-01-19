@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import Stores from "../components/Stores.jsx";
 import Preloader from "../components/Preloader.jsx";
 import { Link } from "react-router-dom";
-import dataStores from "../DummyData/dataStores.js";
 import Footer from "../components/Footer.jsx";
 import { ShopContext } from "../context/shop-context.jsx";
 import { useQuery } from "@tanstack/react-query";
@@ -32,7 +31,7 @@ export default function StoresList() {
 
   return (
     <>
-      <div className="flex flex-row justify-between">
+      <div className="flex flex-row justify-between mb-8">
         <section className=" w-[800px] bg-white grow">
           <ul className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 items-center px-12 mt-10">
             {stores &&

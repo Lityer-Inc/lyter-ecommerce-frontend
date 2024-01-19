@@ -4,12 +4,12 @@ import React from "react";
 export default function Stores({ data }) {
   return (
     <>
-      <div className="cardS bg-gray-50 max-w-[440px]">
+      <div className="cardS bg-gray-50 max-w-[440px] ">
         {/* image */}
-        <div className="cardS-img h-16 w-16">
+        <div className="cardS-img h-16 w-16 rounded-full">
           <img
-            className="h-16 py-3 object-cover"
-            src={data?.products[0]?.image}
+            className=" py-3 object-cover rounded-full"
+            src={data?.avatar}
           />
         </div>
         {/* title, categorys and tags */}
@@ -17,7 +17,7 @@ export default function Stores({ data }) {
           <div className="cardS-title">{data.name}</div>
           <div className="mt-2 relative">
             <Breadcrumbs className="separator" separator="•">
-              {data.category.map((item, i) => (
+              {data.category?.map((item, i) => (
                 <div
                   className="cardS-category text-[#636367]/90 font-semibold inline-flex mr-1 px-1"
                   key={i}
@@ -28,7 +28,7 @@ export default function Stores({ data }) {
             </Breadcrumbs>
           </div>
           <div className=" inline-block mt-1">
-            {data.tags.map((item, i) => (
+            {data.tags?.map((item, i) => (
               <div className="cardS-tags inline-flex mr-1 px-1" key={i}>
                 {item}
               </div>
