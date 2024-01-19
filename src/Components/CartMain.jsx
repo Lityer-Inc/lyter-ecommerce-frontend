@@ -28,6 +28,29 @@ const CartMain = () => {
     queryKey: ["cart"]
   });
 
+  console.log("cartItmes ; ", cartItems);
+
+  const cartProducts = [];
+
+  cartItems &&
+    cartItems.map((item) => [
+      cartProducts.push({ ...item.product, storeId: "lityer" })
+    ]);
+
+  console.log("cartProduts : ", cartProducts);
+
+  const cartProductsByStore = cartProducts.reduce((acc, product) => {
+    const storeId = product.storeId;
+
+    // Create an array for the store if it doesn't exist
+    acc[storeId] = acc[storeId] || [];
+
+    // Add the product to the store's array
+    acc[storeId].push(product);
+
+    return acc;
+  }, {});
+
   if (isLoading) {
     return <Preloader />;
   }
@@ -71,10 +94,61 @@ const CartMain = () => {
                 </div>
               </div>
               <div className="pt-10 flex w-full flex-col pr-6">
-                {/* TODO : cart logic */}
-                {cartItems.map((item, index) => {
+                {/* {cartItems.map((item, index) => {
                   return <CartItem data={item} key={index} />;
-                })}
+                })} */}
+                {Object.keys(cartProductsByStore).map((storeId) => (
+                  <section
+                    className="py-3 px-4 shadow-xl bg-gray-100 rounded-md border border-gray-100"
+                    key={storeId}
+                  >
+                    <div className="flex flex-col space-y-4">
+                      {/* store image & title */}
+                      <div className="flex items-center space-x-4">
+                        <img
+                          src={"/empty-cart.png"}
+                          className="rounded-full w-[80px] h-[80px] border border-gray-300"
+                          alt="productImage"
+                        />
+                        <div className="flex flex-col items-start">
+                          <h3 className="text-xl font-semibold text-gray-900">
+                            {storeId}
+                          </h3>
+                          <span className='text-gray-700' > Lorem ipsum dolor sit amet.</span>
+                          <span className='text-green-800 font-medium'>Delivery by 7pm</span>
+                        </div>
+                      </div>
+                      {/* store product images */}
+                      <div className="flex flex-grow w-full space-x-2">
+                        {cartProductsByStore[storeId].map((product) => (
+                          <img
+                            src={product.image}
+                            className="rounded-full w-[70px] h-[70px] p-1 border object-contain"
+                            alt="productImage"
+                          />
+                        ))}
+                      </div>
+                      {/* down part */}
+                      <div className="self-start flex gap-3 fonts font-medium whitespace-nowrap text-center">
+                        <button className="bg-green-400 hover:bg-green-500 rounded-full px-4 py-2 w-full">
+                          Continue Shopping
+                        </button>
+                        {}
+                        <button
+                          className="bg-red-400 hover:bg-red-500 rounded-full px-6 py-2 w-full"
+                          // onClick={checkoutHandler}
+                        >
+                          CheckOut
+                        </button>
+                      </div>
+                    </div>
+                  </section>
+                ))}
+                {/* <section className="bg-white border-b hover:bg-gray-50 w-full text-center py-3">
+                  <div className="flex gap-3">
+                    <img />
+                  </div>
+                </section> */}
               </div>
 
               <SheetFooter>

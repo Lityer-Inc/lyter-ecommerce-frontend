@@ -51,7 +51,9 @@ const apiService = {
   },
   getCart: async (userId) => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/user/${'65a567337e4098286d11e349'}/cart`);
+      const response = await axios.get(
+        `${API_BASE_URL}/user/${"65a567337e4098286d11e349"}/cart`
+      );
       return response.data;
     } catch (e) {
       console.log("server error !");
@@ -72,9 +74,19 @@ const apiService = {
     } catch (e) {
       throw Error("server error !");
     }
+  },
+  addToCart: async (userId, productId, storeId) => {
+    console.log("rpdocut id : ", productId);
+    try {
+      const response = await axios.post(`${API_BASE_URL}/user/${userId}/cart`, {
+        productId: productId,
+        storeId: storeId
+      });
+      return response;
+    } catch (e) {
+      throw Error("server error !");
+    }
   }
 };
 
 export default apiService;
-
-

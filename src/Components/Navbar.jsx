@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import MobileNav from "./MobileNav";
 import Account from "./Account";
@@ -6,9 +6,10 @@ import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
 import { CheckoutPage } from "./Checkout";
 import SearchIcon from "@mui/icons-material/Search";
 import CartMain from "./CartMain";
+import { ShopContext } from "@/context/shop-context";
 
 export default function Navbar() {
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  const { isCheckoutOpen, setIsCheckoutOpen } = useContext(ShopContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
@@ -22,7 +23,7 @@ export default function Navbar() {
   }
 
   function handleCartShopClick() {
-    setIsCartOpen(!isCartOpen);
+    setIsCheckoutOpen(!isCheckoutOpen);
   }
 
   const menu = [
@@ -133,7 +134,7 @@ export default function Navbar() {
                   </div>
                 )} */}
                 <CheckoutPage
-                  isCartOpen2={isCartOpen}
+                  isCartOpen2={isCheckoutOpen}
                   toggleMobileCart={handleCartShopClick}
                 />
               </div>
