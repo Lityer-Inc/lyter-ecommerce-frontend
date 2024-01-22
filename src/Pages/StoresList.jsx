@@ -32,9 +32,10 @@ export default function StoresList() {
 
   return (
     <>
-      <div className="flex flex-row justify-between">
-        <section className=" w-[800px] bg-white grow">
-          <ul className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 items-center px-12 mt-10">
+      <div className="flex flex-row justify-between h-full bg-white">
+        <section className=" w-[800px] h-full overflow-y-scroll grow">
+          <ul className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 items-center px-12 
+           mt-10">
             {stores &&
               stores?.map((item, i) => (
                 <Link

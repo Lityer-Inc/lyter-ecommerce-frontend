@@ -32,6 +32,7 @@ import apiService from "./utils/apiService.jsx";
 import Footer from "./components/Footer.jsx";
 import useFetchAndAddToCart from "./hooks/useFetchCart.js";
 import { Button } from "./components/ui/button";
+import { CheckoutPage } from "./components/Checkout";
 
 export default function App() {
   const {
@@ -114,7 +115,8 @@ export default function App() {
   }
 
   return (
-    <div className="bg-[#fff] w-[100dvw] h-[100dvh] relative">
+    <div className="bg-[#fff] w-[100dvw] h-[100dvh] relative 
+    ">
       {isLoading && <Preloader />}
 
       {alert && <Alert info={alertState} />}

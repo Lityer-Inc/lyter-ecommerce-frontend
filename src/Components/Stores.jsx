@@ -8,8 +8,9 @@ export default function Stores({ data }) {
         {/* image */}
         <div className="cardS-img h-16 w-16">
           <img
-            className="h-16 py-3 object-cover"
-            src={data?.products[0]?.image}
+            className="h-16 py-3 object-cover"a
+            src={data?.avatar || ''}
+            alt="store"
           />
         </div>
         {/* title, categorys and tags */}
