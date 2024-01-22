@@ -13,7 +13,6 @@ import CartMain from "./CartMain";
 export default function Navbar() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
   const { setProductSelected } = useContext(ShopContext);
@@ -32,27 +31,6 @@ export default function Navbar() {
   function handleCartShopClick() {
     setIsCartOpen(!isCartOpen);
   }
-
-  const menu = [
-    { name: "Vegetables", Icon: "carrot.png", linkTo: "/vegetables" },
-    { name: "Fruits", Icon: "pear.png", linkTo: "/fruits" },
-    { name: "Dairy", Icon: "milk.png", linkTo: "/dairy" },
-    { name: "Meats", Icon: "meat2.png", linkTo: "/meats" },
-    { name: "Bakery", Icon: "bakery2.png", linkTo: "/bread" },
-    { name: "Frozen Foods", Icon: "frozen-fish.png", linkTo: "/frozen-foods" },
-    { name: "Beverages", Icon: "beverages.png", linkTo: "/beverages" },
-    {
-      name: "Cleaning Supplies",
-      Icon: "cleaning-products2.png",
-      linkTo: "/cleaning-supplies"
-    },
-    {
-      name: "Personal Care",
-      Icon: "facial-mask.png",
-      linkTo: "/personal-care"
-    },
-    { name: "Baby Care", Icon: "baby.png", linkTo: "/baby-care" }
-  ];
 
   useEffect(() => {
     // Function to update the screenWidth state when the window is resized
@@ -77,7 +55,7 @@ export default function Navbar() {
           isCategoriesOpen ? "" : "md:mb-12"
         }`}
       >
-        <div className="p-3 pb-1 w-full sticky top-0 z-20 bg-[#F5F5F5] shadow">
+        <div className="p-3 pb-1 w-full sticky top-0 z-20  bg-[#F5F5F5] shadow">
           <div className="flex w-full justify-evenly md:justify-between items-center ">
             {/* menu - logo container */}
             <div className="left-side flex justify-between gap-5 w-[70%] items-center">
@@ -110,6 +88,7 @@ export default function Navbar() {
               </Link>
 
               {/* search-bar categories*/}
+<<<<<<< alpha
               <div
                 onClick={handleCategoriesClick}
                 className={`hidden md:flex items-center justify-center px-4 py-2 hover:bg-pink-300 duration-500 transition-all rounded-lg cursor-pointer`}
@@ -119,6 +98,9 @@ export default function Navbar() {
                   Categories
                 </span>
               </div>
+=======
+              
+>>>>>>> local
               <div className="w-full pl-8 relative header-searchbar rounded-lg flex items-center hover:border-black/50 bg-white p-2">
                 <SearchIcon className="absolute left-3 cursor-pointer" />
                 <input
@@ -160,6 +142,7 @@ export default function Navbar() {
 <p className="sign-in-text">Sign In</p>
 </div> */}
         </div>
+<<<<<<< alpha
         <div className="fixed w-full z-10">
           {/* menu lg */}
           <div
@@ -180,6 +163,9 @@ export default function Navbar() {
             ))}
           </div>
         </div>
+=======
+      
+>>>>>>> local
       </div>
     </>
   );

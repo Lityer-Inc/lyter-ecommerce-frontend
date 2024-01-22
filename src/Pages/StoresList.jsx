@@ -31,20 +31,22 @@ export default function StoresList() {
 
   return (
     <>
+<<<<<<< alpha
       <div className="flex flex-row justify-between mb-8">
+=======
+    
+      <div className="flex flex-row justify-between">
+>>>>>>> local
         <section className=" w-[800px] bg-white grow">
           <ul className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 items-center px-12 mt-10">
-            {stores &&
-              stores?.map((item, i) => (
-                <Link
-                  to={`/storefront?id=${item._id}`}
-                  className="w-full"
-                  key={i}
-                >
-                  <Stores data={item} />
-                  {/* {console.log(item)} */}
-                </Link>
-              ))}
+          {stores &&
+              stores
+                .filter((store) => store.products.length > 0) // Filter out stores with zero products
+                .map((item, i) => (
+                  <Link to={`/storefront?id=${item._id}`} className="w-full" key={i}>
+                    <Stores data={item} />
+                  </Link>
+                ))}
           </ul>
           {/* <Footer /> */}
         </section>

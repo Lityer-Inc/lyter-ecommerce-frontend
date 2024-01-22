@@ -1,20 +1,29 @@
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import React from "react";
-
+import '../index.css'
 export default function Stores({ data }) {
+  
   return (
     <>
+<<<<<<< alpha
       <div className="cardS bg-gray-50 max-w-[440px] ">
         {/* image */}
         <div className="cardS-img h-16 w-16 rounded-full">
           <img
             className=" py-3 object-cover rounded-full"
+=======
+      <div className={`cardS bg-gray-50`}>
+        {/* image */}
+        <div className="cardS-img h-16 w-16 hidden">
+          <img
+            className="h-16 py-3 object-cover"
+>>>>>>> local
             src={data?.avatar}
           />
         </div>
         {/* title, categorys and tags */}
         <div className="cardS-content h-full">
-          <div className="cardS-title">{data.name}</div>
+          <div className="cardS-title">{data?.name}</div>
           <div className="mt-2 relative">
             <Breadcrumbs className="separator" separator="•">
               {data.category?.map((item, i) => (
