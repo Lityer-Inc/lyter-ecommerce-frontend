@@ -22,6 +22,22 @@ const apiService = {
       return null;
     }
   },
+  getSpecificStore: async (storeId) => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/stores/${storeId}`);
+
+      if (response.status === 200) {
+        const store = await response.data;
+        return store;
+      } else {
+        // Handle bad response
+        alert("Error: " + response.statusText);
+        return null;
+      }
+    } catch (error) {
+      throw Error('server error');
+    }
+  },
   decodeJwt: async () => {
     try {
       const token = Cookies.get("token")

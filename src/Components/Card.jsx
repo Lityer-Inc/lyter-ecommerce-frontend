@@ -37,7 +37,7 @@ export default function Card({ data }) {
         console.log("Error while added the item to cart !");
       }
     } catch (e) {
-      console.log("error");
+      console.log("error : ", e);
     }
     // useFetchAndAddToCart(userDetails);
   };

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Sheet,
   SheetContent,
@@ -20,6 +20,8 @@ const CartMain = () => {
   const itemCount = 0;
   const fee = 1;
 
+  const [storeProducts, setStoreProducts] = useState([]);
+
   const { userDetails } = useContext(ShopContext);
   const { getCart } = apiService;
 
@@ -28,28 +30,74 @@ const CartMain = () => {
     queryKey: ["cart"]
   });
 
-  console.log("cartItmes ; ", cartItems);
+  async function separateProductsByStore() {
+    const cartProductsByStore = (
+      await Promise.all(
+        cartItems.length > 0 &&
+          cartItems.map(async (data) => {
+            try {
+              const storeDetails = await apiService.getSpecificStore(
+                data.product?.storeId
+              );
+              const storeId = data.product?.storeId;
+              const storeName = storeDetails.name;
+              const storeImage = storeDetails.avatar || "";
+              const storeDescription = storeDetails.description || "";
 
-  const cartProducts = [];
+              return {
+                [storeId]: {
+                  products: data.product,
+                  storeImage: storeImage,
+                  storeName: storeName,
+                  storeDescription: storeDescription
+                }
+              };
+            } catch (err) {
+              console.error(err);
+              return {
+                unknown_store: {
+                  products: data.product,
+                  storeImage: "",
+                  storeName: "unknown_store",
+                  storeDescription: "lorem upsem khuah"
+                }
+              };
+            }
+          })
+      )
+    ).reduce((acc, product) => {
+      const store = Object.keys(product)[0];
+      const {
+        products: productData,
+        storeImage,
+        storeName,
+        storeDescription
+      } = product[store];
 
-  cartItems &&
-    cartItems.map((item) => [
-      cartProducts.push({ ...item.product, storeId: "lityer" })
-    ]);
+      // Create an array for the store if it doesn't exist
+      acc[store] = acc[store] || {
+        products: [],
+        storeImage,
+        storeName,
+        storeDescription
+      };
 
-  console.log("cartProduts : ", cartProducts);
+      // Add the product to the store's array
+      acc[store].products.push(productData);
 
-  const cartProductsByStore = cartProducts.reduce((acc, product) => {
-    const storeId = product.storeId;
+      return acc;
+    }, {});
 
-    // Create an array for the store if it doesn't exist
-    acc[storeId] = acc[storeId] || [];
+    setStoreProducts(Object.values(cartProductsByStore));
+    return cartProductsByStore;
+  }
 
-    // Add the product to the store's array
-    acc[storeId].push(product);
+  useEffect(() => {
+    if (!isLoading) {
+      separateProductsByStore();
+    }
+  }, [cartItems]);
 
-    return acc;
-  }, {});
 
   if (isLoading) {
     return <Preloader />;
@@ -68,7 +116,7 @@ const CartMain = () => {
           {cartItems.length}
         </span>
       </SheetTrigger>
-      <SheetContent className="flex w-full flex-col pr-0 sm:max-w-lg">
+      <SheetContent className="flex w-full flex-col pr-0 sm:max-w-lg overflow-y-scroll">
         {" "}
         {/* the actual cart component which slides over on cick of cart icon */}
         <SheetHeader className="space-y-2.5 pr-6">
@@ -93,57 +141,68 @@ const CartMain = () => {
                   <span>{fee}</span>
                 </div>
               </div>
-              <div className="pt-10 flex w-full flex-col pr-6">
+              <div className="pt-10 flex w-full flex-col gap-1 pr-6">
                 {/* {cartItems.map((item, index) => {
                   return <CartItem data={item} key={index} />;
                 })} */}
-                {Object.keys(cartProductsByStore).map((storeId) => (
-                  <section
-                    className="py-3 px-4 shadow-xl bg-gray-100 rounded-md border border-gray-100"
-                    key={storeId}
-                  >
-                    <div className="flex flex-col space-y-4">
-                      {/* store image & title */}
-                      <div className="flex items-center space-x-4">
-                        <img
-                          src={"/empty-cart.png"}
-                          className="rounded-full w-[80px] h-[80px] border border-gray-300"
-                          alt="productImage"
-                        />
-                        <div className="flex flex-col items-start">
-                          <h3 className="text-xl font-semibold text-gray-900">
-                            {storeId}
-                          </h3>
-                          <span className='text-gray-700' > Lorem ipsum dolor sit amet.</span>
-                          <span className='text-green-800 font-medium'>Delivery by 7pm</span>
+                {storeProducts.length > 0 &&
+                  storeProducts.map((store, i) => {
+                    // const storeName = String(Object.keys(store)[i]);
+                    // const products = store[Object.keys(store)[i]]?.products;
+                    return (
+                      <section
+                        className="py-3 px-4 shadow-xl bg-gray-100  rounded-md border border-gray-100"
+                        key={i}
+                      >
+                        <div className="flex flex-col space-y-4">
+                          {/* store image & title */}
+                          <div className="flex items-center space-x-4">
+                            <img
+                              src={"/empty-cart.png"}
+                              className="rounded-full w-[80px] h-[80px] border border-gray-300"
+                              alt="productImage"
+                            />
+                            <div className="flex flex-col items-start">
+                              <h3 className="text-xl font-semibold text-gray-900">
+                                {store.storeName}
+                              </h3>
+                              <span className="text-gray-700">
+                                {" "}
+                                {store.storeDescription}
+                              </span>
+                              <span className="text-green-800 font-medium">
+                                Delivery by 7pm
+                              </span>
+                            </div>
+                          </div>
+                          {/* store product images */}
+                          <div className="flex flex-grow w-full space-x-2">
+                            {store.products.map((product, index) => (
+                              // <img
+                              //   src={product?.image}
+                              //   className="rounded-full w-[70px] h-[70px] p-1 border object-contain"
+                              //   alt="productImage"
+                              // />
+                              <p key={index}>{product.title}</p>
+                            ))}
+                          </div>
+                          {/* down part */}
+                          <div className="self-start flex gap-3 fonts font-medium whitespace-nowrap text-center">
+                            <button className="bg-green-400 hover:bg-green-500 rounded-full px-4 py-2 w-full">
+                              Continue Shopping
+                            </button>
+                            {}
+                            <button
+                              className="bg-red-400 hover:bg-red-500 rounded-full px-6 py-2 w-full"
+                              // onClick={checkoutHandler}
+                            >
+                              CheckOut
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                      {/* store product images */}
-                      <div className="flex flex-grow w-full space-x-2">
-                        {cartProductsByStore[storeId].map((product) => (
-                          <img
-                            src={product.image}
-                            className="rounded-full w-[70px] h-[70px] p-1 border object-contain"
-                            alt="productImage"
-                          />
-                        ))}
-                      </div>
-                      {/* down part */}
-                      <div className="self-start flex gap-3 fonts font-medium whitespace-nowrap text-center">
-                        <button className="bg-green-400 hover:bg-green-500 rounded-full px-4 py-2 w-full">
-                          Continue Shopping
-                        </button>
-                        {}
-                        <button
-                          className="bg-red-400 hover:bg-red-500 rounded-full px-6 py-2 w-full"
-                          // onClick={checkoutHandler}
-                        >
-                          CheckOut
-                        </button>
-                      </div>
-                    </div>
-                  </section>
-                ))}
+                      </section>
+                    );
+                  })}
                 {/* <section className="bg-white border-b hover:bg-gray-50 w-full text-center py-3">
                   <div className="flex gap-3">
                     <img />
