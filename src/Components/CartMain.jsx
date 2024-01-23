@@ -24,17 +24,20 @@ const CartMain = () => {
 
   const { userDetails } = useContext(ShopContext);
   const { getCart } = apiService;
+  let userId = undefined;
+
+  if (userDetails) {
+    userId = userDetails.id;  
+  }
 
   const {
     data: cartItems,
     isLoading,
     isFetching
   } = useQuery({
-    queryFn: () => getCart(userDetails.id),
-    queryKey: ["cart"]
+    queryFn: () => getCart(userId),
+    queryKey: ["cart", userId]
   });
-
-  console.log("cartIems : ", cartItems);
 
   useEffect(() => {
     async function separateProductsByStore() {
@@ -103,16 +106,15 @@ const CartMain = () => {
         return cartProductsByStore;
       }
     }
-    if (!isFetching && cartItems) {
+    if (!isFetching) {
       separateProductsByStore();
     }
-  }, [cartItems, isFetching]);
+  }, [isFetching]);
 
   if (isLoading) {
     return <Preloader />;
   }
 
-  console.log("storeProducts : ", storeProducts);
 
   return (
     <Sheet>

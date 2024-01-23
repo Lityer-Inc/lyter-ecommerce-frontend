@@ -92,7 +92,7 @@ export const CheckoutPage = ({ isCartOpen2, toggleMobileCart }) => {
   return (
     <main
       className={`fixed flex w-full h-full top-0 left-0 z-30 justify-center ${
-        !isCartOpen2 ? "" : "hidden"
+        isCartOpen2 ? "" : "hidden"
       }`}
     >
       <div

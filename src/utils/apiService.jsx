@@ -71,7 +71,7 @@ const apiService = {
     }
     try {
       const response = await axios.get(
-        `${API_BASE_URL}/user/${"65a567337e4098286d11e349"}/cart`
+        `${API_BASE_URL}/user/${userId}/cart`
       );
 
       return {data: response.data, status: 200};
