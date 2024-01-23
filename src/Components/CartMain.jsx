@@ -25,83 +25,94 @@ const CartMain = () => {
   const { userDetails } = useContext(ShopContext);
   const { getCart } = apiService;
 
-  const { data: cartItems, isLoading } = useQuery({
+  const {
+    data: cartItems,
+    isLoading,
+    isFetching
+  } = useQuery({
     queryFn: () => getCart(userDetails.id),
     queryKey: ["cart"]
   });
 
-  async function separateProductsByStore() {
-    const cartProductsByStore = (
-      await Promise.all(
-        cartItems.length > 0 &&
-          cartItems.map(async (data) => {
-            try {
-              const storeDetails = await apiService.getSpecificStore(
-                data.product?.storeId
-              );
-              const storeId = data.product?.storeId;
-              const storeName = storeDetails.name;
-              const storeImage = storeDetails.avatar || "";
-              const storeDescription = storeDetails.description || "";
-
-              return {
-                [storeId]: {
-                  products: data.product,
-                  storeImage: storeImage,
-                  storeName: storeName,
-                  storeDescription: storeDescription
-                }
-              };
-            } catch (err) {
-              console.error(err);
-              return {
-                unknown_store: {
-                  products: data.product,
-                  storeImage: "",
-                  storeName: "unknown_store",
-                  storeDescription: "lorem upsem khuah"
-                }
-              };
-            }
-          })
-      )
-    ).reduce((acc, product) => {
-      const store = Object.keys(product)[0];
-      const {
-        products: productData,
-        storeImage,
-        storeName,
-        storeDescription
-      } = product[store];
-
-      // Create an array for the store if it doesn't exist
-      acc[store] = acc[store] || {
-        products: [],
-        storeImage,
-        storeName,
-        storeDescription
-      };
-
-      // Add the product to the store's array
-      acc[store].products.push(productData);
-
-      return acc;
-    }, {});
-
-    setStoreProducts(Object.values(cartProductsByStore));
-    return cartProductsByStore;
-  }
+  console.log("cartIems : ", cartItems);
 
   useEffect(() => {
-    if (!isLoading) {
+    async function separateProductsByStore() {
+      const cartProductsByStore = (
+        await Promise.all(
+          cartItems.data &&
+            cartItems.data.length > 0 &&
+            cartItems.data.map(async (data) => {
+              try {
+                const storeDetails = await apiService.getSpecificStore(
+                  data.product?.storeId
+                );
+                const storeId = data.product?.storeId;
+                const storeName = storeDetails.name;
+                const storeImage = storeDetails.avatar || "";
+                const storeDescription = storeDetails.description || "";
+
+                return {
+                  [storeId]: {
+                    products: data.product,
+                    storeImage: storeImage,
+                    storeName: storeName,
+                    storeDescription: storeDescription
+                  }
+                };
+              } catch (err) {
+                console.error(err);
+                return {
+                  unknown_store: {
+                    products: data.product,
+                    storeImage: "",
+                    storeName: "unknown_store",
+                    storeDescription: "lorem upsem khuah"
+                  }
+                };
+              }
+            })
+        )
+      ).reduce((acc, product) => {
+        const store = Object.keys(product)[0];
+        const {
+          products: productData,
+          storeImage,
+          storeName,
+          storeDescription
+        } = product[store];
+
+        // Create an array for the store if it doesn't exist
+        acc[store] = acc[store] || {
+          products: [],
+          storeImage,
+          storeName,
+          storeDescription
+        };
+
+        // Add the product to the store's array
+        acc[store].products.push(productData);
+
+        return acc;
+      }, {});
+
+      if (cartItems.status !== 200) {
+        return setStoreProducts([]);
+      } else {
+        setStoreProducts(Object.values(cartProductsByStore));
+        return cartProductsByStore;
+      }
+    }
+    if (!isFetching && cartItems) {
       separateProductsByStore();
     }
-  }, [cartItems]);
-
+  }, [cartItems, isFetching]);
 
   if (isLoading) {
     return <Preloader />;
   }
+
+  console.log("storeProducts : ", storeProducts);
 
   return (
     <Sheet>
@@ -113,16 +124,18 @@ const CartMain = () => {
           className="h-9 w-9 flex-shrink-0 text-black group-hover:text-gray-900"
         />
         <span className="ml-2 text-[1.1rem] font- text-gray-900 group-hover:text-gray-800">
-          {cartItems.length}
+          {cartItems.data ? cartItems.data.length : 0}
         </span>
       </SheetTrigger>
       <SheetContent className="flex w-full flex-col pr-0 sm:max-w-lg overflow-y-scroll">
         {" "}
         {/* the actual cart component which slides over on cick of cart icon */}
         <SheetHeader className="space-y-2.5 pr-6">
-          <SheetTitle>Cart ({cartItems.length})</SheetTitle>
+          <SheetTitle>
+            Cart ({cartItems.data ? cartItems.data.length : 0})
+          </SheetTitle>
         </SheetHeader>
-        {itemCount == 0 ? (
+        {storeProducts.length > 0 ? (
           <>
             <div className="space-y-4 pr-6">
               {/* <Separator /> */}
@@ -145,7 +158,7 @@ const CartMain = () => {
                 {/* {cartItems.map((item, index) => {
                   return <CartItem data={item} key={index} />;
                 })} */}
-                {storeProducts.length > 0 &&
+                {
                   storeProducts.map((store, i) => {
                     // const storeName = String(Object.keys(store)[i]);
                     // const products = store[Object.keys(store)[i]]?.products;
@@ -234,17 +247,18 @@ const CartMain = () => {
                 alt="empty shopping cart"
               />
             </div>
-            <h3 className="text-xl font-semibold">Your Cart is Empty</h3>
+            <h3 className="text-xl font-semibold">Please Login to View your cart</h3>
             <SheetTrigger asChild>
               <Link
-                to="/products"
+                  to="/"
+                  className='text-blue-500'
                 // className={buttonVariants({
                 //   variant: "link",
                 //   size: "sm",
                 //   className: "text-sm text-muted-foreground"
                 // })}
               >
-                Add items to your cart to checkout
+                {"back"}
               </Link>
             </SheetTrigger>
           </div>

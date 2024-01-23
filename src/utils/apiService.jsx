@@ -46,7 +46,7 @@ const apiService = {
 
       if (token == null) {
         // alert("token is null");
-        return;
+        return {status: 500}
       }
 
       const response = await axios.get(`${API_BASE_URL}/user/decodeJwt`, {
@@ -66,13 +66,18 @@ const apiService = {
     }
   },
   getCart: async (userId) => {
+    if (userId == undefined) {
+      return {status: 404}
+    }
     try {
       const response = await axios.get(
         `${API_BASE_URL}/user/${"65a567337e4098286d11e349"}/cart`
       );
-      return response.data;
+
+      return {data: response.data, status: 200};
     } catch (e) {
       console.log("server error !");
+      return {status: 500}
     }
   },
   deleteCart: async (userId, productId) => {

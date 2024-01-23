@@ -25,7 +25,6 @@ export const CheckoutPage = ({ isCartOpen2, toggleMobileCart }) => {
   const token = Cookies.get("token") ? JSON.parse(Cookies.get("token")) : null;
   const navigate = useNavigate();
 
-  console.log('workin g!');
 
   // const handleResize = () => {
   //   const width = window.innerWidth;
