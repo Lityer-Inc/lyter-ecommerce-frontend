@@ -1,11 +1,10 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useContext } from "react";
 import { ShopContext } from "../context/shop-context.jsx";
 import { CiSquarePlus } from "react-icons/ci";
 import { CiSquareMinus } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import { Toaster, toast } from "sonner";
 import apiService from "../utils/apiService.jsx";
-import useFetchAndAddToCart from "../hooks/useFetchCart.js";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const CartItem = ({ data }) => {

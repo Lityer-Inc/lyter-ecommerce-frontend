@@ -17,7 +17,7 @@ import { useQuery } from "@tanstack/react-query";
 import CartItem from "./CartItem";
 
 const CartMain = () => {
-  const itemCount = 0;
+  // const itemCount = 0;
   const fee = 1;
 
   const [storeProducts, setStoreProducts] = useState([]);
@@ -27,7 +27,7 @@ const CartMain = () => {
   let userId = undefined;
 
   if (userDetails) {
-    userId = userDetails.id;  
+    userId = userDetails.id;
   }
 
   const {
@@ -115,7 +115,6 @@ const CartMain = () => {
     return <Preloader />;
   }
 
-
   return (
     <Sheet>
       <SheetTrigger className="group -m-2 flex items-center p-2">
@@ -160,64 +159,72 @@ const CartMain = () => {
                 {/* {cartItems.map((item, index) => {
                   return <CartItem data={item} key={index} />;
                 })} */}
-                {
-                  storeProducts.map((store, i) => {
-                    // const storeName = String(Object.keys(store)[i]);
-                    // const products = store[Object.keys(store)[i]]?.products;
-                    return (
-                      <section
-                        className="py-3 px-4 shadow-xl bg-gray-100  rounded-md border border-gray-100"
-                        key={i}
-                      >
-                        <div className="flex flex-col space-y-4">
-                          {/* store image & title */}
-                          <div className="flex items-center space-x-4">
-                            <img
-                              src={"/empty-cart.png"}
-                              className="rounded-full w-[80px] h-[80px] border border-gray-300"
-                              alt="productImage"
-                            />
-                            <div className="flex flex-col items-start">
-                              <h3 className="text-xl font-semibold text-gray-900">
-                                {store.storeName}
-                              </h3>
-                              <span className="text-gray-700">
-                                {" "}
-                                {store.storeDescription}
-                              </span>
-                              <span className="text-green-800 font-medium">
-                                Delivery by 7pm
-                              </span>
-                            </div>
-                          </div>
-                          {/* store product images */}
-                          <div className="flex flex-grow w-full space-x-2">
-                            {store.products.map((product, index) => (
-                              // <img
-                              //   src={product?.image}
-                              //   className="rounded-full w-[70px] h-[70px] p-1 border object-contain"
-                              //   alt="productImage"
-                              // />
-                              <p key={index}>{product.title}</p>
-                            ))}
-                          </div>
-                          {/* down part */}
-                          <div className="self-start flex gap-3 fonts font-medium whitespace-nowrap text-center">
-                            <button className="bg-green-400 hover:bg-green-500 rounded-full px-4 py-2 w-full">
-                              Continue Shopping
-                            </button>
-                            {}
-                            <button
-                              className="bg-red-400 hover:bg-red-500 rounded-full px-6 py-2 w-full"
-                              // onClick={checkoutHandler}
-                            >
-                              CheckOut
-                            </button>
+                {storeProducts.map((store, i) => {
+                  // const storeName = String(Object.keys(store)[i]);
+                  // const products = store[Object.keys(store)[i]]?.products;
+                  return (
+                    <section
+                      className="py-3 px-4 shadow-xl bg-gray-100  rounded-md border border-gray-100"
+                      key={i}
+                    >
+                      <div className="flex flex-col space-y-4">
+                        {/* store image & title */}
+                        <div className="flex items-center space-x-4">
+                          <img
+                            src={`${
+                              store.storeImage
+                                ? store.storeImage
+                                : "/empty-cart.png"
+                            }`}
+                            className="rounded-full w-[80px] h-[80px] border border-gray-300"
+                            alt="productImage"
+                          />
+                          <div className="flex flex-col items-start">
+                            <h3 className="text-xl font-semibold text-gray-900">
+                              {store.storeName}
+                            </h3>
+                            <span className="text-gray-700">
+                              {" "}
+                              {store.storeDescription}
+                            </span>
+                            <span className="text-green-800 font-medium">
+                              Delivery by 7pm
+                            </span>
                           </div>
                         </div>
-                      </section>
-                    );
-                  })}
+                        {/* store product images */}
+                        <div className="flex flex-grow w-full space-x-2">
+                          {store.products.map((product, index) => {
+                            if (product.image) {
+                              return (
+                                <img
+                                src={product?.image}
+                                className="rounded-full w-[70px] h-[70px] p-1 border object-contain"
+                                alt="productImage"
+                                />
+                              )
+                            } else {
+                              return <p key={index}>{product.title}</p>;
+                            }
+                          })}
+                        </div>
+                        {/* down part */}
+                        <div className="self-start flex gap-3 fonts font-medium whitespace-nowrap text-center">
+                          <button className="bg-green-400 hover:bg-green-500 rounded-full px-4 py-2 w-full">
+                            Continue Shopping
+                          </button>
+                          {}
+                          <button
+                            className="bg-red-400 hover:bg-red-500 rounded-full px-6 py-2 w-full"
+                            // onClick={checkoutHandler}
+                          >
+                            CheckOut
+                          </button>
+                        </div>
+                      </div>
+                    </section>
+                  );
+                })}
                 {/* <section className="bg-white border-b hover:bg-gray-50 w-full text-center py-3">
                   <div className="flex gap-3">
                     <img />
@@ -249,11 +256,13 @@ const CartMain = () => {
                 alt="empty shopping cart"
               />
             </div>
-            <h3 className="text-xl font-semibold">Please Login to View your cart</h3>
+            <h3 className="text-xl font-semibold">
+              Please Login to View your cart
+            </h3>
             <SheetTrigger asChild>
               <Link
-                  to="/"
-                  className='text-blue-500'
+                to="/"
+                className="text-blue-500"
                 // className={buttonVariants({
                 //   variant: "link",
                 //   size: "sm",

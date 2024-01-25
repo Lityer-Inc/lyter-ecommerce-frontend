@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import Navbar from "./components/Navbar";
-// import Home from "./Pages/Home";
 import { Routes, Route } from "react-router-dom";
 import Beverages from "./Pages/Beverages";
 import Bakery from "./Pages/Bakery";
@@ -20,7 +19,6 @@ import StoresList from "./Pages/StoresList";
 import StoreFront from "./Pages/StoreFront";
 import Preloader from "./components/Preloader";
 import Protectedroute from "./components/Protectedroute";
-// import Account from "./Pages/Dashbardlayout";
 import Orders from "./Pages/Orders";
 import Alert from "./components/Alert";
 import Saved from "./Pages/Saved";
@@ -30,9 +28,6 @@ import ProductDetails from "./components/ProductDetails";
 import Cookies from "js-cookie";
 import apiService from "./utils/apiService.jsx";
 import Footer from "./components/Footer.jsx";
-import useFetchAndAddToCart from "./hooks/useFetchCart.js";
-import { Button } from "./components/ui/button";
-import { CheckoutPage } from "./components/Checkout";
 
 export default function App() {
   const {
@@ -44,9 +39,7 @@ export default function App() {
     setAlertState,
     userDetails,
     setUserDetails,
-    stores,
     setStores,
-    cartItems,
     productSelected
   } = useContext(ShopContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -78,10 +71,6 @@ export default function App() {
   }, [modal, loginModal, isLoading, alert, token]);
 
   useEffect(() => {
-    // if (cartItems && cartItems.length > 0) {
-    //   return null;
-    // }
-
     const getUserData = async () => {
       const response = await apiService.decodeJwt();
       if (response.status !== 200) {
@@ -107,8 +96,6 @@ export default function App() {
     getUserData();
     getStores();
   }, []);
-
-  useFetchAndAddToCart(userDetails);
 
   if (isErr != null) {
     return alert("Error : " + isErr);

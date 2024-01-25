@@ -1,4 +1,4 @@
-import DeliveryRibbon from "../components/DeliveryRibbon";
+import DeliveryRibbon from "../oldFiles/DeliveryRibbon";
 import InputField from "../components/InputField";
 import Footer from "../components/Footer";
 import { useContext } from "react";
