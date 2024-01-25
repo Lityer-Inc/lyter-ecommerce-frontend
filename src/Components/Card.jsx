@@ -55,8 +55,6 @@ export default function Card({ data }) {
     }
   });
 
-  console.log('products : ', data);
-
   return (
     <>
       {/*

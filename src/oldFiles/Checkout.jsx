@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { ShopContext } from "../context/shop-context";
-import CartItem from "./CartItem";
+import CartItem from "../components/CartItem";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useQuery } from "@tanstack/react-query";
 import apiService from "../utils/apiService";
-import Preloader from "./Preloader";
+import Preloader from "../components/Preloader";
 
 export const CheckoutPage = ({ isCartOpen2, toggleMobileCart }) => {
   const {
