@@ -1,6 +1,6 @@
-import DeliveryRibbon from "../Components/DeliveryRibbon";
-import InputField from "../Components/InputField";
-import Footer from "../Components/Footer";
+import DeliveryRibbon from "../oldFiles/DeliveryRibbon";
+import InputField from "../components/InputField";
+import Footer from "../components/Footer";
 import { useContext } from "react";
 import { ShopContext } from "../context/shop-context";
 
@@ -81,7 +81,7 @@ const {totalPrice, userDetails} = useContext(ShopContext)
 
           <p className="text-left text-sm text-gray-500">
             Your personal data will be used to support your experience
-            throughout this website, to manage access to your account, and for
+           throughout this website, to manage access to your account, and for
             other purposes described in our{" "}
             <span className="text-blue-600 cursor-pointer">
               privacy policy.

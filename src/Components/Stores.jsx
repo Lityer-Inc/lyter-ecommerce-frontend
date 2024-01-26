@@ -2,31 +2,39 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import React from "react";
 
 export default function Stores({ data }) {
-  console.log("dta : ", data);
   return (
     <>
       <div className="cardS bg-gray-50 max-w-[440px]">
         {/* image */}
         <div className="cardS-img h-16 w-16">
-          <img className="h-16 py-3 object-cover" src={data?.products[0].image} />
+          <img
+            className="h-16 py-3 object-cover"a
+            src={data?.avatar || ''}
+            alt="store"
+          />
         </div>
         {/* title, categorys and tags */}
         <div className="cardS-content h-full">
           <div className="cardS-title">{data.name}</div>
-          <p className="mt-2 relative">
+          <div className="mt-2 relative">
             <Breadcrumbs className="separator" separator="•">
-              {data.category.map((item) => (
-                <div className="cardS-category text-[#636367]/90 font-semibold inline-flex mr-1 px-1">
+              {data.category.map((item, i) => (
+                <div
+                  className="cardS-category text-[#636367]/90 font-semibold inline-flex mr-1 px-1"
+                  key={i}
+                >
                   {item}
                 </div>
               ))}
             </Breadcrumbs>
-          </p>
-          <p className=" inline-block mt-1">
-            {data.tags.map((item) => (
-              <div className="cardS-tags inline-flex mr-1 px-1">{item}</div>
+          </div>
+          <div className=" inline-block mt-1">
+            {data.tags.map((item, i) => (
+              <div className="cardS-tags inline-flex mr-1 px-1" key={i}>
+                {item}
+              </div>
             ))}
-          </p>
+          </div>
         </div>
 
         {/* delivery and discount */}
@@ -66,7 +74,9 @@ export default function Stores({ data }) {
                   d="m11 21-8-8L13 3h5l3 3v5L11 21Zm4.5-11a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"
                 ></path>
               </svg>
-              Lower fees on $10.0$
+              {data.description.length > 10
+                ? `${data.description.substring(0, 10)}...`
+                : data.description}
             </span>
           ) : (
             ""
@@ -76,3 +86,5 @@ export default function Stores({ data }) {
     </>
   );
 }
+
+

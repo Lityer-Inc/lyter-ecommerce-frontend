@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
-import Navbar from "./Components/Navbar";
-// import Home from "./Pages/Home";
+import Navbar from "./components/Navbar";
 import { Routes, Route } from "react-router-dom";
 import Beverages from "./Pages/Beverages";
 import Bakery from "./Pages/Bakery";
@@ -14,23 +13,21 @@ import BabyCare from "./Pages/BabyCare";
 import Fruits from "./Pages/Fruits";
 import "./index.css";
 import { ShopContext } from "./context/shop-context";
-import Login from "./Components/Login";
-import Signup from "./Components/Signup";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
 import StoresList from "./Pages/StoresList";
 import StoreFront from "./Pages/StoreFront";
-import Preloader from "./Components/Preloader";
-import Protectedroute from "./Components/Protectedroute";
-// import Account from "./Pages/Dashbardlayout";
+import Preloader from "./components/Preloader";
+import Protectedroute from "./components/Protectedroute";
 import Orders from "./Pages/Orders";
-import Alert from "./Components/Alert";
+import Alert from "./components/Alert";
 import Saved from "./Pages/Saved";
 import Dashboardhome from "./Pages/Dashboardhome";
 import CheckoutPayment from "./Pages/CheckoutPayment";
-import ProductDetails from "./Components/ProductDetails";
+import ProductDetails from "./components/ProductDetails";
 import Cookies from "js-cookie";
 import apiService from "./utils/apiService.jsx";
-import Footer from "./Components/Footer.jsx";
-import useFetchAndAddToCart from "./hooks/useFetchCart.js";
+import Footer from "./components/Footer.jsx";
 
 export default function App() {
   const {
@@ -42,9 +39,7 @@ export default function App() {
     setAlertState,
     userDetails,
     setUserDetails,
-    stores,
     setStores,
-    cartItems,
     productSelected
   } = useContext(ShopContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -54,9 +49,7 @@ export default function App() {
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
-      console.log("listening 1");
       if (loginModal !== 0 && !modal.current.contains(event.target)) {
-        console.log("listening 2");
         setLoginModal(0);
       }
     };
@@ -78,13 +71,6 @@ export default function App() {
   }, [modal, loginModal, isLoading, alert, token]);
 
   useEffect(() => {
-    
-    
-    // if (cartItems && cartItems.length > 0) {
-    //   return null;
-    // }
-
-
     const getUserData = async () => {
       const response = await apiService.decodeJwt();
       if (response.status !== 200) {
@@ -101,25 +87,23 @@ export default function App() {
 
     const getStores = async () => {
       const response = await apiService.getStores();
-      console.log("respnse : ", response);
       if (response) {
         setStores(response);
       } else {
-        alert("somehting wrong !!!");
+        window.alert("somehting wrong !!!");
       }
     };
     getUserData();
     getStores();
   }, []);
 
-  useFetchAndAddToCart(userDetails);
-
   if (isErr != null) {
     return alert("Error : " + isErr);
   }
 
   return (
-    <div className="bg-[#fff] w-[100dvw] h-[100dvh] relative">
+    <div className="bg-[#fff] w-[100dvw] h-[100dvh] relative 
+    ">
       {isLoading && <Preloader />}
 
       {alert && <Alert info={alertState} />}

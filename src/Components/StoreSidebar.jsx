@@ -1,14 +1,39 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useCallback, useContext, useRef } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { TiTick } from "react-icons/ti";
 import { FaBagShopping } from "react-icons/fa6";
 import { IoReloadOutline } from "react-icons/io5";
 import { FaList } from "react-icons/fa";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { ShopContext } from "@/context/shop-context";
+import Preloader from "./Preloader";
 
-const StoreSidebar = ({ store }) => {
+const StoreSidebar = () => {
 
-  if (!store) {
-    return;
+  const { endpointHead } = useContext(ShopContext);
+  const [params] = useSearchParams();
+  const storeId = useRef(params.get("id"));
+
+  const getStores = useCallback(async () => {
+    const response = await axios.get(`${endpointHead}/stores/${storeId.current}`)
+    if (response.status == 200) {
+      return response.data;
+    } else {
+      console.log('error while fetching stores data !');
+      return;
+    }
+  }, [endpointHead, storeId]);
+  
+  const { data: store, isLoading } = useQuery({
+    queryFn: getStores,
+    queryKey: ["storeDetails"]
+  });
+
+  console.log('store : ', store);
+
+  if (isLoading) {
+    return <Preloader />
   }
 
   return (
@@ -17,11 +42,11 @@ const StoreSidebar = ({ store }) => {
       <div className="fixed top-auto bg-gray-100 w-[280px] overflow-y-scroll overflow-x-hidden border-r h-screen p-6">
         <div className="flex w-full flex-col sticky top-0 bg-gray-100/90 backdrop-blur-sm p-2 items-center gap-2">
           <img
-            src="/logo-2.png"
-            className="rounded-full w-[60px] h-[60px] border border-gray-300 p-3"
+            src={store.avatar}
+            className="rounded-full w-[60px] h-[60px] border border-gray-300 p-1"
           />
-          <h2 className="text-[1.2rem] font-semibold">{store.name}</h2>
-          <p className="text-[0.9rem] -mt-3 text-gray-700 font-semibold">{store.description}</p>
+          <h2 className="text-[1.2rem] text-2xl font-bold">{store.name}</h2>
+          <p className="text-[0.8rem] -mt-1 text-center text-gray-700 font-semibold">{store.description}</p>
           <Link to={"/pricing-policy"}>View Pricing Policy {">"}</Link>
           <Link to="/">
             <span className="flex items-center">

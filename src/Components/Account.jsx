@@ -3,7 +3,7 @@ import { ShopContext } from "../context/shop-context";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 
-export default function Account() {
+export default function Account({visible = false}) {
   const { setLoginModal, userDetails, user } = useContext(ShopContext);
   const [selectCurrency, setSelectCurrency] = useState("usdt");
   const [openCurrency, setOpenCurrency] = useState(false);
@@ -36,7 +36,7 @@ export default function Account() {
   };
 
   return (
-    <div className="flex gap-2 text-sm relative max-md:hidden">
+    <div className={`flex gap-2 text-sm relative ${!visible && "max-md:hidden"}`}>
       <div
         className="flex gap-1 self-center cursor-pointer shadow-[0_0px_5px_0.5px_rgba(0,0,0,0.06)] rounded-full items-center"
         onClick={() => setAccountModal(!accountModal)}

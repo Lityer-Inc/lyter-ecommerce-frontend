@@ -56,10 +56,8 @@ export default function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("endpoint : ", endpointHead);
     if (password.length < 4 || confirmPassworderr) {
       setPassworderr(true);
-      console.log("confirm password : ", confirmPassworderr);
       alert("Invalid Password or Password Mismatch !");
       throw new Error("Invalid Password or Password Mismatch !");
     }
@@ -147,9 +145,6 @@ export default function Signup() {
     }
   };
 
-  useEffect(() => {
-    console.log(endpointHead, "test test");
-  }, []);
 
   return (
     <>

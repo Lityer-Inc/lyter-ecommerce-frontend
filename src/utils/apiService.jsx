@@ -7,15 +7,7 @@ const API_BASE_URL = "http://localhost:8000";
 const apiService = {
   getStores: async () => {
     try {
-      const token = Cookies.get("token")
-        ? JSON.parse(Cookies.get("token"))
-        : null;
-
-      const response = await axios.get(`${API_BASE_URL}/stores/`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
+      const response = await axios.get(`${API_BASE_URL}/stores/`);
 
       if (response.status === 200) {
         const stores = await response.data;
@@ -30,16 +22,31 @@ const apiService = {
       return null;
     }
   },
+  getSpecificStore: async (storeId) => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/stores/${storeId}`);
+
+      if (response.status === 200) {
+        const store = await response.data;
+        return store;
+      } else {
+        // Handle bad response
+        alert("Error: " + response.statusText);
+        return null;
+      }
+    } catch (error) {
+      throw Error('server error');
+    }
+  },
   decodeJwt: async () => {
     try {
       const token = Cookies.get("token")
         ? JSON.parse(Cookies.get("token"))
         : null;
 
-      console.log("token : ", token);
       if (token == null) {
         // alert("token is null");
-        return;
+        return {status: 500}
       }
 
       const response = await axios.get(`${API_BASE_URL}/user/decodeJwt`, {
@@ -47,8 +54,6 @@ const apiService = {
           Authorization: `Bearer ${token}`
         }
       });
-      console.log("decodeReponse : ", response.data);
-      console.log("rseponse : ", response.status);
       if (response.status === 200) {
         return { status: 200, data: response.data };
       } else {
@@ -61,12 +66,46 @@ const apiService = {
     }
   },
   getCart: async (userId) => {
+    if (userId == undefined) {
+      return {status: 404}
+    }
     try {
-      const response = await axios.get(`${API_BASE_URL}/user/${userId}/cart`);
-      console.log('response carttt : ', response);
-      return response.data;
+      const response = await axios.get(
+        `${API_BASE_URL}/user/${userId}/cart`
+      );
+
+      return {data: response.data, status: 200};
     } catch (e) {
       console.log("server error !");
+      return {status: 500}
+    }
+  },
+  deleteCart: async (userId, productId) => {
+    // console.log("rpdocut id : ", productId);
+    try {
+      const response = await axios.delete(
+        `${API_BASE_URL}/user/${userId}/cart`,
+        {
+          data: {
+            productId: productId
+          }
+        }
+      );
+      return response;
+    } catch (e) {
+      throw Error("server error !");
+    }
+  },
+  addToCart: async (userId, productId, storeId) => {
+    console.log("rpdocut id : ", productId);
+    try {
+      const response = await axios.post(`${API_BASE_URL}/user/${userId}/cart`, {
+        productId: productId,
+        storeId: storeId
+      });
+      return response;
+    } catch (e) {
+      throw Error("server error !");
     }
   }
 };

@@ -4,7 +4,7 @@ export default function BestDealsCardList({ img, title, description, price }) {
   return (
     <>
       <div className="cards-container-text-container">
-        <p className="cards-container-text">This Week's Best Deals:</p>
+        <p className="cards-container-text">{"This Week's Best Deals:"}</p>
       </div>
       <div className="cards-container">
         <Card img={img} title={title} description={description} price={price} />

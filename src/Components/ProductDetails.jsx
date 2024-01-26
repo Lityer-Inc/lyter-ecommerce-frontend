@@ -10,10 +10,13 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import ComboBox from "@mui/material/Autocomplete";
 import Preloader from "./Preloader.jsx";
 import axios from "axios";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import apiService from "@/utils/apiService";
 
 const ProductDetails = () => {
-  const { productSelected, setProductSelected, addToCart,endpointHead } =
+  const { userDetails, productSelected, setProductSelected, endpointHead } =
     useContext(ShopContext);
+    const queryClient = useQueryClient();
   const [savedItem, setsavedItem] = useState(false);
   const [loading, setLoading] = useState(true);
   const [quantityPro, setQuantityPro] = useState(1);
@@ -33,29 +36,64 @@ const ProductDetails = () => {
     setQuantityPro(newValue);
   };
 
-  useEffect(()=>{
-    const fetchData = async () =>{
-      try{
-        const response = await axios.get(`${endpointHead}/stores/${storeId.current}/products/${productSelected.id}`);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${endpointHead}/stores/${storeId.current}/products/${productSelected.id}`
+        );
         const productData = await response.data;
         console.log("data:", productData);
         setProductDetails(productData);
         setLoading(false);
-      }
-      catch (error){
-        console.log("error on fetch:", error)
+      } catch (error) {
+        console.log("error on fetch:", error);
       }
     };
     fetchData();
-  }, [])
-  
+  }, []);
+
+  const addToCart = async (productId) => {
+    try {
+      const res = await apiService.addToCart(
+        userDetails.id,
+        productId,
+        storeId.current
+      );
+      if (res.status === 200) {
+        console.log("added to cart response : ", res);
+      } else {
+        console.log("Error while added the item to cart !");
+      }
+    } catch (e) {
+      console.log("error");
+    }
+    // useFetchAndAddToCart(userDetails);
+  };
+
+  // useEffect(() => {
+  // }, [cartItems]);
+
+  const { mutateAsync: mutateCart } = useMutation({
+    mutationFn: addToCart,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["cart"], {
+        refetchInactive: true,
+        refetchOnWindowFocus: true
+      });
+    }
+  });
+
   if (loading) {
     return <Preloader />;
   }
 
-
   return (
-    <main className={`fixed flex w-full h-full top-0 z-30 justify-center ${productSelected.selected ? "" : "hidden"}`}>
+    <main
+      className={`fixed flex w-full h-full top-0 z-30 justify-center ${
+        productSelected.selected ? "" : "hidden"
+      }`}
+    >
       {/* background */}
       <div
         className=" absolute bg-black/20 w-full h-full"
@@ -87,8 +125,10 @@ const ProductDetails = () => {
           {/* product details box */}
           <section className="flex md:flex-row flex-col gap-5">
             {/* image */}
-            <div className="flex justify-center self-center w-[70%] p-10 
-            lg:w-[450px]">
+            <div
+              className="flex justify-center self-center w-[70%] p-10 
+            lg:w-[450px]"
+            >
               <img
                 src={productDetails?.image}
                 alt={productDetails?.name}
@@ -102,7 +142,9 @@ const ProductDetails = () => {
                   to={productDetails?.category}
                   className="-mt-3 text-cyan-500 font-bold hover:underline"
                 >
-                  {productDetails?.category ? productDetails?.category : "Random"}
+                  {productDetails?.category
+                    ? productDetails?.category
+                    : "Random"}
                 </Link>
                 <h1 className="sm:text-[2rem] font-semibold text-[1.5rem]">
                   {productDetails?.name}
@@ -112,7 +154,9 @@ const ProductDetails = () => {
                   <Link className="text-cyan-700 font-semibold text-[14px] inline-flex mb-1">{item}</Link>
                 ))}
                 </Breadcrumbs> */}
-              <p className="mt-2 text-red-500">{productDetails?.weight} Available</p>
+                <p className="mt-2 text-red-500">
+                  {productDetails?.weight} Available
+                </p>
                 <h1 className="font-semibold pb-2 text-[1.2rem]">Details</h1>
                 <p className="text-gray-700 flex">
                   {productDetails?.description}
@@ -122,17 +166,18 @@ const ProductDetails = () => {
               {/* right side */}
               <div className="flex-1 max-w-[600px] max-h-[380px] flex relative flex-col gap-4 p-2">
                 {/* inside container */}
-                <div className="p-5 w-[320px] xl:w-[450px]
-                self-center lg:self-end h-full rounded-md border border-gray-400">
+                <div
+                  className="p-5 w-[320px] xl:w-[450px]
+                self-center lg:self-end h-full rounded-md border border-gray-400"
+                >
                   <h1 className="text-[21px] font-bold text-[#39393c] leading-normal font-inherit">
                     ${productDetails?.price}
                   </h1>
                   <h1 className="text-[16px] font-semibold text-[#636367] mb-1 leading-normal font-['Helvetica']">
                     $
-                    {(
-                      productDetails?.weight /
-                      productDetails?.price
-                    ).toFixed(2)}{" "}
+                    {(productDetails?.weight / productDetails?.price).toFixed(
+                      2
+                    )}{" "}
                     each
                   </h1>
                   {/* horizontal */}
@@ -166,8 +211,12 @@ const ProductDetails = () => {
                           ? "bg-gray-400"
                           : "bg-green-700"
                       }`}
-                      onClick={() => {
-                        addToCart(productDetails, quantityPro);
+                      onClick={async () => {
+                        try {
+                          await mutateCart(productDetails._id);
+                        } catch (e) {
+                          console.log("error in deleting cart item");
+                        }
                       }}
                       disabled={
                         quantityPro > 100 ||
