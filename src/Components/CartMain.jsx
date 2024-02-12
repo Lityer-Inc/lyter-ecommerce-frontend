@@ -1,20 +1,19 @@
-import React, { useContext, useEffect, useState } from "react";
+import apiService from "@/utils/apiService";
+import { useQuery } from "@tanstack/react-query";
+import { useContext, useEffect, useState } from "react";
+import { CiShoppingCart } from "react-icons/ci";
+import { Link, useNavigate } from "react-router-dom";
+import { ShopContext } from "../context/shop-context";
+import Preloader from "./Preloader";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger
 } from "./ui/sheet";
-import { Link } from "react-router-dom";
-import { CiShoppingCart } from "react-icons/ci";
-import { ShopContext } from "../context/shop-context";
-import Preloader from "./Preloader";
-import apiService from "@/utils/apiService";
-import { useQuery } from "@tanstack/react-query";
-import CartItem from "./CartItem";
 
 const CartMain = () => {
   // const itemCount = 0;
@@ -22,7 +21,8 @@ const CartMain = () => {
 
   const [storeProducts, setStoreProducts] = useState([]);
 
-  const { userDetails } = useContext(ShopContext);
+  const { userDetails, setCheckoutItems, checkoutItems } =
+    useContext(ShopContext);
   const { getCart } = apiService;
   let userId = undefined;
 
@@ -38,6 +38,8 @@ const CartMain = () => {
     queryFn: () => getCart(userId),
     queryKey: ["cart", userId]
   });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function separateProductsByStore() {
@@ -110,6 +112,11 @@ const CartMain = () => {
       separateProductsByStore();
     }
   }, [isFetching]);
+
+  const checkoutHandler = (store) => {
+    setCheckoutItems(store);
+    navigate("/checkout");
+  };
 
   if (isLoading) {
     return <Preloader />;
@@ -198,11 +205,11 @@ const CartMain = () => {
                             if (product.image) {
                               return (
                                 <img
-                                src={product?.image}
-                                className="rounded-full w-[70px] h-[70px] p-1 border object-contain"
-                                alt="productImage"
+                                  src={product?.image}
+                                  className="rounded-full w-[70px] h-[70px] p-1 border object-contain"
+                                  alt="productImage"
                                 />
-                              )
+                              );
                             } else {
                               return <p key={index}>{product.title}</p>;
                             }
@@ -214,12 +221,14 @@ const CartMain = () => {
                             Continue Shopping
                           </button>
                           {}
-                          <button
-                            className="bg-red-400 hover:bg-red-500 rounded-full px-6 py-2 w-full"
-                            // onClick={checkoutHandler}
-                          >
-                            CheckOut
-                          </button>
+                          <SheetClose asChild>
+                            <button
+                              className="bg-red-400 hover:bg-red-500 rounded-full px-6 py-2 w-full"
+                              onClick={() => checkoutHandler(store)}
+                            >
+                              CheckOut
+                            </button>
+                          </SheetClose>
                         </div>
                       </div>
                     </section>
