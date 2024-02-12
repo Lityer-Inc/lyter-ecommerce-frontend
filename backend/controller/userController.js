@@ -99,6 +99,8 @@ export const userLoginController = async (req, res) => {
     if (!passwordMatch) {
       return res.status(404).json({ error: "Invalid password" });
     }
+
+    console.log('env : ', process.env.ACCESS_TOKEN);
     //  JWT
     const token = jwt.sign(
       { email: user.email, id: user._id },

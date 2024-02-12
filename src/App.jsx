@@ -28,6 +28,7 @@ import ProductDetails from "./components/ProductDetails";
 import Cookies from "js-cookie";
 import apiService from "./utils/apiService.jsx";
 import Footer from "./components/Footer.jsx";
+import Checkout from "./Pages/Checkout";
 
 export default function App() {
   const {
@@ -125,6 +126,7 @@ export default function App() {
         <Route path="/personal-care" element={<PersonalCare />} />
         <Route path="/baby-care" element={<BabyCare />} />
         <Route path="/checkout-payment" element={<CheckoutPayment />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route
           path="/dashboard"
           element={
