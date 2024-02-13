@@ -1,11 +1,9 @@
-import React, { useEffect, useContext, useState } from "react";
-import { ShopContext } from "../context/shop-context.jsx";
-import { CiSquarePlus } from "react-icons/ci";
-import { CiSquareMinus } from "react-icons/ci";
+import { useContext } from "react";
+import { CiSquareMinus, CiSquarePlus } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import { Toaster, toast } from "sonner";
+import { ShopContext } from "../context/shop-context.jsx";
 import apiService from "../utils/apiService.jsx";
-import useFetchAndAddToCart from "../hooks/useFetchCart.js";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const CheckoutItem = ({ data }) => {
@@ -17,7 +15,7 @@ const CheckoutItem = ({ data }) => {
     totalItems,
     totalPrice,
     removeMini,
-    addMini,
+    addMini,876gyre4df
     userDetails,
     product,
     productSelected,
@@ -68,11 +66,11 @@ const CheckoutItem = ({ data }) => {
       <td className="flex p-2 pb-3 ">
         <div className="flex justify-between space-x-6 items-center m-auto relative">
           <img
-            src={data.product.image}
+            src={data?.image}
             alt=""
             className="max-w-[65px] h-auto"
           />
-          <h2 className="font-semibold text-[1.3rem]">{data.product.title}</h2>
+          <h2 className="font-semibold text-[1.3rem]">{data?.title}</h2>
         </div>
       </td>
       {/* <td class="w-2 p-4 pl-0" colSpan="3">
@@ -80,13 +78,13 @@ const CheckoutItem = ({ data }) => {
         </div>
       </td> */}
       <td className="p-2 fonts font-medium md:px-2 md:py-4 whitespace-nowrap text-center">
-        ${data.product.price}
+        ${data?.price}
       </td>
       <td className="p-2 fonts font-medium md:px-2 md:py-4 whitespace-nowrap text-center">
         <div className="flex gap-4 mx-auto max-w-max items-center">
           <CiSquarePlus onClick={() => removeCom(data)} />
-          <span className="text-black text-semibold">{data.count}</span>
-          <CiSquareMinus onClick={() => addMini(data.product)} />
+          <span className="text-black text-semibold">{data?.count}</span>
+          <CiSquareMinus onClick={() => addMini(data)} />
         </div>
       </td>
       {/* <td class="flex flex-row gap-2 bg-black justify-center items-center h-full">
@@ -120,7 +118,7 @@ const CheckoutItem = ({ data }) => {
           <button
             onClick={async () => {
               try {
-                await deleteCartItem(data.product._id);
+                await deleteCartItem(data?._id);
               } catch (e) {
                 console.log("error in deleting cart item");
               }
