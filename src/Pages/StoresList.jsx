@@ -21,9 +21,11 @@ export default function StoresList() {
   // console.log("stores : ", stores);
 
   const { data: stores, isLoading } = useQuery({
-    queryFn: () => getStores(),
+    queryFn: () => getStores(), 
     queryKey: ["stores"],
   });
+
+  console.log('stotes ', stores);
 
 
   if (isLoading) {
@@ -38,7 +40,7 @@ export default function StoresList() {
            mt-10">
            {stores &&
               stores
-                .filter((store) => store.products.length > 0) // Filter out stores with zero products
+                .filter((store) => store.products && store.products.length > 0) // Filter out stores with zero products
                 .map((item, i) => (
                   <Link to={`/storefront?id=${item._id}`} className="w-full" key={i}>
                     <Stores data={item} />

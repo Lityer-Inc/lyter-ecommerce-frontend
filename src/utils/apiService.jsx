@@ -18,7 +18,7 @@ const apiService = {
         return null;
       }
     } catch (error) {
-      alert("please login to access the application");
+      alert("Server Error");
       return null;
     }
   },

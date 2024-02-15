@@ -20,7 +20,6 @@ export const ShopContextProvider = (props) => {
 
   const initialCart = JSON.parse(Cookies.get("cart") || "[]");
   const [cartItems, setCartItems] = useState(initialCart);
-  const [checkoutItems, setCheckoutItems] = useState([]);
   const [loginModal, setLoginModal] = useState(0); //0 means off 1 means login and 2 means signup
   //const [auth, setAuth] = useState();
   const [user, setUser] = useState(false);
@@ -195,8 +194,6 @@ export const ShopContextProvider = (props) => {
     setStores,
     setIsCheckoutOpen,
     isCheckoutOpen,
-    checkoutItems,
-    setCheckoutItems
   };
 
   // Save cart data to cookies whenever cartItems change

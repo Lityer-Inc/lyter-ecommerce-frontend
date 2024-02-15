@@ -25,7 +25,6 @@ export const CheckoutPage = ({ isCartOpen2, toggleMobileCart }) => {
   const token = Cookies.get("token") ? JSON.parse(Cookies.get("token")) : null;
   const navigate = useNavigate();
 
-
   // const handleResize = () => {
   //   const width = window.innerWidth;
   //   if (isCartOpen2 && width < 766) {
@@ -83,10 +82,10 @@ export const CheckoutPage = ({ isCartOpen2, toggleMobileCart }) => {
   //   };
   // }, []);
 
-  console.log('cartTiems : ', cartItems);
+  console.log("cartTiems : ", cartItems);
 
   if (isLoading) {
-    return <Preloader />
+    return <Preloader />;
   }
 
   return (
