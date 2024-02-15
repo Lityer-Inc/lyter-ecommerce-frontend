@@ -81,7 +81,7 @@ export default function Card({ data }) {
         >
           <img
             className="h-full w-full py-3 object-cover bg-gray-100 rounded-md border-none"
-            src={data?.image}
+            src={data?.img}
           />
         </div>
 

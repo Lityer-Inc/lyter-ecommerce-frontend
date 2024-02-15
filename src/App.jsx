@@ -90,9 +90,7 @@ export default function App() {
       const response = await apiService.getStores();
       if (response) {
         setStores(response);
-      } else {
-        window.alert("somehting wrong !!!");
-      }
+      } 
     };
     getUserData();
     getStores();

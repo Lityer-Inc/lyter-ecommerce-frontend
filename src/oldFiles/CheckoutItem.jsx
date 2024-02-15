@@ -15,7 +15,7 @@ const CheckoutItem = ({ data }) => {
     totalItems,
     totalPrice,
     removeMini,
-    addMini,876gyre4df
+    addMini,
     userDetails,
     product,
     productSelected,
@@ -64,13 +64,13 @@ const CheckoutItem = ({ data }) => {
   return (
     <tr className="bg-white border-b hover:bg-gray-50 w-full text-center">
       <td className="flex p-2 pb-3 ">
-        <div className="flex justify-between space-x-6 items-center m-auto relative">
+        <div className="flex justify-center w-full items-center m-auto relative">
           <img
-            src={data?.image}
+            src={data?.img}
             alt=""
             className="max-w-[65px] h-auto"
           />
-          <h2 className="font-semibold text-[1.3rem]">{data?.title}</h2>
+          <h2 className="font-semibold ml-4 text-[1.3rem]">{data?.title}</h2>
         </div>
       </td>
       {/* <td class="w-2 p-4 pl-0" colSpan="3">

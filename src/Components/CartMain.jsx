@@ -21,8 +21,7 @@ const CartMain = () => {
 
   const [storeProducts, setStoreProducts] = useState([]);
 
-  const { userDetails, setCheckoutItems, checkoutItems } =
-    useContext(ShopContext);
+  const { userDetails } = useContext(ShopContext);
   const { getCart } = apiService;
   let userId = undefined;
 
@@ -71,7 +70,7 @@ const CartMain = () => {
                   unknown_store: {
                     products: data.product,
                     storeImage: "",
-                    storeName: "unknown_store",
+                    storeName: null,
                     storeDescription: "lorem upsem khuah"
                   }
                 };
@@ -114,8 +113,11 @@ const CartMain = () => {
   }, [isFetching]);
 
   const checkoutHandler = (store) => {
-    setCheckoutItems(store);
+    localStorage.setItem("checkout", null);
+    localStorage.setItem("checkout", JSON.stringify({ store }));
+    // setCheckoutItems(store);
     navigate("/checkout");
+    window.location.reload();
   };
 
   if (isLoading) {
@@ -202,10 +204,10 @@ const CartMain = () => {
                         {/* store product images */}
                         <div className="flex flex-grow w-full space-x-2">
                           {store.products.map((product, index) => {
-                            if (product.image) {
+                            if (product.img) {
                               return (
                                 <img
-                                  src={product?.image}
+                                  src={product?.img}
                                   className="rounded-full w-[70px] h-[70px] p-1 border object-contain"
                                   alt="productImage"
                                 />

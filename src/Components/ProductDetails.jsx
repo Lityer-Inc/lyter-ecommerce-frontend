@@ -130,7 +130,7 @@ const ProductDetails = () => {
             lg:w-[450px]"
             >
               <img
-                src={productDetails?.image}
+                src={productDetails?.img}
                 alt={productDetails?.name}
                 className="w-full h-full self-center object-fit object-center"
               />

@@ -1,21 +1,44 @@
 import { ShopContext } from "@/context/shop-context";
 import CheckoutItem from "@/oldFiles/CheckoutItem";
-import { useContext } from "react";
+import Cookies from "js-cookie";
+import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Checkout = () => {
-  const { checkoutItems } = useContext(ShopContext);
-  console.log("checkoutItems : ", checkoutItems);
-  const token = 'sdfsdf';
+  const token = Cookies.get("token");
+  const { store: checkoutItems } = JSON.parse(localStorage.getItem("checkout"));
+  console.log("c : ", checkoutItems);
 
   return (
     <main
-      className={`flex w-full h-full top-0 left-0 z-30 justify-center`}
+      className={`flex flex-col w-[90%] max-md:w-[100%] mx-auto max-w-[1400px] h-full justify-start p-1`}
     >
-      <div id="cart-items" className="z-40 self-center w-[90%] max-w-[1400px]">
+      <h1 className="text-2xl font-bold text-[#FF0F6F] pt-4">Checkout </h1>
+      <main>
+        <div className="flex mx-auto py-2 flex-row border-b  backdrop-blur-sm items-center justify-center space-x-4">
+          {checkoutItems?.storeImage && (
+            <img
+              src={checkoutItems?.storeImage}
+              className="rounded-full  w-[80px] h-[80px] border border-gray-300 p-1"
+            />
+          )}
+
+          <h2 className="text-[1.2rem] text-3xl font-semibold">
+            {checkoutItems?.storeName
+              ? checkoutItems?.storeName
+              : "All Cart Products"}
+          </h2>
+          {/* <p className="text-[0.8rem] -mt-1 text-center text-gray-700 font-semibold">
+            {checkoutItems?.storeDescription}
+          </p> */}
+          {/* <Link to='/earn'>
+                </Link> */}
+        </div>
+      </main>
+      <div className="w-full py-5 px-4">
         {checkoutItems && checkoutItems?.products?.length > 0 ? (
-          <div className="bg-[#fff] rounded-lg overflow-x-auto md:overflow-x-hidden h-100 md:h-auto p-2 md:p-10 flex flex-col justify-center items-center gap-5 shadow-lg">
-            <div className="w-[692px] overflow-x-scroll pl-[176px] md:w-full md:overflow-x-hidden md:pl-0 ">
+          <div className="bg-[#fff] rounded-lg overflow-x-auto md:overflow-x-hidden flex flex-col justify-center items-center gap-5">
+            <div className="w-full overflow-scroll max-w-[1050px] max-h-[510px] md:w-full md:overflow-x-hidden md:pl-0 ">
               <table className="w-full text-sm text-left text-gray-500">
                 <thead className="text-xs bg-slate-100 text-gray-700 px-5 fonts uppercase">
                   <tr>
@@ -60,7 +83,7 @@ const Checkout = () => {
             <div className=" w-full border-1 border-[#f5f5f5] flex justify-between p-5">
               <div className="">Total</div>
 
-              <div className="">{'393'}</div>
+              <div className="">{"393"}</div>
             </div>
             <Link
               to={`${token != null ? "checkout-payment" : ""}`}
@@ -107,7 +130,7 @@ const Checkout = () => {
             </div>
           </div>
         )}
-        </div>
+      </div>
     </main>
   );
 };
