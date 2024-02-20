@@ -1,31 +1,16 @@
-import { useContext, useEffect, useState } from "react";
-import Stores from "../components/Stores.jsx";
-import Preloader from "../components/Preloader.jsx";
-import { Link } from "react-router-dom";
-import dataStores from "../DummyData/dataStores.js";
-import Footer from "../components/Footer.jsx";
-import { ShopContext } from "../context/shop-context.jsx";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
+import Preloader from "../components/Preloader.jsx";
+import Stores from "../components/Stores.jsx";
 import apiService from "../utils/apiService.jsx";
 
 export default function StoresList() {
-  // const [storesData, setStoresData] = useEffect();
   const { getStores } = apiService;
-
-  // if (stores) {
-  //   setIsLoading(false);
-  // } else {
-  //   return;
-  // }
-
-  // console.log("stores : ", stores);
 
   const { data: stores, isLoading } = useQuery({
     queryFn: () => getStores(), 
     queryKey: ["stores"],
   });
-
-  console.log('stotes ', stores);
 
 
   if (isLoading) {
