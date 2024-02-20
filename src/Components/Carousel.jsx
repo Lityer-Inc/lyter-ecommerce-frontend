@@ -1,9 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
-import data from "../DummyData/data.js";
-import Card from "./Card.jsx";
+import { useEffect, useState } from "react";
 import "../index.css";
+import Card from "./Card.jsx";
 
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
+import { A11y, Navigation, Pagination, Scrollbar } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";

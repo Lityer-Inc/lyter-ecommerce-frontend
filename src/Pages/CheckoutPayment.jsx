@@ -1,4 +1,4 @@
-import DeliveryRibbon from "../oldFiles/DeliveryRibbon";
+import DeliveryRibbon from "@/components/DeliveryRibbon";
 import InputField from "../components/InputField";
 import Footer from "../components/Footer";
 import { useContext } from "react";
@@ -8,20 +8,9 @@ const CheckoutPayment = () => {
   
 const {totalPrice, userDetails} = useContext(ShopContext)
   return (
-    // <main className='bg-[#F5F5F5] w-full h-full'>
-    //   {/* left */}
-    //   <section className='flex flex-col p-4 bg-gray-100'>
-    //     {/* delivery address */}
-    //     <div className=''>
 
-    //     </div>
-    //   </section>
-    //   {/* right */}
-    // </main>
     <section className="bg-[#F5F5F5] flex flex-col">
-      {/* <h2 className="p-10 text-center text-3xl font-bold text-black">
-      Checkout
-    </h2> */}
+
       <main className="mx-auto flex sm:flex-row flex-col max-w-[8570px] items-start justify-between p-4 pt-8">
         {/* billings details */}
         <div className="flex-1 bg-white w-full p-6 rounded-md flex flex-col gap-6">
@@ -31,7 +20,6 @@ const {totalPrice, userDetails} = useContext(ShopContext)
           {/* name field */}
           <div className="flex space-x-4">
             <InputField dropDown={false} field="Full Name" defaultValue={userDetails.name}/>
-            {/* <InputField dropDown={false} field="Second Name" /> */}
           </div>
           <InputField dropDown={false} field="Delivery Address" />
           <InputField dropDown={false} field="Delivery Instruction" />
@@ -41,7 +29,6 @@ const {totalPrice, userDetails} = useContext(ShopContext)
           <InputField dropDown={false} field="Zip Code" />
           <InputField dropDown={false} field="Phone"  defaultValue={userDetails.contactNumber}/>
           <p>Payment</p>
-          {/* <InputField dropDown={false} field="Wallet address" /> */}
         </div>
         {/* product price details */}
         <div className="flex-[0.8] ml-8 flex max-w-[500px] flex-col gap-4">

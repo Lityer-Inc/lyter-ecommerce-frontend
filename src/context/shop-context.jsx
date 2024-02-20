@@ -1,19 +1,7 @@
-import React, { createContext, useEffect, useState } from "react";
-import data from "../DummyData/data";
 import Cookies from "js-cookie"; // Import the js-cookie package
-import axios from "axios";
+import { createContext, useEffect, useState } from "react";
 
 export const ShopContext = createContext("context");
-
-/*
-const getDefaultCart = () => {
-  let cart = {};
-  for (let i = 0; i < data.length; i++) {
-    cart[i] = 0;
-  }
-  return cart;
-};
-*/
 
 export const ShopContextProvider = (props) => {
   // Load cart data from cookies or use the default cart
@@ -193,7 +181,7 @@ export const ShopContextProvider = (props) => {
     stores,
     setStores,
     setIsCheckoutOpen,
-    isCheckoutOpen,
+    isCheckoutOpen
   };
 
   // Save cart data to cookies whenever cartItems change

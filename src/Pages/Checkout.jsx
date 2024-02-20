@@ -1,5 +1,5 @@
 import { ShopContext } from "@/context/shop-context";
-import CheckoutItem from "@/oldFiles/CheckoutItem";
+import CheckoutItem from "@/components/CheckoutItem";
 import Cookies from "js-cookie";
 import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
